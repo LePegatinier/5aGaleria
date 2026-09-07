@@ -63,14 +63,11 @@ jobs:
           const date = (p) => p?.date?.start || '';
           const formula = (p) => {
             if (!p?.formula) return '';
-            return p.formula.string ?? (p.formula.number != null ? String(p.formula.number) : '');
+            if (typeof p.formula.string === 'string') return p.formula.string;
+            if (p.formula.number != null) return String(p.formula.number);
+            return '';
           };
-          const uniqueId = (p) => {
-            if (!p?.unique_id) return '';
-            const n = p.unique_id.number;
-            const prefix = p.unique_id.prefix || '';
-            return n != null ? `${prefix ? prefix + '-' : ''}${String(n).padStart(6, '0')}` : '';
-          };
+          const uniqueIdNumber = (p) => p?.unique_id?.number ?? null;
 
           async function queryAll() {
             const results = [];
@@ -117,13 +114,21 @@ jobs:
           }
 
           function expedienteFrom(page, properties) {
-            const f = formula(prop(properties, 'Nº Expediente 5a'));
-            if (f) return f;
-            const uid = uniqueId(prop(properties, 'ID interno'));
-            if (uid) return uid.startsWith('5a-') ? uid : `5a-${uid}`;
+            // 1) Fuente canónica: fórmula Nº Expediente 5a.
+            const f = formula(prop(properties, 'Nº Expediente 5a')).trim();
+            const fm = f.match(/5a-(\d{1,})/i);
+            if (fm) return `5a-${fm[1].padStart(6, '0')}`;
+
+            // 2) Respaldo: ID interno de Notion. Nunca conservar el prefijo A5-.
+            const n = uniqueIdNumber(prop(properties, 'ID interno'));
+            if (n != null) return `5a-${String(n).padStart(6, '0')}`;
+
+            // 3) Último respaldo: título existente.
             const t = title(prop(properties, 'Expediente'));
-            const m = t.match(/5a-\d+/i);
-            if (m) return m[0];
+            const m = t.match(/5a-(\d{1,})/i);
+            if (m) return `5a-${m[1].padStart(6, '0')}`;
+
+            // 4) Identificador estable derivado de la página, solo como emergencia.
             return `5a-${page.id.replace(/-/g, '').slice(-6)}`;
           }
 
