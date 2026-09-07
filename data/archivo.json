@@ -1,6 +1,39 @@
 {
   "version": "0.2",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-07T09:42:54.685Z",
-  "records": []
+  "updated": "2026-09-07T15:05:08.783Z",
+  "records": [
+    {
+      "expediente": "5a-000003",
+      "titulo": "AVISTAMIENTO — 5a-000004",
+      "artista": "ANÓNIMO",
+      "ciudad": "",
+      "ubicacion": "",
+      "coordenadas": "",
+      "fecha": "",
+      "tecnica": "Desconocida",
+      "estado": "Desconocido",
+      "stratascore": "",
+      "observaciones": "",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000003",
+      "imagen": ""
+    },
+    {
+      "expediente": "5a-000004",
+      "titulo": "Intervención",
+      "artista": "dsaf",
+      "ciudad": "",
+      "ubicacion": "ddsfa",
+      "coordenadas": "",
+      "fecha": "2026-09-03",
+      "tecnica": "Intervención",
+      "estado": "Desconocida",
+      "stratascore": "",
+      "observaciones": "",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000004",
+      "imagen": "assets/archive/5a-000004.jpg"
+    }
+  ]
 }
