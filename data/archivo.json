@@ -1,7 +1,14 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-08T10:17:39.642Z",
+  "updated": "2026-09-08T10:21:08.535Z",
+  "stratascore": {
+    "system": "StrataScore™ — Bareback Street Art Certification",
+    "scale": "A-E",
+    "index": "0-20",
+    "formula": "suma de 5 variables de 0-4",
+    "not_quality": true
+  },
   "records": [
     {
       "expediente": "5a-000005",
@@ -14,6 +21,7 @@
       "tecnica": "Paste-Up",
       "estado": "Documentada anteriormente",
       "stratascore": "",
+      "strata_index": null,
       "observaciones": "",
       "publicado": true,
       "url": "expediente.html?id=5a-000005",
