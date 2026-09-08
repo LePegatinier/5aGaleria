@@ -5,23 +5,21 @@ async function loadArchive(){
     const response=await fetch('data/archivo.json',{cache:'no-store'});
     if(!response.ok) throw new Error('archive unavailable');
     const data=await response.json();
-    // Regla de publicación: público + coordenadas válidas no vacías.
-    const records=(data.records||[]).filter(r=>r.publicado===true && String(r.coordenadas||'').trim());
+    const records=(data.records||[]).filter(r=>{
+      const coords=String(r.coordenadas||'').trim();
+      const id=String(r.expediente||'');
+      return r.publicado===true && coords && /^5a-\d{6}$/.test(id);
+    });
     if(!records.length){
-      status.textContent='ARCHIVO PÚBLICO: AÚN SIN EXPEDIENTES PUBLICADOS CON COORDENADAS.';
-      grid.innerHTML='<div class="file-card"><div class="fake-photo photo-a"><span>LA CALLE<br>ESTÁ SIENDO<br>CATALOGADA</span></div><div class="file-meta"><strong>NINGÚN EXPEDIENTE PÚBLICO TODAVÍA</strong><p>Los expedientes sin coordenadas permanecen fuera del archivo público.</p></div></div>';
+      status.textContent='ARCHIVO PÚBLICO: AÚN SIN EXPEDIENTES PUBLICADOS.';
+      grid.innerHTML='<div class="file-card"><div class="fake-photo photo-a"><span>LA CALLE<br>ESTÁ SIENDO<br>CATALOGADA</span></div><div class="file-meta"><strong>NINGÚN EXPEDIENTE PÚBLICO</strong></div></div>';
       return;
     }
     status.textContent=`${records.length} EXPEDIENTE${records.length===1?'':'S'} PÚBLICO${records.length===1?'':'S'}`;
     grid.innerHTML=records.map(r=>{
-      const id=r.expediente||r.numero||'SIN NÚMERO';
-      const title=r.titulo||r.tecnica||'INTERVENCIÓN URBANA';
-      const artist=r.artista||'ANÓNIMO';
-      const state=r.estado||'DESCONOCIDO';
-      const score=r.stratascore||'';
-      const image=r.imagen||'';
+      const id=r.expediente;
       const href=`expediente.html?id=${encodeURIComponent(id)}`;
-      return `<article class="file-card"><a href="${href}">${image?`<img src="${escapeAttr(image)}" alt="${escapeAttr(title)}" style="width:100%;aspect-ratio:1;object-fit:cover;display:block">`:`<div class="fake-photo photo-b"><span>DOCUMENTO<br>DE CALLE</span></div>`}</a><div class="file-meta"><span>5a GALERIA / ${escapeHtml(id)}</span><strong><a href="${href}">${escapeHtml(title)}</a></strong><p>Autor: ${escapeHtml(artist)} · Estado: ${escapeHtml(state)}</p>${score?`<b>${escapeHtml(score)}</b>`:''}</div></article>`;
+      return `<article class="file-card"><a href="${href}">${r.imagen?`<img src="${escapeAttr(r.imagen)}" alt="${escapeAttr(r.titulo||id)}" style="width:100%;aspect-ratio:1;object-fit:cover;display:block">`:'<div class="fake-photo photo-b"><span>DOCUMENTO<br>DE CALLE</span></div>'}</a><div class="file-meta"><span>5a GALERIA / ${escapeHtml(id)}</span><strong>${escapeHtml(r.titulo||id)}</strong><p>${escapeHtml(r.ciudad||'')} · ${escapeHtml(r.tecnica||'')}</p></div></article>`;
     }).join('');
   }catch(e){status.textContent='ERROR DE LECTURA DEL ARCHIVO PÚBLICO.';}
 }
