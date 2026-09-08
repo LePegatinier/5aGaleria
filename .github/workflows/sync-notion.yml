@@ -78,8 +78,7 @@ jobs:
                 filter: {
                   and: [
                     { property: 'Estado del expediente', select: { equals: 'PÚBLICO' } },
-                    { property: 'Publicado', checkbox: { equals: true } },
-                    { property: 'Coordenadas', rich_text: { is_not_empty: true } }
+                    { property: 'Publicado', checkbox: { equals: true } }
                   ]
                 },
                 ...(cursor ? { start_cursor: cursor } : {})
@@ -92,6 +91,43 @@ jobs:
               cursor = data.has_more ? data.next_cursor : null;
             } while (cursor);
             return results;
+          }
+
+          async function geocode(location, city) {
+            const query = [location, city, 'España'].filter(Boolean).join(', ');
+            if (!query) return '';
+            const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=es&q=${encodeURIComponent(query)}`;
+            const res = await fetch(url, {
+              headers: { 'User-Agent': '5a-Galeria/1.0 (archivo público)' }
+            });
+            if (!res.ok) throw new Error(`Nominatim HTTP ${res.status}`);
+            const data = await res.json();
+            if (!data.length) return '';
+            return `${Number(data[0].lat).toFixed(6)}, ${Number(data[0].lon).toFixed(6)}`;
+          }
+
+          async function ensureCoordinates(page, properties) {
+            const existing = rich(prop(properties, 'Coordenadas')).trim();
+            if (existing) return existing;
+
+            const location = rich(prop(properties, 'Ubicación')).trim();
+            const city = rich(prop(properties, 'Ciudad')).trim();
+            const coordinates = await geocode(location, city);
+            if (!coordinates) return '';
+
+            await api(`https://api.notion.com/v1/pages/${page.id}`, {
+              method: 'PATCH',
+              body: JSON.stringify({
+                properties: {
+                  'Coordenadas': {
+                    rich_text: [{ type: 'text', text: { content: coordinates } }]
+                  }
+                }
+              })
+            });
+            console.log(`Coordenadas asignadas a ${page.id}: ${coordinates}`);
+            await new Promise(resolve => setTimeout(resolve, 1100));
+            return coordinates;
           }
 
           async function downloadImage(record, image) {
@@ -137,7 +173,15 @@ jobs:
             const records = [];
             for (const page of pages) {
               const p = page.properties || {};
-              const coordenadas = rich(prop(p, 'Coordenadas')).trim();
+              let coordenadas = rich(prop(p, 'Coordenadas')).trim();
+              if (!coordenadas) {
+                try {
+                  coordenadas = await ensureCoordinates(page, p);
+                } catch (err) {
+                  console.warn(`No se pudieron obtener coordenadas para ${page.id}: ${err.message}`);
+                  coordenadas = '';
+                }
+              }
               if (!coordenadas) continue;
 
               const expediente = expedienteFrom(page, p);
@@ -170,7 +214,7 @@ jobs:
               updated: new Date().toISOString(),
               records
             }, null, 2) + '\n');
-            console.log(`5a Galeria: ${records.length} expediente(s) público(s) sincronizado(s) con coordenadas.`);
+            console.log(`5a Galeria: ${records.length} expediente(s) público(s) sincronizado(s); geolocalización interna automática cuando faltan coordenadas.`);
           })().catch(err => { console.error(err); process.exit(1); });
           NODE
 
@@ -185,5 +229,5 @@ jobs:
             echo "Sin cambios en el archivo público."
             exit 0
           fi
-          git commit -m "chore: exigir coordenadas para publicar expedientes"
+          git commit -m "chore: sincronizar archivo con geolocalización interna"
           git push
