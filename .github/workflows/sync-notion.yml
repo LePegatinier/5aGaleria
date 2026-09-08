@@ -47,6 +47,10 @@ jobs:
           const title=p=>p?.title?.map(x=>x.plain_text||'').join('')||'';
           const select=p=>p?.select?.name||'';
           const date=p=>p?.date?.start||'';
+          function normalizeExpediente(value){
+            const m=String(value||'').trim().match(/(?:^|[^0-9A-Za-z])5a-(\d{1,6})(?:$|[^0-9A-Za-z])/i);
+            return m ? `5a-${m[1].padStart(6,'0')}` : '';
+          }
           async function queryAll(){
             const results=[]; let cursor;
             do {
@@ -59,10 +63,19 @@ jobs:
             const query=[location,city,'España'].filter(Boolean).join(', '); if(!query)return '';
             const url=`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=es&q=${encodeURIComponent(query)}`;
             const res=await fetch(url,{headers:{'User-Agent':'5a-Galeria/1.0 (archivo público)'}}); if(!res.ok)throw new Error(`Nominatim HTTP ${res.status}`);
-            const data=await res.json(); if(!data.length)return ''; return `${Number(data[0].lat).toFixed(6)}, ${Number(data[0].lon).toFixed(6)}`;
+            const data=await res.json(); if(!data.length)return '';
+            const lat=Number(data[0].lat), lon=Number(data[0].lon);
+            if(!Number.isFinite(lat)||!Number.isFinite(lon)||lat<-90||lat>90||lon<-180||lon>180)return '';
+            return `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+          }
+          function validCoordinates(value){
+            const m=String(value||'').trim().match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);
+            if(!m)return false;
+            const lat=Number(m[1]),lon=Number(m[2]);
+            return Number.isFinite(lat)&&Number.isFinite(lon)&&lat>=-90&&lat<=90&&lon>=-180&&lon<=180;
           }
           async function ensureCoordinates(page,p){
-            const existing=rich(prop(p,'Coordenadas')).trim(); if(existing)return existing;
+            const existing=rich(prop(p,'Coordenadas')).trim(); if(validCoordinates(existing))return existing;
             const coordinates=await geocode(rich(prop(p,'Ubicación')).trim(),rich(prop(p,'Ciudad')).trim()); if(!coordinates)return '';
             await api(`https://api.notion.com/v1/pages/${page.id}`,{method:'PATCH',body:JSON.stringify({properties:{'Coordenadas':{rich_text:[{type:'text',text:{content:coordinates}}]}}})});
             console.log(`Coordenadas asignadas a ${page.id}: ${coordinates}`); await new Promise(r=>setTimeout(r,1100)); return coordinates;
@@ -74,23 +87,30 @@ jobs:
             try { const res=await fetch(source); if(!res.ok)throw new Error(`HTTP ${res.status}`); fs.writeFileSync(target,Buffer.from(await res.arrayBuffer())); return `assets/archive/${filename}`; }
             catch(err){console.warn(`No se pudo copiar la fotografía de ${record.expediente}: ${err.message}`);return '';}
           }
-          function expedienteFrom(p){
-            const t=title(prop(p,'Expediente')).trim(); const m=t.match(/5a-(\d{1,})/i); if(m)return `5a-${m[1].padStart(6,'0')}`;
-            throw new Error('El campo Expediente no contiene un identificador 5a válido.');
-          }
           (async()=>{
-            const pages=await queryAll(); fs.rmSync(path.join('assets','archive'),{recursive:true,force:true}); fs.mkdirSync(path.join('assets','archive'),{recursive:true});
-            const records=[];
+            const pages=await queryAll();
+            fs.rmSync(path.join('assets','archive'),{recursive:true,force:true});
+            fs.mkdirSync(path.join('assets','archive'),{recursive:true});
+            const records=[]; const seen=new Set();
             for(const page of pages){
-              const p=page.properties||{}; let coordenadas=rich(prop(p,'Coordenadas')).trim();
-              if(!coordenadas){try{coordenadas=await ensureCoordinates(page,p);}catch(err){console.warn(`No se pudieron obtener coordenadas para ${page.id}: ${err.message}`);coordenadas='';}}
-              if(!coordenadas)continue;
-              const expediente=expedienteFrom(p);
-              const record={expediente,titulo:title(prop(p,'Expediente'))||select(prop(p,'Técnica'))||'INTERVENCIÓN URBANA',artista:rich(prop(p,'Artista / Alias'))||'ANÓNIMO',ciudad:rich(prop(p,'Ciudad')),ubicacion:rich(prop(p,'Ubicación')),coordenadas,fecha:date(prop(p,'Fecha')),tecnica:select(prop(p,'Técnica'))||'Desconocida',estado:select(prop(p,'Estado de la obra'))||'Desconocido',stratascore:select(prop(p,'StrataScore™')),observaciones:rich(prop(p,'Observaciones')),publicado:true,url:`expediente.html?id=${encodeURIComponent(expediente)}`,imagen:''};
-              const files=prop(p,'Fotografía')?.files||[]; if(files.length)record.imagen=await downloadImage(record,files[0]); records.push(record);
+              const p=page.properties||{};
+              const rawExpediente=title(prop(p,'Expediente')).trim();
+              const expediente=normalizeExpediente(rawExpediente);
+              if(!expediente){console.warn(`Omitido ${page.id}: Expediente inválido (${rawExpediente||'vacío'}).`);continue;}
+              if(seen.has(expediente)){console.warn(`Omitido duplicado: ${expediente}`);continue;}
+              let coordenadas=rich(prop(p,'Coordenadas')).trim();
+              if(!validCoordinates(coordenadas)){
+                try{coordenadas=await ensureCoordinates(page,p);}catch(err){console.warn(`No se pudieron obtener coordenadas para ${expediente}: ${err.message}`);coordenadas='';}
+              }
+              // Regla canónica: sin coordenadas válidas no existe publicación pública.
+              if(!validCoordinates(coordenadas)){console.warn(`No publicado ${expediente}: sin coordenadas válidas.`);continue;}
+              const record={expediente,titulo:rawExpediente||'INTERVENCIÓN URBANA',artista:rich(prop(p,'Artista / Alias'))||'ANÓNIMO',ciudad:rich(prop(p,'Ciudad')),ubicacion:rich(prop(p,'Ubicación')),coordenadas,fecha:date(prop(p,'Fecha')),tecnica:select(prop(p,'Técnica'))||'Desconocida',estado:select(prop(p,'Estado de la obra'))||'Desconocido',stratascore:select(prop(p,'StrataScore™')),observaciones:rich(prop(p,'Observaciones')),publicado:true,url:`expediente.html?id=${encodeURIComponent(expediente)}`,imagen:''};
+              const files=prop(p,'Fotografía')?.files||[]; if(files.length)record.imagen=await downloadImage(record,files[0]);
+              seen.add(expediente); records.push(record);
             }
-            records.sort((a,b)=>a.expediente.localeCompare(b.expediente,'es',{numeric:true})); fs.writeFileSync('data/archivo.json',JSON.stringify({version:'0.2',source:'5a GALERIA / ARCHIVO MAESTRO',updated:new Date().toISOString(),records},null,2)+'\n');
-            console.log(`5a Galeria: ${records.length} expediente(s) público(s) sincronizado(s); ID público tomado del campo Expediente.`);
+            records.sort((a,b)=>a.expediente.localeCompare(b.expediente,'es',{numeric:true}));
+            fs.writeFileSync('data/archivo.json',JSON.stringify({version:'1.0',source:'5a GALERIA / ARCHIVO MAESTRO',updated:new Date().toISOString(),records},null,2)+'\n');
+            console.log(`5a Galeria: ${records.length} expediente(s) público(s) sincronizado(s).`);
           })().catch(err=>{console.error(err);process.exit(1);});
           NODE
 
@@ -102,5 +122,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/archivo.json assets/archive
           if git diff --cached --quiet; then echo "Sin cambios en el archivo público."; exit 0; fi
-          git commit -m "fix: usar expediente público canónico"
+          git commit -m "chore: sincronizar archivo público 5a Galeria"
           git push
