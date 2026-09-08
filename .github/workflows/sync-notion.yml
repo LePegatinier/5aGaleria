@@ -78,7 +78,8 @@ jobs:
                 filter: {
                   and: [
                     { property: 'Estado del expediente', select: { equals: 'PÚBLICO' } },
-                    { property: 'Publicado', checkbox: { equals: true } }
+                    { property: 'Publicado', checkbox: { equals: true } },
+                    { property: 'Coordenadas', rich_text: { is_not_empty: true } }
                   ]
                 },
                 ...(cursor ? { start_cursor: cursor } : {})
@@ -114,21 +115,17 @@ jobs:
           }
 
           function expedienteFrom(page, properties) {
-            // 1) Fuente canónica: fórmula Nº Expediente 5a.
             const f = formula(prop(properties, 'Nº Expediente 5a')).trim();
             const fm = f.match(/5a-(\d{1,})/i);
             if (fm) return `5a-${fm[1].padStart(6, '0')}`;
 
-            // 2) Respaldo: ID interno de Notion. Nunca conservar el prefijo A5-.
             const n = uniqueIdNumber(prop(properties, 'ID interno'));
             if (n != null) return `5a-${String(n).padStart(6, '0')}`;
 
-            // 3) Último respaldo: título existente.
             const t = title(prop(properties, 'Expediente'));
             const m = t.match(/5a-(\d{1,})/i);
             if (m) return `5a-${m[1].padStart(6, '0')}`;
 
-            // 4) Identificador estable derivado de la página, solo como emergencia.
             return `5a-${page.id.replace(/-/g, '').slice(-6)}`;
           }
 
@@ -140,6 +137,9 @@ jobs:
             const records = [];
             for (const page of pages) {
               const p = page.properties || {};
+              const coordenadas = rich(prop(p, 'Coordenadas')).trim();
+              if (!coordenadas) continue;
+
               const expediente = expedienteFrom(page, p);
               const record = {
                 expediente,
@@ -147,7 +147,7 @@ jobs:
                 artista: rich(prop(p, 'Artista / Alias')) || 'ANÓNIMO',
                 ciudad: rich(prop(p, 'Ciudad')),
                 ubicacion: rich(prop(p, 'Ubicación')),
-                coordenadas: rich(prop(p, 'Coordenadas')),
+                coordenadas,
                 fecha: date(prop(p, 'Fecha')),
                 tecnica: select(prop(p, 'Técnica')) || 'Desconocida',
                 estado: select(prop(p, 'Estado de la obra')) || 'Desconocido',
@@ -170,7 +170,7 @@ jobs:
               updated: new Date().toISOString(),
               records
             }, null, 2) + '\n');
-            console.log(`5a Galeria: ${records.length} expediente(s) público(s) sincronizado(s).`);
+            console.log(`5a Galeria: ${records.length} expediente(s) público(s) sincronizado(s) con coordenadas.`);
           })().catch(err => { console.error(err); process.exit(1); });
           NODE
 
@@ -185,5 +185,5 @@ jobs:
             echo "Sin cambios en el archivo público."
             exit 0
           fi
-          git commit -m "chore: sincronizar archivo público 5a Galeria"
+          git commit -m "chore: exigir coordenadas para publicar expedientes"
           git push
