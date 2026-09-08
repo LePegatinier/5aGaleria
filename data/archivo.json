@@ -1,24 +1,8 @@
 {
-  "version": "0.2",
+  "version": "1.0",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-08T06:10:05.723Z",
+  "updated": "2026-09-08T08:40:20.480Z",
   "records": [
-    {
-      "expediente": "5a-000004",
-      "titulo": "AVISTAMIENTO — 5a-000004",
-      "artista": "ANÓNIMO",
-      "ciudad": "",
-      "ubicacion": "",
-      "coordenadas": "39.326068, -4.837979",
-      "fecha": "",
-      "tecnica": "Desconocida",
-      "estado": "Desconocido",
-      "stratascore": "",
-      "observaciones": "",
-      "publicado": true,
-      "url": "expediente.html?id=5a-000004",
-      "imagen": ""
-    },
     {
       "expediente": "5a-000005",
       "titulo": "5a-000005",
