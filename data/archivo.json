@@ -1,10 +1,10 @@
 {
   "version": "0.2",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-08T06:00:50.596Z",
+  "updated": "2026-09-08T06:10:05.723Z",
   "records": [
     {
-      "expediente": "5a-000003",
+      "expediente": "5a-000004",
       "titulo": "AVISTAMIENTO — 5a-000004",
       "artista": "ANÓNIMO",
       "ciudad": "",
@@ -16,11 +16,11 @@
       "stratascore": "",
       "observaciones": "",
       "publicado": true,
-      "url": "expediente.html?id=5a-000003",
+      "url": "expediente.html?id=5a-000004",
       "imagen": ""
     },
     {
-      "expediente": "5a-000007",
+      "expediente": "5a-000005",
       "titulo": "5a-000005",
       "artista": "prueba",
       "ciudad": "Barcelona",
@@ -32,8 +32,8 @@
       "stratascore": "",
       "observaciones": "",
       "publicado": true,
-      "url": "expediente.html?id=5a-000007",
-      "imagen": "assets/archive/5a-000007.jpg"
+      "url": "expediente.html?id=5a-000005",
+      "imagen": "assets/archive/5a-000005.jpg"
     }
   ]
 }
