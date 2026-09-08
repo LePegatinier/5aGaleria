@@ -1,7 +1,7 @@
 {
   "version": "1.1",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-08T10:21:28.126Z",
+  "updated": "2026-09-08T10:21:48.717Z",
   "stratascore": {
     "system": "StrataScore™ — Bareback Street Art Certification",
     "scale": "A-E",
@@ -22,6 +22,12 @@
       "estado": "Documentada anteriormente",
       "stratascore": "",
       "strata_index": null,
+      "strata_origen": null,
+      "strata_mediacion": null,
+      "strata_soporte": null,
+      "strata_autonomia": null,
+      "strata_artwash": null,
+      "strata_evidence": "",
       "observaciones": "",
       "publicado": true,
       "url": "expediente.html?id=5a-000005",
