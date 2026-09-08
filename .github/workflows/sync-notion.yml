@@ -37,126 +37,23 @@ jobs:
           const version = process.env.NOTION_VERSION;
           const dataSourceId = process.env.DATA_SOURCE_ID;
           if (!token) throw new Error('NOTION_TOKEN no está disponible.');
-
-          const api = async (url, options = {}) => {
-            const res = await fetch(url, {...options, headers:{'Authorization':`Bearer ${token}`,'Notion-Version':version,'Content-Type':'application/json',...(options.headers||{})}});
-            const text = await res.text(); let body; try { body=JSON.parse(text); } catch { body={raw:text}; }
-            if (!res.ok) throw new Error(`Notion API ${res.status}: ${body.message||text}`); return body;
-          };
+          const api = async (url, options = {}) => { const res=await fetch(url,{...options,headers:{'Authorization':`Bearer ${token}`,'Notion-Version':version,'Content-Type':'application/json',...(options.headers||{})}}); const text=await res.text(); let body; try{body=JSON.parse(text)}catch{body={raw:text}} if(!res.ok)throw new Error(`Notion API ${res.status}: ${body.message||text}`); return body; };
           const prop=(properties,name)=>properties?.[name];
           const rich=p=>p?.rich_text?.map(x=>x.plain_text||'').join('')||'';
           const title=p=>p?.title?.map(x=>x.plain_text||'').join('')||'';
           const select=p=>p?.select?.name||'';
           const number=p=>typeof p?.number==='number'&&Number.isFinite(p.number)?p.number:null;
           const date=p=>p?.date?.start||'';
-
-          function normalizeExpediente(value){
-            const m=String(value||'').trim().match(/(?:^|[^0-9A-Za-z])5a-(\d{1,6})(?:$|[^0-9A-Za-z])/i);
-            return m ? `5a-${m[1].padStart(6,'0')}` : '';
-          }
-
-          async function queryAll(){
-            const results=[]; let cursor;
-            do {
-              const body={page_size:100,filter:{and:[{property:'Estado del expediente',select:{equals:'PÚBLICO'}},{property:'Publicado',checkbox:{equals:true}}]},...(cursor?{start_cursor:cursor}:{})};
-              const data=await api(`https://api.notion.com/v1/data_sources/${dataSourceId}/query`,{method:'POST',body:JSON.stringify(body)});
-              results.push(...(data.results||[]).filter(x=>x.object==='page')); cursor=data.has_more?data.next_cursor:null;
-            } while(cursor); return results;
-          }
-
-          async function geocode(location,city){
-            const query=[location,city,'España'].filter(Boolean).join(', '); if(!query)return '';
-            const url=`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=es&q=${encodeURIComponent(query)}`;
-            const res=await fetch(url,{headers:{'User-Agent':'5a-Galeria/1.0 (archivo público)'}}); if(!res.ok)throw new Error(`Nominatim HTTP ${res.status}`);
-            const data=await res.json(); if(!data.length)return '';
-            const lat=Number(data[0].lat), lon=Number(data[0].lon);
-            if(!Number.isFinite(lat)||!Number.isFinite(lon)||lat<-90||lat>90||lon<-180||lon>180)return '';
-            return `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-          }
-
-          function validCoordinates(value){
-            const m=String(value||'').trim().match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);
-            if(!m)return false;
-            const lat=Number(m[1]),lon=Number(m[2]);
-            return Number.isFinite(lat)&&Number.isFinite(lon)&&lat>=-90&&lat<=90&&lon>=-180&&lon<=180;
-          }
-
-          async function ensureCoordinates(page,p){
-            const existing=rich(prop(p,'Coordenadas')).trim(); if(validCoordinates(existing))return existing;
-            const coordinates=await geocode(rich(prop(p,'Ubicación')).trim(),rich(prop(p,'Ciudad')).trim()); if(!coordinates)return '';
-            await api(`https://api.notion.com/v1/pages/${page.id}`,{method:'PATCH',body:JSON.stringify({properties:{'Coordenadas':{rich_text:[{type:'text',text:{content:coordinates}}]}}})});
-            console.log(`Coordenadas asignadas a ${page.id}: ${coordinates}`); await new Promise(r=>setTimeout(r,1100)); return coordinates;
-          }
-
-          function scoreCategory(index){
-            if(!Number.isFinite(index)||index<0||index>20)return '';
-            if(index<=3)return 'A — STREET RAW CERTIFIED';
-            if(index<=7)return 'B — SEMI-WILD URBAN';
-            if(index<=11)return 'C — URBAN DISTRICT APPROVED';
-            if(index<=15)return 'D — ARTWASH READY™';
-            return 'E — CONTENT SLURRY INDUSTRIAL';
-          }
-
-          function getStrataScores(p){
-            const names=['Origen','Mediación','Soporte','Autonomía','Artwash'];
-            const values=names.map(n=>number(prop(p,`SS — ${n}`)));
-            if(values.some(v=>v===null||v<0||v>4))return null;
-            return {values,index:values.reduce((a,b)=>a+b,0)};
-          }
-
-          async function syncStrataScore(page,p){
-            const score=getStrataScores(p);
-            if(!score)return {index:null,category:select(prop(p,'StrataScore™'))};
-            const category=scoreCategory(score.index);
-            const currentIndex=number(prop(p,'SS — Índice'));
-            const currentCategory=select(prop(p,'StrataScore™'));
-            const patch={};
-            if(currentIndex!==score.index)patch['SS — Índice']={number:score.index};
-            if(currentCategory!==category)patch['StrataScore™']={select:{name:category}};
-            if(Object.keys(patch).length){
-              patch['SS — Fecha revisión']={date:{start:new Date().toISOString().slice(0,10)}};
-              await api(`https://api.notion.com/v1/pages/${page.id}`,{method:'PATCH',body:JSON.stringify({properties:patch})});
-              console.log(`StrataScore actualizado ${title(prop(p,'Expediente'))}: ${score.index}/20 → ${category}`);
-            }
-            return {index:score.index,category};
-          }
-
-          async function downloadImage(record,image){
-            const source=image?.type==='file'?image.file?.url:image?.external?.url; if(!source)return '';
-            const ext=(image?.name?.match(/\.(jpe?g|png|webp|gif)$/i)?.[1]||'jpg').toLowerCase(); const dir=path.join('assets','archive'); fs.mkdirSync(dir,{recursive:true});
-            const filename=`${record.expediente.replace(/[^a-zA-Z0-9_-]/g,'_')}.${ext}`; const target=path.join(dir,filename);
-            try { const res=await fetch(source); if(!res.ok)throw new Error(`HTTP ${res.status}`); fs.writeFileSync(target,Buffer.from(await res.arrayBuffer())); return `assets/archive/${filename}`; }
-            catch(err){console.warn(`No se pudo copiar la fotografía de ${record.expediente}: ${err.message}`);return '';}
-          }
-
-          (async()=>{
-            const pages=await queryAll();
-            fs.rmSync(path.join('assets','archive'),{recursive:true,force:true});
-            fs.mkdirSync(path.join('assets','archive'),{recursive:true});
-            const records=[]; const seen=new Set();
-            for(const page of pages){
-              const p=page.properties||{};
-              const rawExpediente=title(prop(p,'Expediente')).trim();
-              const expediente=normalizeExpediente(rawExpediente);
-              if(!expediente){console.warn(`Omitido ${page.id}: Expediente inválido (${rawExpediente||'vacío'}).`);continue;}
-              if(seen.has(expediente)){console.warn(`Omitido duplicado: ${expediente}`);continue;}
-
-              let coordenadas=rich(prop(p,'Coordenadas')).trim();
-              if(!validCoordinates(coordenadas)){
-                try{coordenadas=await ensureCoordinates(page,p);}catch(err){console.warn(`No se pudieron obtener coordenadas para ${expediente}: ${err.message}`);coordenadas='';}
-              }
-              // Regla canónica: sin coordenadas válidas no existe publicación pública.
-              if(!validCoordinates(coordenadas)){console.warn(`No publicado ${expediente}: sin coordenadas válidas.`);continue;}
-
-              const strata=await syncStrataScore(page,p);
-              const record={expediente,titulo:rawExpediente||'INTERVENCIÓN URBANA',artista:rich(prop(p,'Artista / Alias'))||'ANÓNIMO',ciudad:rich(prop(p,'Ciudad')),ubicacion:rich(prop(p,'Ubicación')),coordenadas,fecha:date(prop(p,'Fecha')),tecnica:select(prop(p,'Técnica'))||'Desconocida',estado:select(prop(p,'Estado de la obra'))||'Desconocido',stratascore:strata.category||'',strata_index:strata.index,observaciones:rich(prop(p,'Observaciones')),publicado:true,url:`expediente.html?id=${encodeURIComponent(expediente)}`,imagen:''};
-              const files=prop(p,'Fotografía')?.files||[]; if(files.length)record.imagen=await downloadImage(record,files[0]);
-              seen.add(expediente); records.push(record);
-            }
-            records.sort((a,b)=>a.expediente.localeCompare(b.expediente,'es',{numeric:true}));
-            fs.writeFileSync('data/archivo.json',JSON.stringify({version:'1.1',source:'5a GALERIA / ARCHIVO MAESTRO',updated:new Date().toISOString(),stratascore:{system:'StrataScore™ — Bareback Street Art Certification',scale:'A-E',index:'0-20',formula:'suma de 5 variables de 0-4',not_quality:true},records},null,2)+'\n');
-            console.log(`5a Galeria: ${records.length} expediente(s) público(s) sincronizado(s).`);
-          })().catch(err=>{console.error(err);process.exit(1);});
+          function normalizeExpediente(value){const m=String(value||'').trim().match(/(?:^|[^0-9A-Za-z])5a-(\d{1,6})(?:$|[^0-9A-Za-z])/i);return m?`5a-${m[1].padStart(6,'0')}`:'';}
+          async function queryAll(){const results=[];let cursor;do{const body={page_size:100,filter:{and:[{property:'Estado del expediente',select:{equals:'PÚBLICO'}},{property:'Publicado',checkbox:{equals:true}}]},...(cursor?{start_cursor:cursor}:{})};const data=await api(`https://api.notion.com/v1/data_sources/${dataSourceId}/query`,{method:'POST',body:JSON.stringify(body)});results.push(...(data.results||[]).filter(x=>x.object==='page'));cursor=data.has_more?data.next_cursor:null;}while(cursor);return results;}
+          async function geocode(location,city){const query=[location,city,'España'].filter(Boolean).join(', ');if(!query)return '';const url=`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=es&q=${encodeURIComponent(query)}`;const res=await fetch(url,{headers:{'User-Agent':'5a-Galeria/1.0 (archivo público)'}});if(!res.ok)throw new Error(`Nominatim HTTP ${res.status}`);const data=await res.json();if(!data.length)return '';const lat=Number(data[0].lat),lon=Number(data[0].lon);if(!Number.isFinite(lat)||!Number.isFinite(lon)||lat<-90||lat>90||lon<-180||lon>180)return '';return `${lat.toFixed(6)}, ${lon.toFixed(6)}`;}
+          function validCoordinates(value){const m=String(value||'').trim().match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);if(!m)return false;const lat=Number(m[1]),lon=Number(m[2]);return Number.isFinite(lat)&&Number.isFinite(lon)&&lat>=-90&&lat<=90&&lon>=-180&&lon<=180;}
+          async function ensureCoordinates(page,p){const existing=rich(prop(p,'Coordenadas')).trim();if(validCoordinates(existing))return existing;const coordinates=await geocode(rich(prop(p,'Ubicación')).trim(),rich(prop(p,'Ciudad')).trim());if(!coordinates)return '';await api(`https://api.notion.com/v1/pages/${page.id}`,{method:'PATCH',body:JSON.stringify({properties:{'Coordenadas':{rich_text:[{type:'text',text:{content:coordinates}}]}}})});console.log(`Coordenadas asignadas a ${page.id}: ${coordinates}`);await new Promise(r=>setTimeout(r,1100));return coordinates;}
+          function scoreCategory(index){if(!Number.isFinite(index)||index<0||index>20)return '';if(index<=3)return 'A — STREET RAW CERTIFIED';if(index<=7)return 'B — SEMI-WILD URBAN';if(index<=11)return 'C — URBAN DISTRICT APPROVED';if(index<=15)return 'D — ARTWASH READY™';return 'E — CONTENT SLURRY INDUSTRIAL';}
+          function getStrataScores(p){const names=['Origen','Mediación','Soporte','Autonomía','Artwash'];const values=names.map(n=>number(prop(p,`SS — ${n}`)));if(values.some(v=>v===null||v<0||v>4))return null;return {values,index:values.reduce((a,b)=>a+b,0)};}
+          async function syncStrataScore(page,p){const score=getStrataScores(p);if(!score)return {index:null,category:select(prop(p,'StrataScore™')),values:[null,null,null,null,null],evidence:rich(prop(p,'SS — Evidencia'))};const category=scoreCategory(score.index);const currentIndex=number(prop(p,'SS — Índice'));const currentCategory=select(prop(p,'StrataScore™'));const patch={};if(currentIndex!==score.index)patch['SS — Índice']={number:score.index};if(currentCategory!==category)patch['StrataScore™']={select:{name:category}};if(Object.keys(patch).length){patch['SS — Fecha revisión']={date:{start:new Date().toISOString().slice(0,10)}};await api(`https://api.notion.com/v1/pages/${page.id}`,{method:'PATCH',body:JSON.stringify({properties:patch})});console.log(`StrataScore actualizado ${title(prop(p,'Expediente'))}: ${score.index}/20 → ${category}`);}return {index:score.index,category,values:score.values,evidence:rich(prop(p,'SS — Evidencia'))};}
+          async function downloadImage(record,image){const source=image?.type==='file'?image.file?.url:image?.external?.url;if(!source)return '';const ext=(image?.name?.match(/\.(jpe?g|png|webp|gif)$/i)?.[1]||'jpg').toLowerCase();const dir=path.join('assets','archive');fs.mkdirSync(dir,{recursive:true});const filename=`${record.expediente.replace(/[^a-zA-Z0-9_-]/g,'_')}.${ext}`;const target=path.join(dir,filename);try{const res=await fetch(source);if(!res.ok)throw new Error(`HTTP ${res.status}`);fs.writeFileSync(target,Buffer.from(await res.arrayBuffer()));return `assets/archive/${filename}`;}catch(err){console.warn(`No se pudo copiar la fotografía de ${record.expediente}: ${err.message}`);return '';}}
+          (async()=>{const pages=await queryAll();fs.rmSync(path.join('assets','archive'),{recursive:true,force:true});fs.mkdirSync(path.join('assets','archive'),{recursive:true});const records=[];const seen=new Set();for(const page of pages){const p=page.properties||{};const rawExpediente=title(prop(p,'Expediente')).trim();const expediente=normalizeExpediente(rawExpediente);if(!expediente){console.warn(`Omitido ${page.id}: Expediente inválido (${rawExpediente||'vacío'}).`);continue;}if(seen.has(expediente)){console.warn(`Omitido duplicado: ${expediente}`);continue;}let coordenadas=rich(prop(p,'Coordenadas')).trim();if(!validCoordinates(coordenadas)){try{coordenadas=await ensureCoordinates(page,p)}catch(err){console.warn(`No se pudieron obtener coordenadas para ${expediente}: ${err.message}`);coordenadas='';}}if(!validCoordinates(coordenadas)){console.warn(`No publicado ${expediente}: sin coordenadas válidas.`);continue;}const strata=await syncStrataScore(page,p);const record={expediente,titulo:rawExpediente||'INTERVENCIÓN URBANA',artista:rich(prop(p,'Artista / Alias'))||'ANÓNIMO',ciudad:rich(prop(p,'Ciudad')),ubicacion:rich(prop(p,'Ubicación')),coordenadas,fecha:date(prop(p,'Fecha')),tecnica:select(prop(p,'Técnica'))||'Desconocida',estado:select(prop(p,'Estado de la obra'))||'Desconocido',stratascore:strata.category||'',strata_index:strata.index,strata_origen:strata.values[0],strata_mediacion:strata.values[1],strata_soporte:strata.values[2],strata_autonomia:strata.values[3],strata_artwash:strata.values[4],strata_evidence:strata.evidence,observaciones:rich(prop(p,'Observaciones')),publicado:true,url:`expediente.html?id=${encodeURIComponent(expediente)}`,imagen:''};const files=prop(p,'Fotografía')?.files||[];if(files.length)record.imagen=await downloadImage(record,files[0]);seen.add(expediente);records.push(record);}records.sort((a,b)=>a.expediente.localeCompare(b.expediente,'es',{numeric:true}));fs.writeFileSync('data/archivo.json',JSON.stringify({version:'1.1',source:'5a GALERIA / ARCHIVO MAESTRO',updated:new Date().toISOString(),stratascore:{system:'StrataScore™ — Bareback Street Art Certification',scale:'A-E',index:'0-20',formula:'suma de 5 variables de 0-4',not_quality:true},records},null,2)+'\n');console.log(`5a Galeria: ${records.length} expediente(s) público(s) sincronizado(s).`);})().catch(err=>{console.error(err);process.exit(1);});
           NODE
 
       - name: Commit public archive if changed
