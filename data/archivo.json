@@ -1,6 +1,39 @@
 {
   "version": "0.2",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-08T04:57:51.453Z",
-  "records": []
+  "updated": "2026-09-08T05:09:30.227Z",
+  "records": [
+    {
+      "expediente": "5a-000003",
+      "titulo": "AVISTAMIENTO — 5a-000004",
+      "artista": "ANÓNIMO",
+      "ciudad": "",
+      "ubicacion": "",
+      "coordenadas": "39.326068, -4.837979",
+      "fecha": "",
+      "tecnica": "Desconocida",
+      "estado": "Desconocido",
+      "stratascore": "",
+      "observaciones": "",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000003",
+      "imagen": ""
+    },
+    {
+      "expediente": "5a-000007",
+      "titulo": "5a-000005",
+      "artista": "prueba",
+      "ciudad": "Barcelona",
+      "ubicacion": "Poblenou",
+      "coordenadas": "41.403733, 2.203354",
+      "fecha": "2026-09-16",
+      "tecnica": "Paste-Up",
+      "estado": "Documentada anteriormente",
+      "stratascore": "",
+      "observaciones": "",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000007",
+      "imagen": "assets/archive/5a-000007.jpg"
+    }
+  ]
 }
