@@ -1,28 +1,11 @@
-async function loadArchive(){
-  const status=document.getElementById('archive-status');
-  const grid=document.getElementById('archive-grid');
-  try{
-    const response=await fetch('data/archivo.json',{cache:'no-store'});
-    if(!response.ok) throw new Error('archive unavailable');
-    const data=await response.json();
-    const records=(data.records||[]).filter(r=>{
-      const coords=String(r.coordenadas||'').trim();
-      const id=String(r.expediente||'');
-      return r.publicado===true && coords && /^5a-\d{6}$/.test(id);
-    });
-    if(!records.length){
-      status.textContent='ARCHIVO PÚBLICO: AÚN SIN EXPEDIENTES PUBLICADOS.';
-      grid.innerHTML='<div class="file-card"><div class="fake-photo photo-a"><span>LA CALLE<br>ESTÁ SIENDO<br>CATALOGADA</span></div><div class="file-meta"><strong>NINGÚN EXPEDIENTE PÚBLICO</strong></div></div>';
-      return;
-    }
-    status.textContent=`${records.length} EXPEDIENTE${records.length===1?'':'S'} PÚBLICO${records.length===1?'':'S'}`;
-    grid.innerHTML=records.map(r=>{
-      const id=r.expediente;
-      const href=`expediente.html?id=${encodeURIComponent(id)}`;
-      return `<article class="file-card"><a href="${href}">${r.imagen?`<img src="${escapeAttr(r.imagen)}" alt="${escapeAttr(r.titulo||id)}" style="width:100%;aspect-ratio:1;object-fit:cover;display:block">`:'<div class="fake-photo photo-b"><span>DOCUMENTO<br>DE CALLE</span></div>'}</a><div class="file-meta"><span>5a GALERIA / ${escapeHtml(id)}</span><strong>${escapeHtml(r.titulo||id)}</strong><p>${escapeHtml(r.ciudad||'')} · ${escapeHtml(r.tecnica||'')}</p></div></article>`;
-    }).join('');
-  }catch(e){status.textContent='ERROR DE LECTURA DEL ARCHIVO PÚBLICO.';}
-}
-function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
-function escapeAttr(value){return escapeHtml(value);}
-loadArchive();
+let archiveRecords=[];
+const $=id=>document.getElementById(id);
+const norm=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+function publicRecord(r){const id=String(r.expediente||'');const coords=String(r.coordenadas||'').trim();return r.publicado===true&&coords&&/^5a-\d{6}$/.test(id)&&String(r.imagen||'').trim();}
+function unique(field){return [...new Set(archiveRecords.map(r=>String(r[field]||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es',{sensitivity:'base'}));}
+function fillSelect(id,field){const el=$(id);unique(field).forEach(v=>el.insertAdjacentHTML('beforeend',`<option value="${escapeAttr(v)}">${escapeHtml(v)}</option>`));}
+function filters(){return {q:norm($('archive-search').value),city:$('filter-city').value,technique:$('filter-technique').value,artist:$('filter-artist').value,state:$('filter-state').value,score:$('filter-score').value,sort:$('archive-sort').value};}
+function filteredRecords(){const f=filters();let rows=archiveRecords.filter(r=>{const hay=norm([r.expediente,r.titulo,r.artista,r.ciudad,r.ubicacion,r.tecnica,r.estado,r.stratascore,r.observaciones].join(' '));return (!f.q||hay.includes(f.q))&&(!f.city||r.ciudad===f.city)&&(!f.technique||r.tecnica===f.technique)&&(!f.artist||r.artista===f.artist)&&(!f.state||r.estado===f.state)&&(!f.score||r.stratascore===f.score);});rows.sort((a,b)=>{if(f.sort==='oldest')return String(a.fecha||'').localeCompare(String(b.fecha||''));if(f.sort==='id-asc')return a.expediente.localeCompare(b.expediente);if(f.sort==='id-desc')return b.expediente.localeCompare(a.expediente);return String(b.fecha||'').localeCompare(String(a.fecha||''));});return rows;}
+function render(){const grid=$('archive-grid'),status=$('archive-status'),summary=$('archive-summary');const rows=filteredRecords();status.textContent=`ARCHIVO PÚBLICO / ${archiveRecords.length} EXPEDIENTE${archiveRecords.length===1?'':'S'} CATALOGADO${archiveRecords.length===1?'':'S'}`;summary.textContent=`MOSTRANDO ${rows.length} DE ${archiveRecords.length}`;if(!rows.length){grid.innerHTML='<div class="archive-empty"><strong>NINGÚN EXPEDIENTE COINCIDE.</strong><p>La calle existe. Este filtro, de momento, no.</p></div>';return;}grid.innerHTML=rows.map(r=>{const href=`expediente.html?id=${encodeURIComponent(r.expediente)}`;return `<article class="file-card"><a href="${href}" aria-label="Abrir expediente ${escapeAttr(r.expediente)}"><img src="${escapeAttr(r.imagen)}" alt="${escapeAttr(r.titulo||r.expediente)}" loading="lazy"></a><div class="file-meta"><span>5a GALERIA / ${escapeHtml(r.expediente)}</span><strong><a href="${href}">${escapeHtml(r.titulo||r.expediente)}</a></strong><p>${escapeHtml(r.artista||'ANÓNIMO')}</p><p>${escapeHtml(r.ciudad||'SIN CIUDAD')} · ${escapeHtml(r.tecnica||'SIN CLASIFICAR')}</p><div class="file-tags">${r.estado?`<small>${escapeHtml(r.estado)}</small>`:''}${r.stratascore?`<small>${escapeHtml(r.stratascore)}</small>`:''}</div></div></article>`;}).join('');}
+async function loadArchive(){try{const response=await fetch('data/archivo.json',{cache:'no-store'});if(!response.ok)throw new Error();const data=await response.json();archiveRecords=(data.records||[]).filter(publicRecord);fillSelect('filter-city','ciudad');fillSelect('filter-technique','tecnica');fillSelect('filter-artist','artista');fillSelect('filter-state','estado');fillSelect('filter-score','stratascore');['archive-search','filter-city','filter-technique','filter-artist','filter-state','filter-score','archive-sort'].forEach(id=>$(id).addEventListener(id==='archive-search'?'input':'change',render));$('archive-reset').addEventListener('click',()=>{['archive-search','filter-city','filter-technique','filter-artist','filter-state','filter-score'].forEach(id=>$(id).value='');$('archive-sort').value='newest';render();});render();}catch(e){$('archive-status').textContent='ERROR DE LECTURA DEL ARCHIVO PÚBLICO.';$('archive-grid').innerHTML='';}}
+function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}function escapeAttr(value){return escapeHtml(value);}loadArchive();
