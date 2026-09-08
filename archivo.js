@@ -5,10 +5,11 @@ async function loadArchive(){
     const response=await fetch('data/archivo.json',{cache:'no-store'});
     if(!response.ok) throw new Error('archive unavailable');
     const data=await response.json();
-    const records=(data.records||[]).filter(r=>r.publicado===true);
+    // Regla de publicación: público + coordenadas válidas no vacías.
+    const records=(data.records||[]).filter(r=>r.publicado===true && String(r.coordenadas||'').trim());
     if(!records.length){
-      status.textContent='ARCHIVO PÚBLICO: AÚN SIN EXPEDIENTES PUBLICADOS.';
-      grid.innerHTML='<div class="file-card"><div class="fake-photo photo-a"><span>LA CALLE<br>ESTÁ SIENDO<br>CATALOGADA</span></div><div class="file-meta"><strong>NINGÚN EXPEDIENTE PÚBLICO TODAVÍA</strong><p>Los avisos recibidos pasan primero por revisión, catalogación y archivo.</p></div></div>';
+      status.textContent='ARCHIVO PÚBLICO: AÚN SIN EXPEDIENTES PUBLICADOS CON COORDENADAS.';
+      grid.innerHTML='<div class="file-card"><div class="fake-photo photo-a"><span>LA CALLE<br>ESTÁ SIENDO<br>CATALOGADA</span></div><div class="file-meta"><strong>NINGÚN EXPEDIENTE PÚBLICO TODAVÍA</strong><p>Los expedientes sin coordenadas permanecen fuera del archivo público.</p></div></div>';
       return;
     }
     status.textContent=`${records.length} EXPEDIENTE${records.length===1?'':'S'} PÚBLICO${records.length===1?'':'S'}`;
