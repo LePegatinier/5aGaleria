@@ -8,18 +8,26 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="index.html" aria-label="5a Galeria"><img src="assets/logo-5a.png" alt="5a Galeria"></a>
-    <nav><a href="index.html">Inicio</a><a href="archivo.html">Archivo</a><a href="index.html#mapa">Mapa</a><a href="index.html#stratascore">StrataScore™</a><a href="index.html#premis">Premis</a><a class="nav-submit" href="https://tally.so/r/qDoB1P">Avistar</a></nav>
-  </header>
-  <main class="section">
-    <p class="section-kicker">5a GALERIA / ARCHIVO PÚBLICO</p>
-    <h1 style="font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(48px,8vw,110px);line-height:.9">LA CALLE<br>DEJA RASTRO.</h1>
-    <p class="lead">Cada registro público es un expediente documental. La obra pertenece a la calle. El archivo pertenece a la 5a Galeria.</p>
-    <div id="archive-status" class="archive-note">CARGANDO ARCHIVO…</div>
-    <div id="archive-grid" class="file-grid" aria-live="polite"></div>
-  </main>
-  <footer><div>5a GALERIA</div><div>La5agaleria@proton.me</div><div>© Archivo 5a Galeria</div></footer>
-  <script src="archivo.js"></script>
-</body>
-</html>
+<header class="site-header"><a class="brand" href="index.html" aria-label="5a Galeria"><img src="assets/logo-5a.png" alt="5a Galeria"></a><nav><a href="index.html">Inicio</a><a href="archivo.html">Archivo</a><a href="mapa.html">Mapa</a><a href="index.html#stratascore">StrataScore™</a><a href="index.html#premis">Premis</a><a class="nav-submit" href="https://tally.so/r/qDoB1P">Avistar</a></nav></header>
+<main class="section">
+<p class="section-kicker">5a GALERIA / ARCHIVO PÚBLICO</p>
+<h1 class="archive-title">LA CALLE<br>DEJA RASTRO.</h1>
+<p class="lead">Cada registro público es un expediente documental. La obra pertenece a la calle. El archivo pertenece a la 5a Galeria.</p>
+<section class="archive-tools" aria-label="Herramientas del archivo">
+<label class="archive-search">BUSCAR EN EL ARCHIVO<input id="archive-search" type="search" placeholder="Expediente, artista, ciudad, ubicación…" autocomplete="off"></label>
+<div class="archive-filters">
+<label>CIUDAD<select id="filter-city"><option value="">Todas</option></select></label>
+<label>TÉCNICA<select id="filter-technique"><option value="">Todas</option></select></label>
+<label>ARTISTA<select id="filter-artist"><option value="">Todos</option></select></label>
+<label>ESTADO<select id="filter-state"><option value="">Todos</option></select></label>
+<label>STRATASCORE™<select id="filter-score"><option value="">Todos</option></select></label>
+<label>ORDEN<select id="archive-sort"><option value="newest">Más recientes</option><option value="oldest">Más antiguos</option><option value="id-asc">Expediente ↑</option><option value="id-desc">Expediente ↓</option></select></label>
+</div>
+<div class="archive-tool-foot"><button id="archive-reset" type="button">LIMPIAR FILTROS</button><span id="archive-summary" aria-live="polite"></span></div>
+</section>
+<div id="archive-status" class="archive-note">CARGANDO ARCHIVO…</div>
+<div id="archive-grid" class="file-grid" aria-live="polite"></div>
+</main>
+<footer><div>5a GALERIA</div><div>La5agaleria@proton.me</div><div>© Archivo 5a Galeria</div></footer>
+<script src="js/5a-validator.js"></script><script src="archivo.js"></script>
+</body></html>
