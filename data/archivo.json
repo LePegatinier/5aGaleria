@@ -1,7 +1,7 @@
 {
   "version": "1.2",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-09T04:32:59.209Z",
+  "updated": "2026-09-09T05:27:24.710Z",
   "stratascore": {
     "system": "StrataScore™ — Bareback Street Art Certification",
     "scale": "A-E",
@@ -41,6 +41,36 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000005",
       "imagen": "assets/archive/5a-000005.jpg"
+    },
+    {
+      "expediente": "5a-000006",
+      "titulo": "5a-000006",
+      "artista": "Test",
+      "ciudad": "Barcelona",
+      "ubicacion": "Poblenou",
+      "coordenadas": "41.403733, 2.203354",
+      "fecha": "2026-09-08",
+      "tecnica": "Sticker",
+      "estado": "Desconocido",
+      "stratascore": "",
+      "strata_index": null,
+      "strata_origen": null,
+      "strata_mediacion": null,
+      "strata_soporte": null,
+      "strata_autonomia": null,
+      "strata_artwash": null,
+      "strata_contribucion": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "strata_evidence": "",
+      "observaciones": "bla, bla",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000006",
+      "imagen": "assets/archive/5a-000006.png"
     }
   ]
 }
