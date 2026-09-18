@@ -1,7 +1,7 @@
 {
   "version": "1.2",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-18T04:12:33.198Z",
+  "updated": "2026-09-18T04:31:11.302Z",
   "stratascore": {
     "system": "StrataScore™ — Bareback Street Art Certification",
     "scale": "A-E",
@@ -11,5 +11,36 @@
     "not_quality": true,
     "requires_complete_matrix": true
   },
-  "records": []
+  "records": [
+    {
+      "expediente": "5a-000001",
+      "titulo": "5a-000001",
+      "artista": "Nicollage_KG",
+      "ciudad": "Barcelona",
+      "ubicacion": "carrer del bisbe",
+      "coordenadas": "41.383914, 2.175549",
+      "fecha": "2026-09-17",
+      "tecnica": "Sticker",
+      "estado": "Desconocido",
+      "stratascore": "",
+      "strata_index": null,
+      "strata_origen": null,
+      "strata_mediacion": null,
+      "strata_soporte": null,
+      "strata_autonomia": null,
+      "strata_artwash": null,
+      "strata_contribucion": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "strata_evidence": "",
+      "observaciones": "Superviviente",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000001",
+      "imagen": "assets/archive/5a-000001.jpg"
+    }
+  ]
 }
