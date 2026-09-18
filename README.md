@@ -1,30 +1,79 @@
-# 5a Galeria — web 0 €
+# 5a Galeria — archivo distribuido del arte callejero
 
-Esta es la primera versión estática de la web.
+La 5a Galeria es un archivo público y distribuido de avistamientos de arte callejero. El sistema actual permite recibir fotografías mediante formulario, revisar y catalogar los registros en Notion y publicar automáticamente los expedientes autorizados en GitHub Pages.
 
-## Estructura
+## Arquitectura actual
 
-- `index.html` — web completa de una sola página.
-- `styles.css` — identidad visual y responsive.
-- `assets/logo-5a.png` — logo extraído del PDF original.
-- `README.md` — instrucciones.
+**Tally → Notion / ARCHIVO MAESTRO → GitHub Actions → archivo.json + imágenes → GitHub Pages**
 
-## Publicación gratuita
+### Componentes
 
-La opción prevista es GitHub Pages:
+- `index.html` — portada.
+- `archivo.html` — archivo público con búsqueda y filtros.
+- `expediente.html` — ficha individual de cada expediente.
+- `mapa.html` — mapa de expedientes publicados.
+- `stratascore.html` — sistema StrataScore™.
+- `premis.html` — sección de Premis.
+- `street-raw.html` — sección Street Raw.
+- `styles.css`, `header.css` — identidad visual y responsive.
+- `js/5a-validator.js` — validaciones de expedientes.
+- `data/archivo.json` — índice público generado automáticamente.
+- `assets/archive/` — fotografías de los expedientes publicados.
+- `.github/workflows/sync-notion.yml` — sincronización automática.
 
-1. Crear una cuenta gratuita en GitHub.
-2. Crear un repositorio público, por ejemplo `5agaleria`.
-3. Subir estos archivos respetando la estructura.
-4. En Settings → Pages, activar publicación desde la rama principal.
-5. La web quedará disponible en una dirección `*.github.io`.
+## Recepción de avistamientos
 
-## Siguiente conexión
+El botón **Avistar** abre el formulario Tally:
 
-El botón de participación actualmente abre el correo `La5agaleria@proton.me`.
-La siguiente fase será conectar un formulario gratuito para recibir fotos y volcar las entradas al archivo.
+https://tally.so/r/gDoB1P
 
-## Importante
+Las entradas llegan al **5a GALERIA / ARCHIVO MAESTRO** de Notion.
 
-Los expedientes y el mapa que aparecen en esta versión son marcadores visuales: NO son obras reales del archivo.
-No deben publicarse como documentación real hasta sustituirlos por fotografías recibidas/documentadas.
+El sistema asigna automáticamente un expediente canónico con formato:
+
+`5a-000001`
+
+Si existen coordenadas válidas, el registro pasa a **EN REVISIÓN**. La publicación pública requiere que el expediente esté en **PÚBLICO** y que **Publicado** esté activado.
+
+## Publicación automática
+
+GitHub Actions comprueba el Archivo Maestro cada **5 minutos** y también puede ejecutarse manualmente o mediante cambios en la rama `main`.
+
+Los registros publicados se incorporan a:
+
+- `data/archivo.json`
+- `assets/archive/`
+
+La web pública consume ese índice para generar Archivo, Mapa y Expedientes.
+
+## Criterio de publicación
+
+Un expediente no debe aparecer en el archivo público simplemente por existir en Notion.
+
+Para su publicación se exige:
+
+- expediente canónico válido;
+- estado **PÚBLICO**;
+- propiedad **Publicado = YES**;
+- coordenadas válidas;
+- fotografía disponible.
+
+El sistema evita publicar registros incompletos y no inventa valores de StrataScore™.
+
+## StrataScore™
+
+StrataScore™ — Bareback Street Art Certification utiliza una matriz de cinco variables y un índice de 0 a 20.
+
+El índice **no es una valoración de calidad artística**. Si la matriz no está completa, el expediente se publica sin puntuación.
+
+## Estado del proyecto
+
+La infraestructura básica de recepción, catalogación, publicación, archivo y mapa está operativa.
+
+Las siguientes fases son mejorar documentación, estructura territorial, indicadores del archivo, tratamiento de imágenes y escala del sistema.
+
+## Publicación
+
+El sitio se sirve gratuitamente mediante GitHub Pages:
+
+https://lepegatinier.github.io/5aGaleria/
