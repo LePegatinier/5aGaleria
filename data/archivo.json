@@ -1,7 +1,7 @@
 {
   "version": "1.2",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-18T04:33:10.605Z",
+  "updated": "2026-09-18T04:44:23.750Z",
   "stratascore": {
     "system": "StrataScore™ — Bareback Street Art Certification",
     "scale": "A-E",
@@ -41,6 +41,36 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000001",
       "imagen": "assets/archive/5a-000001.jpg"
+    },
+    {
+      "expediente": "5a-000002",
+      "titulo": "5a-000002",
+      "artista": "Agents Incívics",
+      "ciudad": "Barcelona",
+      "ubicacion": "Roc Boronat",
+      "coordenadas": "41.400985, 2.196824",
+      "fecha": "2026-07-15",
+      "tecnica": "Sticker",
+      "estado": "PÚBLICO",
+      "stratascore": "",
+      "strata_index": null,
+      "strata_origen": null,
+      "strata_mediacion": null,
+      "strata_soporte": null,
+      "strata_autonomia": null,
+      "strata_artwash": null,
+      "strata_contribucion": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "strata_evidence": "",
+      "observaciones": "Sensor adhesivo de impacto urbano",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000002",
+      "imagen": "assets/archive/5a-000002.jpg"
     }
   ]
 }
