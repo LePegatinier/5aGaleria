@@ -74,8 +74,13 @@ jobs:
               const files=prop(p,'Fotografía')?.files||[];if(files.length)r.imagen=await image(r,files[0]);seen.add(expediente);records.push(r)
             }
             records.sort((a,b)=>a.expediente.localeCompare(b.expediente,'es',{numeric:true}));
-            fs.writeFileSync('data/archivo.json',JSON.stringify({version:'1.2',source:'5a GALERIA / ARCHIVO MAESTRO',updated:new Date().toISOString(),stratascore:{system:'StrataScore™ — Bareback Street Art Certification',scale:'A-E',index:'0-20',formula:'(4-Origen)+Mediación+(4-Soporte)+(4-Autonomía)+Artwash',direction:'0 = street raw / 20 = domesticated',not_quality:true,requires_complete_matrix:true},records},null,2)+'\n');
-            console.log(`5a Galeria: ${records.length} expediente(s) público(s) sincronizado(s).`)
+            const existingPath='data/archivo.json';
+            let previous=null;try{previous=JSON.parse(fs.readFileSync(existingPath,'utf8'))}catch{}
+            const base={version:'1.2',source:'5a GALERIA / ARCHIVO MAESTRO',stratascore:{system:'StrataScore™ — Bareback Street Art Certification',scale:'A-E',index:'0-20',formula:'(4-Origen)+Mediación+(4-Soporte)+(4-Autonomía)+Artwash',direction:'0 = street raw / 20 = domesticated',not_quality:true,requires_complete_matrix:true},records};
+            const sameRecords=previous&&JSON.stringify(previous.records||[])===JSON.stringify(records);
+            const payload={...base,updated:sameRecords&&previous.updated?previous.updated:new Date().toISOString()};
+            fs.writeFileSync(existingPath,JSON.stringify(payload,null,2)+'\n');
+            console.log('5a Galeria: '+records.length+' expediente(s) público(s) sincronizado(s).'+(sameRecords?' Sin cambios de contenido.':''))
           })().catch(e=>{console.error(e);process.exit(1)})
           NODE
 
@@ -88,4 +93,11 @@ jobs:
           git add data/archivo.json assets/archive
           if git diff --cached --quiet; then echo "Sin cambios en el archivo público."; exit 0; fi
           git commit -m "chore: sincronizar archivo público 5a Galeria"
-          git push
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "Push rechazado; actualizando main y reintentando (${attempt}/3)…"
+            git fetch origin main
+            git rebase origin/main
+          done
+          echo "No se pudo publicar el archivo tras 3 intentos." >&2
+          exit 1
