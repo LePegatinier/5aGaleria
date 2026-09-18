@@ -16,3 +16,4 @@
 @media(max-width:800px){.methacrylate-page-hero{grid-template-columns:1fr}.methacrylate-plaque{min-height:500px;border-top:2px solid var(--ink)}.methacrylate-route{grid-template-columns:1fr}.methacrylate-route a{border-right:0;border-bottom:1px solid var(--line)}}
 
 .hero-mark{padding:5vw;min-width:0}.methacrylate-art{display:block;width:100%;max-width:620px;height:auto;position:relative;z-index:1}
+.calabozo-image{width:min(100%,620px);margin:0 0 22px;position:relative;z-index:1}.calabozo-image img{display:block;width:100%;height:auto}
