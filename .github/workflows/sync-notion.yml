@@ -97,7 +97,13 @@ jobs:
             if git push; then exit 0; fi
             echo "Push rechazado; actualizando main y reintentando (${attempt}/3)…"
             git fetch origin main
-            git rebase origin/main
+            if git rebase origin/main; then
+              continue
+            fi
+            echo "Conflicto en artefactos generados; conservando la versión recién sincronizada."
+            git checkout --theirs -- data/archivo.json assets/archive
+            git add data/archivo.json assets/archive
+            GIT_EDITOR=true git rebase --continue
           done
           echo "No se pudo publicar el archivo tras 3 intentos." >&2
           exit 1
