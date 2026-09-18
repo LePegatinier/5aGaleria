@@ -65,7 +65,8 @@ jobs:
           (async()=>{
             await processIntake();
             const pages=await publicPages();
-            fs.rmSync(path.join('assets','archive'),{recursive:true,force:true});fs.mkdirSync(path.join('assets','archive'),{recursive:true});
+            const archiveDir=path.join('assets','archive');
+            fs.mkdirSync(archiveDir,{recursive:true});
             const records=[],seen=new Set();
             for(const page of pages){const p=page.properties||{},raw=title(prop(p,'Expediente')).trim(),expediente=norm(raw);if(!expediente){console.warn(`Omitido ${page.id}: Expediente inválido.`);continue}if(seen.has(expediente)){console.warn(`Omitido duplicado: ${expediente}`);continue}
               let coords=rich(prop(p,'Coordenadas')).trim();if(!validCoords(coords)){try{coords=await geocode(rich(prop(p,'Ubicación')),rich(prop(p,'Ciudad')))}catch(e){coords=''}}if(!validCoords(coords)){console.warn(`No publicado ${expediente}: sin coordenadas válidas.`);continue}
