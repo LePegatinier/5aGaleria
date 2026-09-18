@@ -248,7 +248,41 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000007",
       "imagen": "assets/archive/5a-000007.jpg"
+    },
+    {
+      "expediente": "5a-000008",
+      "titulo": "5a-000008",
+      "artista": "Desconocido ",
+      "ciudad": "Barcelona ",
+      "ubicacion": "Roc boronat con Llull",
+      "coordenadas": "41.399289, 2.198995",
+      "fecha": "2026-09-18",
+      "tecnica": "Graffiti",
+      "tipo_formato": "Graffiti",
+      "estado": "PÚBLICO",
+      "destino_curatorial": "Archivo público",
+      "methacrylate_advisory": false,
+      "motivos_reclusion": [],
+      "stratascore": "",
+      "strata_index": null,
+      "strata_origen": null,
+      "strata_mediacion": null,
+      "strata_soporte": null,
+      "strata_autonomia": null,
+      "strata_artwash": null,
+      "strata_contribucion": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "strata_evidence": "",
+      "observaciones": "",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000008",
+      "imagen": "assets/archive/5a-000008.jpeg"
     }
   ],
-  "updated": "2026-09-18T09:55:35.975Z"
+  "updated": "2026-09-18T18:44:43.291Z"
 }
