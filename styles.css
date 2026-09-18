@@ -14,3 +14,5 @@
 .methacrylate-route{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
 .methacrylate-route a{padding:28px;border-right:1px solid var(--line);min-height:150px}.methacrylate-route a:last-child{border-right:0}.methacrylate-route b,.methacrylate-route span{display:block}.methacrylate-route b{font-family:'Archivo Black';font-size:22px}.methacrylate-route span{font-size:11px;color:var(--muted);line-height:1.6;margin-top:12px}.methacrylate-route a:hover{background:var(--ink);color:var(--paper)}.methacrylate-route a:hover span{color:var(--paper)}
 @media(max-width:800px){.methacrylate-page-hero{grid-template-columns:1fr}.methacrylate-plaque{min-height:500px;border-top:2px solid var(--ink)}.methacrylate-route{grid-template-columns:1fr}.methacrylate-route a{border-right:0;border-bottom:1px solid var(--line)}}
+
+.hero-mark{padding:5vw}.methacrylate-art{width:min(100%,620px);height:auto;display:block}.methacrylate-art svg{display:block;width:100%;height:auto}
