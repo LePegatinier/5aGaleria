@@ -17,3 +17,4 @@
 
 .hero-mark{padding:5vw;min-width:0}.methacrylate-art{display:block;width:100%;max-width:620px;height:auto;position:relative;z-index:1}
 .calabozo-image{width:min(100%,620px);margin:0 0 22px;position:relative;z-index:1}.calabozo-image img{display:block;width:100%;height:auto}
+.calabozo-image{position:relative}.calabozo-image-link{position:absolute;left:9%;bottom:8%;width:34%;height:8%;display:block;z-index:2}
