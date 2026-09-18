@@ -1,7 +1,6 @@
 {
   "version": "1.2",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-18T06:29:35.514Z",
   "stratascore": {
     "system": "StrataScore™ — Bareback Street Art Certification",
     "scale": "A-E",
@@ -161,6 +160,37 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000005",
       "imagen": "assets/archive/5a-000005.jpg"
+    },
+    {
+      "expediente": "5a-000006",
+      "titulo": "5a-000006",
+      "artista": "SINOBRILLANOVALE",
+      "ciudad": "Granada",
+      "ubicacion": "Ángel Ganivet",
+      "coordenadas": "37.172804, -3.597804",
+      "fecha": "2025-01-04",
+      "tecnica": "Sticker",
+      "estado": "PÚBLICO",
+      "stratascore": "",
+      "strata_index": null,
+      "strata_origen": null,
+      "strata_mediacion": null,
+      "strata_soporte": null,
+      "strata_autonomia": null,
+      "strata_artwash": null,
+      "strata_contribucion": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "strata_evidence": "",
+      "observaciones": "Se avistaron transeúntes a cortejados por la intervención ",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000006",
+      "imagen": "assets/archive/5a-000006.jpeg"
     }
-  ]
+  ],
+  "updated": "2026-09-18T06:32:38.114Z"
 }
