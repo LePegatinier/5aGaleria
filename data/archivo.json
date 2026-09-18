@@ -1,7 +1,7 @@
 {
   "version": "1.2",
   "source": "5a GALERIA / ARCHIVO MAESTRO",
-  "updated": "2026-09-18T05:36:43.182Z",
+  "updated": "2026-09-18T05:37:55.720Z",
   "stratascore": {
     "system": "StrataScore™ — Bareback Street Art Certification",
     "scale": "A-E",
@@ -101,6 +101,36 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000003",
       "imagen": "assets/archive/5a-000003.jpg"
+    },
+    {
+      "expediente": "5a-000004",
+      "titulo": "5a-000004",
+      "artista": "Nicollage_KG",
+      "ciudad": "Cornellà",
+      "ubicacion": "Rambla de Cornellà",
+      "coordenadas": "41.359441, 2.091225",
+      "fecha": "2019-09-20",
+      "tecnica": "Sticker",
+      "estado": "PÚBLICO",
+      "stratascore": "",
+      "strata_index": null,
+      "strata_origen": null,
+      "strata_mediacion": null,
+      "strata_soporte": null,
+      "strata_autonomia": null,
+      "strata_artwash": null,
+      "strata_contribucion": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "strata_evidence": "",
+      "observaciones": "Primer sticker de la serie Polagram iniciada pre-pandemia. El sticker aún resiste adosado a su muro 6 años después! Superviviente!",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000004",
+      "imagen": "assets/archive/5a-000004.jpg"
     }
   ]
 }
