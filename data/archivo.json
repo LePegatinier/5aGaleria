@@ -294,7 +294,7 @@
       "tecnica": "Pintura",
       "tipo_formato": "Pintura",
       "estado": "PÚBLICO",
-      "destino_curatorial": "Archivo público",
+      "destino_curatorial": "No clasificado",
       "methacrylate_advisory": true,
       "motivos_reclusion": [],
       "stratascore": "",
@@ -318,5 +318,5 @@
       "imagen": "assets/archive/5a-000009.jpg"
     }
   ],
-  "updated": "2026-09-19T06:12:36.984Z"
+  "updated": "2026-09-19T06:17:15.160Z"
 }
