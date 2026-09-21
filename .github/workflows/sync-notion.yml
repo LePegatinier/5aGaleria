@@ -3,6 +3,8 @@ name: 5a Galeria · Sincronizar archivo público
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [notion-publish]
   push:
     branches: [main]
   schedule:
@@ -38,7 +40,9 @@ jobs:
           const api=async(url,options={})=>{const res=await fetch(url,{...options,headers:{Authorization:`Bearer ${token}`,'Notion-Version':version,'Content-Type':'application/json',...(options.headers||{})}});const text=await res.text();let body;try{body=JSON.parse(text)}catch{body={raw:text}}if(!res.ok)throw new Error(`Notion API ${res.status}: ${body.message||text}`);return body};
           const prop=(p,n)=>p?.[n],rich=p=>p?.rich_text?.map(x=>x.plain_text||'').join('')||'',title=p=>p?.title?.map(x=>x.plain_text||'').join('')||'',select=p=>p?.select?.name||'',number=p=>typeof p?.number==='number'&&Number.isFinite(p.number)?p.number:null,date=p=>p?.date?.start||'';
           const norm=v=>{const m=String(v||'').trim().match(/(?:^|[^0-9A-Za-z])5a-(\d{1,6})(?:$|[^0-9A-Za-z])/i);return m?`5a-${m[1].padStart(6,'0')}`:''};
-          const validCoords=v=>{const m=String(v||'').trim().match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);if(!m)return false;const a=Number(m[1]),b=Number(m[2]);return Number.isFinite(a)&&Number.isFinite(b)&&a>=-90&&a<=90&&b>=-180&&b<=180};
+          const parseCoords=v=>{const s=String(v||'').trim();const m=s.match(/^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/);if(m)return [Number(m[1]),Number(m[2])];const d=s.match(/^\s*(\d{1,3})[°º]\s*(\d{1,2})['’]\s*(\d+(?:\.\d+)?)["”]\s*([NS])\s*[,; ]+\s*(\d{1,3})[°º]\s*(\d{1,2})['’]\s*(\d+(?:\.\d+)?)["”]\s*([EW])\s*$/i);if(!d)return null;let lat=Number(d[1])+Number(d[2])/60+Number(d[3])/3600,lon=Number(d[5])+Number(d[6])/60+Number(d[7])/3600;if(d[4].toUpperCase()==='S')lat=-lat;if(d[8].toUpperCase()==='W')lon=-lon;return [lat,lon]};
+          const validCoords=v=>{const m=parseCoords(v);return !!m&&Number.isFinite(m[0])&&Number.isFinite(m[1])&&m[0]>=-90&&m[0]<=90&&m[1]>=-180&&m[1]<=180};
+          const normalizeCoords=v=>{const m=parseCoords(v);return m?m[0].toFixed(6)+', '+m[1].toFixed(6):''};
           async function queryAll(filter=null){const out=[];let cursor;do{const body={page_size:100,...(filter?{filter}:{}),...(cursor?{start_cursor:cursor}:{})};const d=await api(`https://api.notion.com/v1/data_sources/${ds}/query`,{method:'POST',body:JSON.stringify(body)});out.push(...(d.results||[]).filter(x=>x.object==='page'));cursor=d.has_more?d.next_cursor:null}while(cursor);return out}
           async function geocode(location,city){const normalized=String(location||'').replace(/\s+con\s+/i,' / ');const q=[normalized,city].filter(Boolean).join(', ');if(!q)return '';const r=await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(q)}`,{headers:{'User-Agent':'5a-Galeria/1.0 (archivo público)'}});if(!r.ok)throw new Error(`Nominatim HTTP ${r.status}`);const d=await r.json();if(!d.length)return '';const lat=Number(d[0].lat),lon=Number(d[0].lon);return Number.isFinite(lat)&&Number.isFinite(lon)&&lat>=-90&&lat<=90&&lon>=-180&&lon<=180?`${lat.toFixed(6)}, ${lon.toFixed(6)}`:''}
           async function patchPage(id,properties){return api(`https://api.notion.com/v1/pages/${id}`,{method:'PATCH',body:JSON.stringify({properties})})}
@@ -49,7 +53,7 @@ jobs:
             for(const page of pages){const p=page.properties||{};if(title(prop(p,'Expediente')).trim())continue;
               const expediente=`5a-${String(++max).padStart(6,'0')}`;
               const location=rich(prop(p,'Ubicación')).trim(),city=rich(prop(p,'Ciudad')).trim();
-              let coords=rich(prop(p,'Coordenadas')).trim();
+              let coords=normalizeCoords(rich(prop(p,'Coordenadas')).trim());
               if(!validCoords(coords)){try{coords=await geocode(location,city)}catch(e){console.warn(`Geocodificación fallida para ${expediente}: ${e.message}`);coords=''}}
               const properties={'Expediente':{title:[{type:'text',text:{content:expediente}}]},'Estado del expediente':{select:{name:coords?'EN REVISIÓN':'RECIBIDO'}}};
               if(coords)properties['Coordenadas']={rich_text:[{type:'text',text:{content:coords}}]};
@@ -70,7 +74,7 @@ jobs:
             fs.mkdirSync(archiveDir,{recursive:true});
             const records=[],seen=new Set();
             for(const page of pages){const p=page.properties||{},raw=title(prop(p,'Expediente')).trim(),expediente=norm(raw);if(!expediente){console.warn(`Omitido ${page.id}: Expediente inválido.`);continue}if(seen.has(expediente)){console.warn(`Omitido duplicado: ${expediente}`);continue}
-              let coords=rich(prop(p,'Coordenadas')).trim();if(!validCoords(coords)){try{coords=await geocode(rich(prop(p,'Ubicación')),rich(prop(p,'Ciudad')))}catch(e){coords=''}}if(!validCoords(coords)){console.warn(`No publicado ${expediente}: sin coordenadas válidas.`);continue}
+              let coords=normalizeCoords(rich(prop(p,'Coordenadas')).trim());if(!validCoords(coords)){try{coords=await geocode(rich(prop(p,'Ubicación')),rich(prop(p,'Ciudad')))}catch(e){coords=''}}if(!validCoords(coords)){console.warn(`No publicado ${expediente}: sin coordenadas válidas.`);continue}
               const s=await syncStrata(page,p),r={expediente,titulo:raw||'INTERVENCIÓN URBANA',artista:rich(prop(p,'Artista / Alias'))||'ANÓNIMO',ciudad:rich(prop(p,'Ciudad')),ubicacion:rich(prop(p,'Ubicación')),coordenadas:coords,fecha:date(prop(p,'Fecha')),tecnica:select(prop(p,'Técnica'))||'Desconocida',tipo_formato:select(prop(p,'Tipo / Formato'))||select(prop(p,'Técnica'))||'Desconocida',estado:select(prop(p,'Estado del expediente'))||'Desconocido',destino_curatorial:select(prop(p,'Destino curatorial'))||'No clasificado',methacrylate_advisory:prop(p,'METHACRYLATE ADVISORY™')?.checkbox===true,motivos_reclusion:prop(p,'Motivo de reclusión')?.multi_select?.map(x=>x.name)||[],stratascore:s.category||'',strata_index:s.index,strata_origen:s.values[0],strata_mediacion:s.values[1],strata_soporte:s.values[2],strata_autonomia:s.values[3],strata_artwash:s.values[4],strata_contribucion:s.contributions,strata_evidence:s.evidence,observaciones:rich(prop(p,'Observaciones')),publicado:true,url:`expediente.html?id=${encodeURIComponent(expediente)}`,imagen:''};
               const files=prop(p,'Fotografía')?.files||[];if(files.length)r.imagen=await image(r,files[0]);seen.add(expediente);records.push(r)
             }
