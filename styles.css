@@ -19,6 +19,6 @@
 .calabozo-image{width:min(100%,620px);margin:0 0 22px;position:relative;z-index:1}.calabozo-image img{display:block;width:100%;height:auto}
 .calabozo-image{position:relative}.calabozo-image-link{position:absolute;left:9%;bottom:8%;width:34%;height:8%;display:block;z-index:2}
 /* Anti Sticker hero: render as a full panel image */
-.hero-mark{isolation:isolate;position:relative;min-height:0;overflow:hidden;background:#201d1d;justify-content:flex-start;align-items:center}
-.hero-mark .methacrylate-art{display:block !important;position:relative;inset:auto;width:100% !important;height:auto !important;max-width:none !important;max-height:100%;object-fit:contain;object-position:center top;z-index:3;margin:0;padding:0}
+.hero-mark{isolation:isolate;position:relative;min-height:0;overflow:hidden;background:#201d1d;justify-content:flex-start;align-items:center;padding:0 !important}
+.hero-mark .methacrylate-art{display:block !important;position:absolute !important;top:0 !important;left:0 !important;right:0 !important;width:100% !important;height:auto !important;max-width:none !important;max-height:none !important;object-fit:contain;object-position:center top;z-index:3;margin:0 !important;padding:0 !important}
 .hero-mark:before{z-index:1;pointer-events:none}
