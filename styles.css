@@ -18,3 +18,7 @@
 .hero-mark{padding:5vw;min-width:0}.methacrylate-art{display:block;width:100%;max-width:620px;height:auto;position:relative;z-index:1}
 .calabozo-image{width:min(100%,620px);margin:0 0 22px;position:relative;z-index:1}.calabozo-image img{display:block;width:100%;height:auto}
 .calabozo-image{position:relative}.calabozo-image-link{position:absolute;left:9%;bottom:8%;width:34%;height:8%;display:block;z-index:2}
+/* Anti Sticker hero: render as a full panel image */
+.hero-mark{isolation:isolate;position:relative;min-height:0;overflow:hidden;background:#201d1d}
+.hero-mark .methacrylate-art{display:block !important;position:absolute;inset:0;width:100% !important;height:100% !important;max-width:none !important;object-fit:contain;object-position:center;z-index:3;margin:0;padding:5vw}
+.hero-mark:before{z-index:1;pointer-events:none}
