@@ -1,0 +1,36 @@
+name: 5a Galeria · Importar imagen Pegatón
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Descargar imagen desde Canva
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets
+          curl -L --fail --retry 3 --output assets/pegaton-cartel.jpg 'https://media.canva.com/v2/image-resize/format:PNG/height:171/quality:100/uri:ifs%3A%2F%2FM%2Fc86854af-8b85-4eae-ac64-c72c54db80a9/watermark:F/width:200?csig=AAAAAAAAAAAAAAAAAAAAACDT6UjY1PxZVsKGkNIifLhJ58TOTf4vv1Q3Yd-vPeF7&exp=1789980173&osig=AAAAAAAAAAAAAAAAAAAAAPCeY16Tunkkn9MZB0pJxud5reu4QeFQIx3QqAPKJlpR&signer=media-rpc&x-canva-quality=thumbnail'
+
+      - name: Guardar imagen en el repositorio
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "5a Galeria Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/pegaton-cartel.jpg
+          if git diff --cached --quiet; then
+            echo "Imagen ya importada."
+            exit 0
+          fi
+          git commit -m "feat: incorporar imagen de Pegatón en portada"
+          git push
