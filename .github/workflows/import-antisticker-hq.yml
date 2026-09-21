@@ -1,4 +1,4 @@
-name: Importar Anti Sticker alta calidad
+name: Importar Anti Sticker alta calidad v2
 on:
   push:
     paths:
