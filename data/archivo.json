@@ -295,7 +295,7 @@
       "tipo_formato": "Pintura",
       "estado": "PÚBLICO",
       "destino_curatorial": "No clasificado",
-      "methacrylate_advisory": true,
+      "methacrylate_advisory": false,
       "motivos_reclusion": [],
       "stratascore": "A — STREET RAW CERTIFIED",
       "strata_index": 3,
@@ -352,5 +352,5 @@
       "imagen": "assets/archive/5a-000010.jpg"
     }
   ],
-  "updated": "2026-09-22T08:54:07.168Z"
+  "updated": "2026-09-22T09:24:08.941Z"
 }
