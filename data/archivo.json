@@ -350,7 +350,41 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000010",
       "imagen": "assets/archive/5a-000010.jpg"
+    },
+    {
+      "expediente": "5a-000011",
+      "titulo": "5a-000011",
+      "artista": "@pezespolla",
+      "ciudad": "Barcelona ",
+      "ubicacion": "Carrer marqués de barberà",
+      "coordenadas": "41.517474, 2.358985",
+      "fecha": "2026-09-22",
+      "tecnica": "Intervención",
+      "tipo_formato": "Intervención",
+      "estado": "PÚBLICO",
+      "destino_curatorial": "No clasificado",
+      "methacrylate_advisory": false,
+      "motivos_reclusion": [],
+      "stratascore": "D — ARTWASH READY™",
+      "strata_index": 12,
+      "strata_origen": 0,
+      "strata_mediacion": 0,
+      "strata_soporte": 0,
+      "strata_autonomia": 0,
+      "strata_artwash": 0,
+      "strata_contribucion": [
+        4,
+        0,
+        4,
+        4,
+        0
+      ],
+      "strata_evidence": "Es un ejemplo de handmade callejero, referente",
+      "observaciones": "Banco de peces del referente @pezespolla, lleva tiempo en la calle y ya faltan algunos ejemplares de pez",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000011",
+      "imagen": "assets/archive/5a-000011.jpeg"
     }
   ],
-  "updated": "2026-09-22T09:24:33.042Z"
+  "updated": "2026-09-22T17:44:50.924Z"
 }
