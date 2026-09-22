@@ -10,27 +10,40 @@
 </head>
 <body>
 <header class="site-header"><div class="site-identity"><a class="brand" href="index.html" aria-label="5a Galeria"><img src="assets/logo-5a.png" alt="5a Galeria"></a><div class="powered-by" aria-label="5a Galeria · Powered by Agents Incívics · LPGTNR_LAB"><img src="assets/banner-5a-galeria.jpg" alt="5a Galeria · Powered by Agents Incívics · LPGTNR_LAB"></div></div><nav><a href="index.html">Inicio</a><a href="archivo.html">Archivo</a><a href="calabozo.html">Calabozo</a><a href="mapa.html">Mapa</a><a href="stratascore.html">StrataScore™</a><a href="metacrilato.html">Metacrilato</a><a href="premis.html">Premis</a><a class="nav-submit" href="https://tally.so/r/gDoB1P" target="_blank" rel="noopener noreferrer">Avistar</a></nav></header>
+
 <main class="section">
-<p class="section-kicker">5a GALERIA / ARCHIVO PÚBLICO</p>
-<h1 class="archive-title">LA CALLE<br>DEJA RASTRO.</h1>
-<p class="lead">Cada registro público es un expediente documental. La obra pertenece a la calle. El archivo pertenece a la 5a Galeria.</p>
-<section class="archive-tools" aria-label="Herramientas del archivo">
-<label class="archive-search">BUSCAR EN EL ARCHIVO<input id="archive-search" type="search" placeholder="Expediente, artista, ciudad, ubicación…" autocomplete="off"></label>
-<div class="archive-filters">
-<label>CIUDAD<select id="filter-city"><option value="">Todas</option></select></label>
-<label>TÉCNICA<select id="filter-technique"><option value="">Todas</option></select></label>
-<label>ARTISTA<select id="filter-artist"><option value="">Todos</option></select></label>
-<label>ESTADO<select id="filter-state"><option value="">Todos</option></select></label>
-<label>STRATASCORE™<select id="filter-score"><option value="">Todos</option></select></label>
-<label>DESTINO CURATORIAL<select id="filter-destino"><option value="">Todos</option></select></label>
-<label>ADVISORY<select id="filter-advisory"><option value="">Todos</option><option value="yes">METHACRYLATE ADVISORY™</option><option value="no">Sin advisory</option></select></label>
-<label>ORDEN DEL ARCHIVO<select id="archive-sort"><option value="newest">Más recientes</option><option value="oldest">Más antiguos</option><option value="id-asc">Expediente ↑</option><option value="id-desc">Expediente ↓</option></select><small id="archive-sort-note" class="archive-sort-note">Fecha del avistamiento · más recientes primero</small></label>
-</div>
-<div class="archive-tool-foot"><button id="archive-reset" type="button">LIMPIAR FILTROS</button><span id="archive-summary" aria-live="polite"></span></div>
-</section>
-<div id="archive-status" class="archive-note">CARGANDO ARCHIVO…</div>
-<div id="archive-grid" class="file-grid" aria-live="polite"></div>
+  <p class="section-kicker">5a GALERIA / ARCHIVO PÚBLICO</p>
+  <h1 class="archive-title">LA CALLE<br>DEJA RASTRO.</h1>
+  <p class="lead">Cada registro público es un expediente documental. La obra pertenece a la calle. El archivo pertenece a la 5a Galeria.</p>
+
+  <section class="archive-stats" aria-label="Estadísticas del archivo">
+    <div><b id="stat-total">—</b><span>EXPEDIENTES</span></div>
+    <div><b id="stat-cities">—</b><span>CIUDADES</span></div>
+    <div><b id="stat-artists">—</b><span>AUTORÍAS</span></div>
+    <div><b id="stat-calabozo">—</b><span>CALABOZO</span></div>
+    <div><b id="stat-advisory">—</b><span>ADVISORY</span></div>
+  </section>
+
+  <section class="archive-tools" aria-label="Herramientas del archivo">
+    <label class="archive-search">BUSCAR EN EL ARCHIVO<input id="archive-search" type="search" placeholder="Expediente, título, artista, ciudad, ubicación…" autocomplete="off"></label>
+    <div class="archive-filters">
+      <label>CIUDAD<select id="filter-city"><option value="">Todas</option></select></label>
+      <label>TÉCNICA<select id="filter-technique"><option value="">Todas</option></select></label>
+      <label>ARTISTA<select id="filter-artist"><option value="">Todos</option></select></label>
+      <label>ESTADO<select id="filter-state"><option value="">Todos</option></select></label>
+      <label>STRATASCORE™<select id="filter-score"><option value="">Todos</option></select></label>
+      <label>DESTINO CURATORIAL<select id="filter-destino"><option value="">Todos</option></select></label>
+      <label>ADVISORY<select id="filter-advisory"><option value="">Todos</option><option value="yes">METHACRYLATE ADVISORY™</option><option value="no">Sin advisory</option></select></label>
+      <label>ORDEN DEL ARCHIVO<select id="archive-sort"><option value="newest">Más recientes</option><option value="oldest">Más antiguos</option><option value="id-asc">Expediente ↑</option><option value="id-desc">Expediente ↓</option></select><small id="archive-sort-note" class="archive-sort-note">Fecha del avistamiento · más recientes primero</small></label>
+    </div>
+    <div id="active-filters" class="active-filters" aria-live="polite"></div>
+    <div class="archive-tool-foot"><button id="archive-reset" type="button">LIMPIAR FILTROS</button><span id="archive-summary" aria-live="polite"></span></div>
+  </section>
+
+  <div id="archive-status" class="archive-note">CARGANDO ARCHIVO…</div>
+  <div id="archive-grid" class="file-grid" aria-live="polite"></div>
 </main>
+
 <footer><div>5a GALERIA</div><div>La5agaleria@proton.me</div><div>© Archivo 5a Galeria</div></footer>
 <script src="js/5a-validator.js"></script><script src="archivo.js"></script>
 </body></html>
