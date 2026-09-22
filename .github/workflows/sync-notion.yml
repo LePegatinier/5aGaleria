@@ -68,10 +68,12 @@ jobs:
             const ns=['Origen','Mediación','Soporte','Autonomía','Artwash'],v=ns.map(n=>number(prop(p,`SS — ${n}`)));
             const validatedCategory=select(prop(p,'StrataScore™ validado'));
             const validatedIndex=number(prop(p,'SS — Índice validado'));
+            const existingCategory=select(prop(p,'StrataScore™'));
+            const existingIndex=number(prop(p,'SS — Índice'));
             if(v.some(x=>x===null||x<0||x>4)){
               return {
-                index:validatedCategory&&validatedIndex!==null?validatedIndex:null,
-                category:validatedCategory,
+                index:validatedCategory?(validatedIndex!==null?validatedIndex:null):existingIndex,
+                category:validatedCategory||existingCategory,
                 values:[null,null,null,null,null],
                 contributions:[null,null,null,null,null],
                 evidence:rich(prop(p,'SS — Evidencia')),
