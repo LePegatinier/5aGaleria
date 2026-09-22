@@ -78,6 +78,15 @@ function updateActiveFilters(){
   const box=$('active-filters');
   box.innerHTML=chips.map(([k,v])=>`<span><b>${escapeHtml(k)}</b> ${escapeHtml(v)}</span>`).join('');
 }
+function strataGrade(r){
+  const s=String(r.stratascore_validado||r.stratascore||'').trim();
+  const m=s.match(/^([A-E])(?:\\s|$)/i);
+  if(m)return m[1].toUpperCase();
+  const n=Number(r.strata_index_validado??r.strata_index);
+  if(Number.isFinite(n)&&n>=0&&n<=20)return n<=3?'A':n<=7?'B':n<=11?'C':n<=15?'D':'E';
+  return '';
+}
+function strataImage(r){const g=strataGrade(r);return g?'assets/'+g+'.png':'';}
 function render(){
   const grid=$('archive-grid'),status=$('archive-status'),summary=$('archive-summary');
   updateSortNote();updateActiveFilters();
@@ -100,7 +109,7 @@ function render(){
         <p>${escapeHtml(r.artista||'ANÓNIMO')}</p>
         <p>${escapeHtml(r.ciudad||'SIN CIUDAD')} · ${escapeHtml(r.tecnica||'SIN CLASIFICAR')}</p>
         <div class="file-card-date">${escapeHtml(date)}</div>
-        <div class="file-score-line"><b>${score}</b></div>
+        <div class="file-score-line"><b>${score}</b></div>${strataImage(r)?'<div class="file-strata-badge"><img src="'+escapeAttr(strataImage(r))+'" alt="StrataScore™ '+escapeAttr(strataGrade(r))+'" loading="lazy"></div>':''}
         <div class="file-tags">
           ${r.estado?`<small>${escapeHtml(r.estado)}</small>`:''}
           ${r.methacrylate_advisory?`<small>METHACRYLATE ADVISORY™</small>`:''}
