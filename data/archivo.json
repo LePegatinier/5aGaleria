@@ -263,19 +263,19 @@
       "destino_curatorial": "Archivo público",
       "methacrylate_advisory": false,
       "motivos_reclusion": [],
-      "stratascore": "",
-      "strata_index": null,
-      "strata_origen": null,
-      "strata_mediacion": null,
-      "strata_soporte": null,
-      "strata_autonomia": null,
-      "strata_artwash": null,
+      "stratascore": "C — URBAN DISTRICT APPROVED",
+      "strata_index": 8,
+      "strata_origen": 0,
+      "strata_mediacion": 0,
+      "strata_soporte": 4,
+      "strata_autonomia": 4,
+      "strata_artwash": 4,
       "strata_contribucion": [
-        null,
-        null,
-        null,
-        null,
-        null
+        4,
+        0,
+        0,
+        0,
+        4
       ],
       "strata_evidence": "",
       "observaciones": "",
@@ -331,19 +331,19 @@
       "destino_curatorial": "Archivo público",
       "methacrylate_advisory": false,
       "motivos_reclusion": [],
-      "stratascore": "",
-      "strata_index": null,
-      "strata_origen": null,
-      "strata_mediacion": null,
-      "strata_soporte": null,
-      "strata_autonomia": null,
-      "strata_artwash": null,
+      "stratascore": "D — ARTWASH READY™",
+      "strata_index": 12,
+      "strata_origen": 0,
+      "strata_mediacion": 0,
+      "strata_soporte": 0,
+      "strata_autonomia": 0,
+      "strata_artwash": 0,
       "strata_contribucion": [
-        null,
-        null,
-        null,
-        null,
-        null
+        4,
+        0,
+        4,
+        4,
+        0
       ],
       "strata_evidence": "",
       "observaciones": "Serie de Paste up de #chuberchu",
@@ -352,5 +352,5 @@
       "imagen": "assets/archive/5a-000010.jpg"
     }
   ],
-  "updated": "2026-09-21T11:01:26.417Z"
+  "updated": "2026-09-22T08:54:07.168Z"
 }
