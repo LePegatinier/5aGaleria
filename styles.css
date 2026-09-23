@@ -37,28 +37,41 @@
 }
 
 
-/* Premis: la imagen completa ocupa el marco sin recortarse */
+/* Premis: la imagen arranca en el borde superior del marco */
+.hero-mark{
+  background:transparent;
+  justify-content:flex-start;
+  align-self:start;
+  height:auto;
+  min-height:0;
+  overflow:visible;
+}
+.hero-mark:before{inset:2% 7%;z-index:2;pointer-events:none;}
 .hero-mark .premis-goat{
-  position:absolute;
-  inset:0;
+  position:relative;
+  inset:auto;
   width:100%;
-  height:100%;
+  height:auto;
   max-width:none;
   max-height:none;
   object-fit:contain;
-  object-position:center;
+  object-position:top center;
   margin:0;
   z-index:1;
+  display:block;
 }
+.hero-mark .stamp{display:none;}
 .hero-mark>p{
   position:absolute;
-  bottom:8%;
+  left:50%;
+  bottom:3%;
+  transform:translateX(-50%);
   margin:0;
   z-index:3;
   text-shadow:0 2px 8px rgba(0,0,0,.65);
 }
-.stamp{z-index:4;}
 @media(max-width:800px){
-  .hero-mark .premis-goat{inset:0;width:100%;height:100%;object-fit:contain;}
-  .hero-mark>p{bottom:7%;}
+  .hero-mark{width:100%;height:auto;}
+  .hero-mark .premis-goat{width:100%;height:auto;}
+  .hero-mark>p{bottom:3%;}
 }
