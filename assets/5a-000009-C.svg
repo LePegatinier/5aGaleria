@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="230" viewBox="0 0 620 230" role="img" aria-label="StrataScore C — URBAN DISTRICT APPROVED">
+<rect width="620" height="230" fill="#fff"/>
+<text x="38" y="54" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#111">STRATASCORE™</text>
+<text x="38" y="84" font-family="Arial,sans-serif" font-size="18" fill="#111">URBAN DISTRICT APPROVED</text>
+<rect x="38" y="120" width="108" height="70" rx="14" fill="#087c2a"/>
+<rect x="146" y="120" width="108" height="70" fill="#ffb511"/>
+<rect x="254" y="120" width="108" height="70" fill="#ef6b00"/>
+<rect x="362" y="120" width="108" height="70" fill="#e60000"/>
+<rect x="470" y="120" width="112" height="70" rx="14" fill="#111"/>
+<rect x="248" y="102" width="120" height="100" fill="#ef6b00"/>
+<text x="92" y="165" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#fff">A</text>
+<text x="200" y="165" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#111">B</text>
+<text x="308" y="165" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#fff">C</text>
+<text x="416" y="165" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#fff">D</text>
+<text x="526" y="165" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#fff">E</text>
+</svg>
