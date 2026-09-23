@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carnet Incívic — 5a Galeria</title>
+<meta name="description" content="Carnet Incívic i àrea On Demand dels Agents Incívics de la 5a Galeria.">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="header.css?v=5">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-identity">
+    <a class="brand" href="index.html" aria-label="5a Galeria"><img src="assets/logo-5a.png" alt="5a Galeria"></a>
+    <div class="powered-by" aria-label="5a Galeria · Powered by Agents Incívics · LPGTNR_LAB"><img src="assets/banner-5a-galeria-correcta.svg" alt="5a Galeria · Powered by Agents Incívics · LPGTNR_LAB"></div>
+  </div>
+  <nav>
+    <a href="index.html" data-nav="inicio">Inicio</a>
+    <a href="https://tally.so/r/gDoB1P" target="_blank" rel="noopener noreferrer">Avistar</a>
+    <a href="archivo.html">Archivo</a>
+    <a href="mapa.html">Mapa</a>
+    <a href="calabozo.html">Calabozo</a>
+    <a href="stratascore.html">StrataScore™</a>
+    <a href="premis.html">Premis</a>
+    <a href="loreverso.html">Pegatinier Lab</a>
+    <a href="street-raw.html">On demand</a>
+    <a href="carnet.html" class="active" aria-current="page">Carnet Incívic</a>
+  </nav>
+</header>
+
+<main>
+<section class="carnet-hero">
+  <div class="carnet-copy">
+    <p class="eyebrow">5a GALERIA / AGENTS INCÍVICS</p>
+    <h1>CARNET<br><em>INCÍVIC.</em></h1>
+    <p class="lead">Deu avistaments validats. Una ciutat observada. Un agent més per l'arxiu.</p>
+    <div class="hero-actions">
+      <a class="button button-dark" href="https://tally.so/r/aQV52Z" target="_blank" rel="noopener noreferrer">Sol·licitar carnet</a>
+      <a class="button button-light" href="#on-demand">Entrar a On Demand</a>
+    </div>
+  </div>
+  <div class="carnet-panel">
+    <div class="carnet-card">
+      <small>5a GALERIA / AGENTS INCÍVICS</small>
+      <strong id="card-id">AINC-0001</strong>
+      <span id="card-alias">AGENT DE PROVA</span>
+      <div class="carnet-rule"></div>
+      <span>ESTAT</span><b id="card-status">ACTIU</b>
+      <span>AVISTAMENTS VALIDATS</span><b id="card-count">10</b>
+    </div>
+  </div>
+</section>
+
+<section class="section ruled" id="eligibility">
+  <p class="section-kicker">01 / ELEGIBILITAT</p>
+  <h2>10 AVISTAMENTS.<br>DESPRÉS, SOL·LICITA.</h2>
+  <div class="carnet-grid">
+    <div><b>01</b><span>Observa</span><p>Localitza una peça o acció de carrer.</p></div>
+    <div><b>02</b><span>Avista</span><p>Envia la prova al 5a Galeria.</p></div>
+    <div><b>03</b><span>Valida</span><p>El registre entra a l'arxiu quan supera la revisió.</p></div>
+    <div><b>04</b><span>Solicita</span><p>Amb 10 avistaments validats pots demanar el carnet.</p></div>
+  </div>
+  <div class="eligibility-box" id="eligibility-box">
+    <strong id="eligibility-title">ELEGIBLE</strong>
+    <p id="eligibility-text">Aquest perfil de prova ja ha superat el llindar de 10 avistaments validats.</p>
+  </div>
+</section>
+
+<section class="section" id="on-demand">
+  <p class="section-kicker">02 / ON DEMAND</p>
+  <div class="section-head">
+    <div><h2>ÀREA<br>DE L'AGENT.</h2></div>
+    <p>Un espai privat per consultar activitat, expedients i identitat d'agent.</p>
+  </div>
+  <div class="agent-dashboard">
+    <div class="dashboard-head"><span>IDENTITAT</span><strong id="agent-name">AGENT DE PROVA</strong><b id="agent-id">AINC-0001</b></div>
+    <div class="dashboard-grid">
+      <div><small>ESTAT</small><strong id="dash-status">ACTIU</strong></div>
+      <div><small>VALIDATS</small><strong id="dash-count">10 / 10</strong></div>
+      <div><small>TERRITORI</small><strong id="dash-territory">Barcelona / Catalunya</strong></div>
+      <div><small>CARNET</small><strong>EMÈS</strong></div>
+    </div>
+    <div class="dashboard-actions">
+      <a class="button button-dark" href="#registry">Veure registre</a>
+      <a class="button button-light" href="https://tally.so/r/aQV52Z" target="_blank" rel="noopener noreferrer">Gestionar sol·licitud</a>
+    </div>
+  </div>
+</section>
+
+<section class="section dark-section" id="registry">
+  <p class="section-kicker">03 / REGISTRE</p>
+  <h2>REGISTRE<br>D'AGENTS.</h2>
+  <p class="intro-dark">Base de dades pública mínima. Les dades personals no formen part d'aquest registre.</p>
+  <div class="agent-table-wrap">
+    <table class="agent-table">
+      <thead><tr><th>AGENT</th><th>ÀLIES</th><th>TERRITORI</th><th>VALIDATS</th><th>ESTAT</th></tr></thead>
+      <tbody id="agent-table-body"><tr><td colspan="5">Carregant registre...</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section ruled">
+  <p class="section-kicker">04 / TEST</p>
+  <h2>INFRAESTRUCTURA<br>EN PROVES.</h2>
+  <p class="lead">Aquesta primera versió utilitza un registre JSON públic i un agent de prova. L'àrea privada real necessitarà autenticació i una base de dades de servidor abans de donar accés a dades personals o expedients privats.</p>
+  <div class="test-controls">
+    <label>Avistaments validats de prova
+      <input id="test-count" type="number" min="0" max="99" value="10">
+    </label>
+    <button class="button button-dark" id="apply-test">ACTUALITZAR TEST</button>
+  </div>
+</section>
+
+<section class="closing ruled">
+  <p>AGENTS INCÍVICS / 5a GALERIA</p>
+  <h2>La ciutat<br>també té agents.</h2>
+  <p class="fuck">OBSERVA. DOCUMENTA. REMET.</p>
+</section>
+</main>
+
+<footer><div>5a GALERIA</div><div>La5agaleria@proton.me</div><div>© Agents Incívics</div></footer>
+
+<script>
+(function(){
+  const demo={agent_id:"AINC-0001",alias:"Agent de prova",city:"Barcelona",status:"ACTIU",carnet:true,issued:"2026-09-23",validated_sightings:10,total_sightings:12,territory:"Barcelona / Catalunya",role:"Agent Incívic",public:true,test:true};
+  const countEl=document.getElementById("test-count");
+  const saved=Number(localStorage.getItem("5a_demo_agent_count"));
+  if(Number.isFinite(saved)) countEl.value=saved;
+  function render(count){
+    const eligible=count>=10;
+    document.getElementById("card-count").textContent=count;
+    document.getElementById("dash-count").textContent=count+" / 10";
+    document.getElementById("eligibility-title").textContent=eligible?"ELEGIBLE":"ENCARA NO";
+    document.getElementById("eligibility-text").textContent=eligible?"Aquest perfil de prova ja ha superat el llindar de 10 avistaments validats.":"Falten "+(10-count)+" avistament(s) validat(s) per poder sol·licitar el carnet.";
+    document.getElementById("card-status").textContent=eligible?"ACTIU":"CANDIDAT";
+    document.getElementById("dash-status").textContent=eligible?"ACTIU":"CANDIDAT";
+  }
+  document.getElementById("apply-test").addEventListener("click",function(){const n=Math.max(0,Number(countEl.value)||0);localStorage.setItem("5a_demo_agent_count",n);render(n);});
+  fetch("data/agentes.json").then(r=>r.json()).then(data=>{
+    const body=document.getElementById("agent-table-body");
+    body.innerHTML="";
+    (data.agents||[]).filter(a=>a.public).forEach(a=>{
+      const tr=document.createElement("tr");
+      tr.innerHTML="<td>"+a.agent_id+"</td><td>"+a.alias+"</td><td>"+a.territory+"</td><td>"+a.validated_sightings+"</td><td>"+a.status+"</td>";
+      body.appendChild(tr);
+    });
+  }).catch(function(){
+    document.getElementById("agent-table-body").innerHTML="<tr><td colspan='5'>No s'ha pogut carregar el registre.</td></tr>";
+  });
+  render(Number(countEl.value)||10);
+})();
+</script>
+</body>
+</html>
