@@ -84,3 +84,12 @@
   .hero-mark .premis-goat{width:100%;height:auto;}
   .hero-mark .premis-caption{margin:18px 5vw 0;padding:14px 16px 11px;font-size:clamp(34px,11vw,64px);}
 }
+
+
+/* ON DEMAND — estilos específicos para evitar conflictos con otros hero-mark */
+.ondemand-hero{min-height:calc(100vh - 100px)}
+.ondemand-mark{background:#201d1d !important;color:#f2eee6 !important;display:flex !important;justify-content:center !important;align-items:center !important;position:relative !important;overflow:hidden !important;min-height:0 !important;padding:5vw !important;border-left:2px solid var(--ink) !important}
+.ondemand-mark:before{content:"" !important;position:absolute !important;inset:10% !important;border:1px solid rgba(255,255,255,.18) !important;z-index:1 !important;pointer-events:none !important}
+.ondemand-mark .stamp{display:block !important;position:absolute !important;top:7% !important;right:8% !important;color:#f2eee6 !important;border:2px solid #f2eee6 !important;padding:12px !important;z-index:2 !important}
+.ondemand-mark>p{font-family:'Archivo Black',sans-serif !important;font-size:clamp(32px,5vw,70px) !important;line-height:.9 !important;color:#f2eee6 !important;z-index:2 !important;margin:0 !important}
+@media(max-width:800px){.ondemand-mark{min-height:380px !important;border-left:0 !important;border-top:2px solid var(--ink) !important}.ondemand-hero{min-height:0}}
