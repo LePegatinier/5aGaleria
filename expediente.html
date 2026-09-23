@@ -14,13 +14,13 @@ const scoreDescriptions={
 function field(label,value,extra=''){return `<div class="record-field"><span>${label}</span><strong>${value||'—'}</strong>${extra}</div>`}
 function strataGrade(x){
  const s=String(x.stratascore_validado||x.stratascore||'').trim();
- const m=s.match(/^([A-E])(?:\\s|$)/i);
+ const m=s.match(/^([A-E])(?:\s|$)/i);
  if(m)return m[1].toUpperCase();
  const n=Number(x.strata_index_validado??x.strata_index);
  if(Number.isFinite(n)&&n>=0&&n<=20)return n<=3?'A':n<=7?'B':n<=11?'C':n<=15?'D':'E';
  return '';
 }
-function strataImage(x){const g=String(x.stratascore_validado||x.stratascore||'').trim().match(/^([A-E])(?:\\s|$)/i)?.[1]?.toUpperCase()||'';return g?'assets/'+g+'.png?v=20260923-'+g:'';}
+function strataImage(x){const g=String(x.stratascore_validado||x.stratascore||'').trim().match(/^([A-E])(?:\s|$)/i)?.[1]?.toUpperCase()||'';return g?'assets/'+g+'.png?v=20260923-'+g:'';}
 function scoreBlock(x){
  const vals=scoreLabels.map(k=>Number(x[`strata_${k.toLowerCase()}`]));
  const contributions=Array.isArray(x.strata_contribucion)?x.strata_contribucion:[];
