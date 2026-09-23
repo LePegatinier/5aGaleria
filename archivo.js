@@ -86,7 +86,7 @@ function strataGrade(r){
   if(Number.isFinite(n)&&n>=0&&n<=20)return n<=3?'A':n<=7?'B':n<=11?'C':n<=15?'D':'E';
   return '';
 }
-function strataImage(r){const g=strataGrade(r);return g?'assets/'+g+'.png?v='+encodeURIComponent(g):'';}
+function strataImage(r){const g=strataGrade(r);if(!g)return '';if(String(r.expediente||'')==='5a-000009')return 'assets/5a-000009-C.svg?v=20260923-EXP9C-FINAL';return 'assets/'+g+'.png?v='+encodeURIComponent(g);}
 function render(){
   const grid=$('archive-grid'),status=$('archive-status'),summary=$('archive-summary');
   updateSortNote();updateActiveFilters();
