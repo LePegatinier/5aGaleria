@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="230" viewBox="0 0 620 230">
+<rect width="620" height="230" fill="#fff"/>
+<rect x="18" y="18" width="584" height="194" rx="18" fill="none" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="10 8"/>
+<text x="62" y="68" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="700" fill="#111">StrataScore</text>
+<text x="62" y="91" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#111">Bareback Street Art Certification</text>
+<text x="430" y="67" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" fill="#e60000">AGENTS</text>
+<text x="430" y="91" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" fill="#e60000">INCÍVICS</text>
+<circle cx="575" cy="58" r="9" fill="#e60000"/><circle cx="575" cy="84" r="9" fill="#e60000"/>
+<rect x="38" y="120" width="108" height="70" rx="14" fill="#087c2a"/><rect x="146" y="120" width="108" height="70" fill="#ffb511"/>
+<rect x="254" y="120" width="108" height="70" fill="#ef6b00"/><rect x="362" y="120" width="108" height="70" fill="#e60000"/><rect x="470" y="120" width="112" height="70" rx="14" fill="#111"/>
+<text x="92" y="171" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="48" font-weight="700" fill="#fff">A</text>
+<text x="200" y="171" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="48" font-weight="700" fill="#fff">B</text>
+<rect x="248" y="102" width="120" height="100" fill="#ef6b00"/>
+<text x="308" y="171" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="62" font-weight="700" fill="#fff">C</text>
+<text x="416" y="171" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="48" font-weight="700" fill="#fff">D</text>
+<text x="526" y="171" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="48" font-weight="700" fill="#fff">E</text>
+</svg>
