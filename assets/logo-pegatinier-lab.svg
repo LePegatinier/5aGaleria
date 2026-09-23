@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1749 558" role="img" aria-labelledby="title desc">
+<title>Pegatinier Lab — Research Division</title><desc>Logo de Pegatinier Lab.</desc>
+<defs><linearGradient id="rainbow" x1="0%" y1="50%" x2="100%" y2="50%"><stop offset="0%" stop-color="#24b8e8"/><stop offset="25%" stop-color="#7ed36d"/><stop offset="50%" stop-color="#ffe07b"/><stop offset="75%" stop-color="#ff7d8c"/><stop offset="100%" stop-color="#b76bd6"/></linearGradient></defs>
+<rect width="1749" height="558" fill="#fff"/>
+<path d="M115 370 C30 290 82 211 188 217 C313 225 350 157 429 102 C508 47 612 66 639 141 C668 220 619 296 550 304 C458 315 391 267 327 231 C254 190 173 211 115 279 C75 326 75 373 115 405 C157 439 226 433 289 374 L606 117 C630 98 660 108 670 137 C681 171 671 213 648 234 C621 259 591 263 559 246 L407 166" fill="none" stroke="url(#rainbow)" stroke-width="110" stroke-linecap="round" stroke-linejoin="round" opacity=".92"/>
+<path d="M115 370 C30 290 82 211 188 217 C313 225 350 157 429 102 C508 47 612 66 639 141 C668 220 619 296 550 304 C458 315 391 267 327 231 C254 190 173 211 115 279 C75 326 75 373 115 405 C157 439 226 433 289 374 L606 117 C630 98 660 108 670 137 C681 171 671 213 648 234 C621 259 591 263 559 246 L407 166" fill="none" stroke="#000" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="638" cy="201" rx="20" ry="64" fill="none" stroke="#000" stroke-width="10"/>
+<g transform="translate(755 90)" fill="#000">
+<text x="0" y="85" font-family="monospace" font-weight="900" font-size="86" letter-spacing="5">PGTNR_LAB</text>
+<text x="0" y="170" font-family="monospace" font-weight="900" font-size="45" letter-spacing="3">RESEARCH DIVISION</text>
+<text x="0" y="225" font-family="Arial, Helvetica, sans-serif" font-size="31" letter-spacing="1">LABORATORIO MULTIUNIDIMENSIONAL</text>
+<rect x="0" y="244" width="920" height="10" fill="url(#rainbow)"/>
+<text x="0" y="302" font-family="monospace" font-weight="700" font-size="27" letter-spacing="2">AS ABOVE, SO BELOW; AS WITHIN, SO WITHOUT</text>
+</g></svg>
