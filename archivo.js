@@ -5,7 +5,7 @@ const norm=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLo
 function publicRecord(r){
   const id=String(r.expediente||'');
   const coords=String(r.coordenadas||'').trim();
-  return r.publicado===true&&coords&&/^5a-\d{6}$/.test(id)&&String(r.imagen||'').trim();
+  return r.publicado===true&&coords&&/^5a-\d{6}$/.test(id);
 }
 function unique(field){
   return [...new Set(archiveRecords.map(r=>String(r[field]||'').trim()).filter(Boolean))]
@@ -122,7 +122,7 @@ function render(){
 }
 async function loadArchive(){
   try{
-    const response=await fetch('data/archivo.json',{cache:'no-store'});
+    const response=await fetch('data/archivo.json?v='+Date.now(),{cache:'no-store'});
     if(!response.ok)throw new Error();
     const data=await response.json();
     archiveRecords=(data.records||[]).filter(publicRecord);
