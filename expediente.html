@@ -20,7 +20,7 @@ function strataGrade(x){
  if(Number.isFinite(n)&&n>=0&&n<=20)return n<=3?'A':n<=7?'B':n<=11?'C':n<=15?'D':'E';
  return '';
 }
-function strataImage(x){const g=String(x.stratascore_validado||x.stratascore||'').trim().match(/^([A-E])(?:\s|$)/i)?.[1]?.toUpperCase()||'';if(!g)return '';if(String(x.expediente||'')==='5a-000009')return 'assets/C.png?v=20260923-C000009';return 'assets/'+g+'.png?v=20260923-'+g;}
+function strataImage(x){const g=String(x.stratascore_validado||x.stratascore||'').trim().match(/^([A-E])(?:\s|$)/i)?.[1]?.toUpperCase()||'';if(!g)return '';if(String(x.expediente||'')==='5a-000009')return 'assets/C-VERIFIED.svg?v=20260923-C000009';return 'assets/'+g+'.png?v=20260923-'+g;}
 function scoreBlock(x){
  const vals=scoreLabels.map(k=>Number(x[`strata_${k.toLowerCase()}`]));
  const contributions=Array.isArray(x.strata_contribucion)?x.strata_contribucion:[];
@@ -50,11 +50,6 @@ async function load(){
   <section class="record-section"><p class="section-kicker">NOTA DOCUMENTAL</p><h2>LA OBRA DEJA<br>UN RASTRO.</h2><p>${esc(x.observaciones||'Sin observaciones públicas. El expediente queda abierto a futuras actualizaciones documentales.')}</p></section>
   <section class="record-section"><p class="section-kicker">HISTORIAL</p><div class="timeline"><div><b>REGISTRO ACTUAL</b><span>${esc(x.fecha||'Fecha no registrada')}</span><p>Estado archivado: ${status}.</p></div><div><b>REVISIÓN</b><span>STRATASCORE™</span><p>La clasificación queda vinculada a la evidencia disponible y puede actualizarse cuando cambie la relación de la obra con la calle.</p></div></div></section>
   <div class="record-actions"><a class="button button-dark" href="archivo.html">← ARCHIVO</a><a class="button" href="mapa.html">VER MAPA</a></div>`
-  // Expediente 9: la imagen verificada es C, independientemente del índice numérico 13.
-  if(id==='5a-000009'){
-   const verifiedImg=el.querySelector('.verified-strata img');
-   if(verifiedImg) verifiedImg.src='assets/C.png?expediente9=C';
-  }
  }catch(e){el.innerHTML='<div class="archive-empty"><h1>ERROR DE LECTURA.</h1><p>No se pudo cargar el expediente público.</p></div>'}
 }
 load();</script></body></html>
