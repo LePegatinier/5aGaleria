@@ -35,3 +35,7 @@
   .hero-mark{min-height:0;height:auto;overflow:visible;padding:0 !important;}
   .hero-mark .methacrylate-art{position:relative !important;top:auto !important;left:auto !important;right:auto !important;width:100% !important;height:auto !important;max-width:none !important;max-height:none !important;object-fit:contain !important;object-position:center !important;display:block !important;}
 }
+
+/* Premis: cabra del cartel, colocada sobre el marco negro */
+.hero-mark .premis-goat{position:absolute;top:18%;left:50%;transform:translateX(-50%);width:min(30%,280px);height:auto;max-height:38%;object-fit:contain;z-index:4;display:block;}
+@media(max-width:800px){.hero-mark .premis-goat{top:16%;width:min(42%,240px);max-height:34%;}}
