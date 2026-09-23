@@ -37,7 +37,28 @@
 }
 
 
-/* Premis: cartel completo en alta resolución, sobre el marco */
-.hero-mark .premis-goat{position:absolute;top:4%;left:50%;transform:translateX(-50%);width:min(58%,420px);height:auto;max-height:none;object-fit:contain;z-index:3;display:block;}
-.hero-mark>p{position:absolute;bottom:10%;margin:0;z-index:2;}
-@media(max-width:800px){.hero-mark .premis-goat{top:5%;width:min(68%,300px);}.hero-mark>p{bottom:8%;}}
+/* Premis: la imagen completa ocupa el marco sin recortarse */
+.hero-mark .premis-goat{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  max-width:none;
+  max-height:none;
+  object-fit:contain;
+  object-position:center;
+  margin:0;
+  z-index:1;
+}
+.hero-mark>p{
+  position:absolute;
+  bottom:8%;
+  margin:0;
+  z-index:3;
+  text-shadow:0 2px 8px rgba(0,0,0,.65);
+}
+.stamp{z-index:4;}
+@media(max-width:800px){
+  .hero-mark .premis-goat{inset:0;width:100%;height:100%;object-fit:contain;}
+  .hero-mark>p{bottom:7%;}
+}
