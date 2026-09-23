@@ -93,3 +93,17 @@
 .ondemand-mark .stamp{display:block !important;position:absolute !important;top:7% !important;right:8% !important;color:#f2eee6 !important;border:2px solid #f2eee6 !important;padding:12px !important;z-index:2 !important}
 .ondemand-mark>p{font-family:'Archivo Black',sans-serif !important;font-size:clamp(32px,5vw,70px) !important;line-height:.9 !important;color:#f2eee6 !important;z-index:2 !important;margin:0 !important}
 @media(max-width:800px){.ondemand-mark{min-height:380px !important;border-left:0 !important;border-top:2px solid var(--ink) !important}.ondemand-hero{min-height:0}}
+
+
+/* ON DEMAND — compactar primera pantalla */
+.ondemand-hero{min-height:0 !important}
+.ondemand-hero .hero-copy{padding:4vw 7vw !important}
+.ondemand-hero .hero-copy h1{margin:14px 0;font-size:clamp(52px,7vw,105px)}
+.ondemand-hero .lead{margin-bottom:0}
+.ondemand-hero .on-demand-requirements{margin-top:1rem !important;padding-top:.8rem !important}
+.ondemand-mark{min-height:0 !important;height:auto !important}
+.ondemand-mark>p{color:#f2eee6 !important}
+@media(max-width:800px){
+  .ondemand-hero .hero-copy{padding:8vw 7vw !important}
+  .ondemand-mark{min-height:300px !important}
+}
