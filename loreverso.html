@@ -3,102 +3,179 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>¿Qué coño es esto? — Loreverso Pegatinier</title>
-<meta name="description" content="Entrada al Loreverso Pegatinier: Le Pegatinier, Pegatinismo Dialéctico, Agents Incívics y 5a Galeria.">
+<title>Pegatinier Lab — 5a Galeria</title>
+<meta name="description" content="PGTNR_LAB. Laboratorio científico, filosófico y experimental del Loreverso Pegatinier. Una sola dimensión. El resto son capas.">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="header.css?v=5">
 <style>
-.lore-hero{min-height:78vh;display:grid;grid-template-columns:1.1fr .9fr;border-bottom:2px solid var(--ink)}
-.lore-copy{padding:9vw 7vw}
-.lore-copy h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(54px,8vw,120px);line-height:.88;letter-spacing:-.05em;margin:22px 0}
-.lore-copy h1 em{font-style:normal;-webkit-text-stroke:1.5px var(--ink);color:transparent}
-.lore-lead{font-size:17px;line-height:1.75;max-width:720px}
-.lore-mark{background:#201d1d;color:#eee9df;border-left:2px solid var(--ink);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.lore-mark:before{content:"";position:absolute;inset:10%;border:1px solid rgba(255,255,255,.2);transform:rotate(-3deg)}
-.lore-mark .stamp{border:3px solid #eee9df;padding:20px;font-family:'Archivo Black';font-size:26px;line-height:.95;transform:rotate(-4deg);z-index:1;text-align:center}
-.lore-intro{padding:7vw;border-bottom:2px solid var(--ink)}
-.lore-intro p{max-width:900px;font-size:clamp(20px,3vw,34px);line-height:1.45}
-.lore-grid{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--ink)}
-.lore-door{padding:5vw 6vw;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:300px}
-.lore-door:nth-child(2n){border-right:0}
-.lore-door .num{font-size:11px;font-weight:600}
-.lore-door h2{font-size:clamp(34px,5vw,65px);margin:18px 0}
-.lore-door p{line-height:1.7;max-width:620px;color:var(--muted)}
-.lore-door a{display:inline-block;margin-top:15px}
-.lore-footer{padding:8vw 7vw;text-align:center;border-bottom:2px solid var(--ink)}
-.lore-footer h2{font-size:clamp(42px,7vw,90px)}
-@media(max-width:800px){.lore-hero,.lore-grid{grid-template-columns:1fr}.lore-mark{min-height:350px;border-left:0;border-top:2px solid var(--ink)}.lore-door{border-right:0}}
+.lab-hero{min-height:78vh;display:grid;grid-template-columns:1.1fr .9fr;border-bottom:2px solid var(--ink)}
+.lab-copy{padding:9vw 7vw}
+.lab-copy h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(54px,8vw,125px);line-height:.82;letter-spacing:-.05em;margin:22px 0}
+.lab-copy h1 em{font-style:normal;-webkit-text-stroke:1.5px var(--ink);color:transparent}
+.lab-lead{font-size:17px;line-height:1.75;max-width:720px}
+.lab-mark{background:#201d1d;color:#eee9df;border-left:2px solid var(--ink);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:420px}
+.lab-mark:before{content:"";position:absolute;inset:10%;border:1px solid rgba(255,255,255,.2);transform:rotate(-3deg)}
+.lab-stamp{position:relative;border:3px solid #eee9df;padding:24px;font-family:'Archivo Black';font-size:clamp(25px,4vw,52px);line-height:.9;transform:rotate(-4deg);z-index:1;text-align:center}
+.lab-stamp small{display:block;font:600 10px 'IBM Plex Mono',monospace;margin-top:18px;letter-spacing:.12em}
+.lab-statement{padding:7vw;border-bottom:2px solid var(--ink)}
+.lab-statement p{max-width:980px;font-size:clamp(21px,3vw,36px);line-height:1.45}
+.lab-functions{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2px solid var(--ink)}
+.lab-function{padding:34px 5vw;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:180px}
+.lab-function:nth-child(3n){border-right:0}
+.lab-function b{font-family:'Archivo Black';font-size:13px}
+.lab-function p{font-size:11px;line-height:1.65;color:var(--muted);max-width:360px}
+.lab-mobius{background:#171515;color:#eee9df;padding:8vw 7vw;border-bottom:2px solid var(--ink)}
+.lab-mobius h2{font-size:clamp(42px,7vw,90px)}
+.lab-mobius p{max-width:850px;line-height:1.7}
+.lab-mobius .lab-formula{font-family:'Archivo Black';font-size:clamp(22px,4vw,48px);line-height:1;margin:40px 0}
+.lab-lines{padding:8vw 7vw;border-bottom:2px solid var(--ink)}
+.lab-lines h2{font-size:clamp(42px,7vw,90px)}
+.lab-research-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:2px solid var(--ink)}
+.lab-research{padding:32px 4vw;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:250px}
+.lab-research:nth-child(2n){border-right:0}
+.lab-research .num{font-size:10px;font-weight:600}
+.lab-research h3{font-size:clamp(24px,3.5vw,44px);margin:14px 0}
+.lab-research p{font-size:11px;line-height:1.7;color:var(--muted);max-width:620px}
+.lab-best{border-left:8px solid var(--ink);padding:20px 0 20px 25px;font-family:'Archivo Black';font-size:clamp(23px,4vw,48px);line-height:1;margin-top:45px}
+.lab-instruments{background:#201d1d;color:#eee9df;padding:8vw 7vw;border-bottom:2px solid var(--ink)}
+.lab-instruments h2{font-size:clamp(42px,7vw,90px)}
+.lab-instrument-grid{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid #777;border-bottom:1px solid #777}
+.lab-instrument{padding:25px 18px;border-right:1px solid #777;min-height:220px}
+.lab-instrument:last-child{border-right:0}
+.lab-instrument b{font-family:'Archivo Black';font-size:16px}
+.lab-instrument p{font-size:10px;line-height:1.65;color:#c8c1b7}
+.lab-disclaimer{border:2px solid #eee9df;padding:18px;margin-top:35px;max-width:720px;font-size:10px;line-height:1.6}
+.lab-doors{padding:8vw 7vw;border-bottom:2px solid var(--ink)}
+.lab-doors h2{font-size:clamp(42px,7vw,90px)}
+.lab-door-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.lab-door{padding:30px 20px;border-right:1px solid var(--line);min-height:210px}
+.lab-door:last-child{border-right:0}
+.lab-door b{font-family:'Archivo Black';font-size:22px}
+.lab-door p{font-size:10px;line-height:1.6;color:var(--muted)}
+.lab-door a{display:inline-block;margin-top:10px;font-size:9px;text-decoration:underline;font-weight:600}
+.lab-trinity{background:#f5f1e9;padding:8vw 7vw;border-bottom:2px solid var(--ink)}
+.lab-trinity h2{font-size:clamp(42px,7vw,90px)}
+.trinity-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.trinity-card{padding:30px 22px;border-right:1px solid var(--line);min-height:210px}
+.trinity-card:last-child{border-right:0}
+.trinity-card span{font-size:9px;text-transform:uppercase}
+.trinity-card h3{font-size:clamp(24px,3vw,42px);margin:15px 0}
+.trinity-card p{font-size:11px;line-height:1.65;color:var(--muted)}
+.lab-end{padding:9vw 7vw;text-align:center}
+.lab-end h2{font-size:clamp(48px,8vw,110px)}
+.lab-end .lab-line{font-family:'Archivo Black';font-size:clamp(24px,4vw,52px);margin-top:35px}
+.lab-anchor{scroll-margin-top:130px}
+@media(max-width:900px){
+ .lab-functions{grid-template-columns:1fr 1fr}.lab-function:nth-child(3n){border-right:1px solid var(--line)}.lab-function:nth-child(2n){border-right:0}
+ .lab-instrument-grid{grid-template-columns:1fr 1fr}.lab-instrument:nth-child(2n){border-right:0}.lab-instrument:nth-child(n+3){border-top:1px solid #777}
+ .lab-door-grid{grid-template-columns:1fr 1fr}.lab-door:nth-child(2n){border-right:0}.lab-door:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media(max-width:800px){
+ .lab-hero{grid-template-columns:1fr}.lab-mark{border-left:0;border-top:2px solid var(--ink);min-height:360px}
+ .lab-functions,.lab-research-grid,.trinity-grid{grid-template-columns:1fr}
+ .lab-function,.lab-research,.trinity-card{border-right:0}
+ .lab-function:nth-child(n+2),.lab-research:nth-child(n+2),.trinity-card:nth-child(n+2){border-top:1px solid var(--line)}
+ .lab-door-grid{grid-template-columns:1fr}.lab-door{border-right:0}.lab-door:nth-child(n+2){border-top:1px solid var(--line)}
+}
 </style>
 </head>
 <body>
-<header class="site-header"><div class="site-identity"><a class="brand" href="index.html" aria-label="5a Galeria"><img src="assets/logo-5a.png" alt="5a Galeria"></a><div class="powered-by" aria-label="5a Galeria · Powered by Agents Incívics · LPGTNR_LAB"><img src="assets/banner-5a-galeria-correcta.svg" alt="5a Galeria · Powered by Agents Incívics · LPGTNR_LAB"></div></div><nav><a href="index.html" data-nav="inicio">Inicio</a><a href="https://tally.so/r/gDoB1P" target="_blank" rel="noopener noreferrer" data-nav="avistar">Avistar</a><a href="archivo.html" data-nav="archivo">Archivo</a><a href="mapa.html" data-nav="mapa">Mapa</a><a href="calabozo.html" data-nav="calabozo">Calabozo</a><a href="stratascore.html" data-nav="stratascore">StrataScore™</a><a href="premis.html" data-nav="premis">Premis</a><a href="loreverso.html" data-nav="lab">Pegatinier Lab</a><a href="street-raw.html" data-nav="ondemand">On demand</a></nav></header><script>(function(){const p=location.pathname.split('/').pop()||'index.html';const map={'index.html':'inicio','archivo.html':'archivo','calabozo.html':'calabozo','mapa.html':'mapa','stratascore.html':'stratascore','premis.html':'premis','loreverso.html':'lab','street-raw.html':'ondemand'};const k=map[p];if(k){const a=document.querySelector('.site-header nav a[data-nav="'+k+'"]');if(a){a.classList.add('active');a.setAttribute('aria-current','page')}}})();</script>
+<header class="site-header"><div class="site-identity"><a class="brand" href="index.html" aria-label="5a Galeria"><img src="assets/logo-5a.png" alt="5a Galeria"></a><div class="powered-by" aria-label="5a Galeria · Powered by Agents Incívics · LPGTNR_LAB"><img src="assets/banner-5a-galeria-correcta.svg" alt="5a Galeria · Powered by Agents Incívics · LPGTNR_LAB"></div></div><nav><a href="index.html" data-nav="inicio">Inicio</a><a href="https://tally.so/r/gDoB1P" target="_blank" rel="noopener noreferrer" data-nav="avistar">Avistar</a><a href="archivo.html" data-nav="archivo">Archivo</a><a href="mapa.html" data-nav="mapa">Mapa</a><a href="calabozo.html" data-nav="calabozo">Calabozo</a><a href="stratascore.html" data-nav="stratascore">StrataScore™</a><a href="premis.html" data-nav="premis">Premis</a><a href="loreverso.html" data-nav="lab">Pegatinier Lab</a><a href="street-raw.html" data-nav="ondemand">On demand</a></nav></header>
+<script>(function(){const p=location.pathname.split('/').pop()||'index.html';const map={'index.html':'inicio','archivo.html':'archivo','calabozo.html':'calabozo','mapa.html':'mapa','stratascore.html':'stratascore','premis.html':'premis','loreverso.html':'lab','street-raw.html':'ondemand'};const k=map[p];if(k){const a=document.querySelector('.site-header nav a[data-nav="'+k+'"]');if(a){a.classList.add('active');a.setAttribute('aria-current','page')}}})();</script>
 
 <main>
-<section class="lore-hero">
-<div class="lore-copy">
-<p class="eyebrow">LOREVERSO PEGATINIER / DOCUMENTO DE ENTRADA</p>
-<h1>¿QUÉ<br>COÑO<br>ES <em>ESTO?</em></h1>
-<p class="lore-lead">No es un portfolio. No es una colección de enlaces. Es un universo construido alrededor de la pegatina, la calle, el collage y el transgraffiti.</p>
+<section class="lab-hero">
+<div class="lab-copy">
+<p class="eyebrow">PGTNR_LAB / LABORATORIO DEL LOREVERSO</p>
+<h1>PEGATINIER<br><em>LAB</em></h1>
+<p class="lab-lead">Laboratorio científico, filosófico y experimental del Loreverso Pegatinier.</p>
+<p class="lab-lead"><strong>Una sola dimensión. El resto son capas.</strong></p>
 </div>
-<div class="lore-mark"><div class="stamp">ENTRADA<br>NO OFICIAL<br><span>PEGATINIER / 001</span></div></div>
+<div class="lab-mark"><div class="lab-stamp">PGTNR<br>LAB<small>OBSERVARE / EXPERIMENTARE / EXPANDERE</small></div></div>
 </section>
 
-<section class="lore-intro">
-<p><strong>Si has llegado hasta aquí, ya estás dentro.</strong><br>
-Aquí conviven personajes, instituciones, archivos, sistemas de clasificación, artefactos y operaciones de calle. Algunas cosas son obra. Otras son ficción. Otras no necesitan decidirlo.</p>
+<section class="lab-statement">
+<p><strong>El PGTNR_LAB investiga aquello que sucede cuando una pegatina deja de ser solamente una pegatina.</strong></p>
+<p>Materia. Muro. Memoria. Desgaste. Accidente. Autoría. Archivo. Tiempo.</p>
+<p>Aquí se estudia la continuidad entre cosas que normalmente consideramos separadas: <strong>interior / exterior · obra / soporte · autor / consecuencia · organismo / entorno · original / copia · error / información · desaparición / memoria.</strong></p>
+<p>Porque quizá no sean cosas distintas. Quizá sean capas.</p>
 </section>
 
-<section class="lore-grid">
-<article class="lore-door">
-<span class="num">01 / PERSONAJE</span>
-<h2>LE PEGATINIER™</h2>
-<p>La figura que convierte la pegatina y el paste-up en intervención, archivo y lenguaje de calle.</p>
-<a class="button button-dark" href="https://www.instagram.com/nicollage_kg/" target="_blank" rel="noopener noreferrer">VER OBRA →</a>
-</article>
-
-<article class="lore-door">
-<span class="num">02 / SISTEMA</span>
-<h2>PEGATINISMO DIALÉCTICO™</h2>
-<p>El sistema de pensamiento que sostiene el universo. Su documento fundacional está disponible para lectura y descarga.</p>
-<a class="button button-dark" href="https://raw.githubusercontent.com/LePegatinier/5aGaleria/main/pegatinismo-dialectico-manifiesto.pdf" target="_blank" rel="noopener noreferrer">LEER MANIFIESTO →</a>
-</article>
-
-<article class="lore-door">
-<span class="num">03 / OPERATIVO</span>
-<h2>AGENTS INCÍVICS™</h2>
-<p>La estructura operativa del Loreverso: observar, localizar, documentar, catalogar y remitir manifestaciones de arte urbano.</p>
-<a class="button button-dark" href="index.html">ENTRAR EN 5ª GALERIA →</a>
-</article>
-
-<article class="lore-door">
-<span class="num">04 / ARCHIVO</span>
-<h2>5ª GALERIA™</h2>
-<p>Museo distribuido y archivo vivo del arte callejero. La ciudad es la sala. El muro es el soporte. La desaparición forma parte de la historia.</p>
-<a class="button button-dark" href="archivo.html">ABRIR ARCHIVO →</a>
-</article>
-
-<article class="lore-door">
-<span class="num">05 / CERTIFICACIÓN</span>
-<h2>STRATASCORE™</h2>
-<p>Sistema de clasificación del grado de domesticación del arte callejero. Certificación no reconocida por ninguna autoridad competente.</p>
-<a class="button button-dark" href="stratascore.html">CONSULTAR SISTEMA →</a>
-</article>
-
-<article class="lore-door">
-<span class="num">06 / PARTICIPACIÓN</span>
-<h2>AVISTAR</h2>
-<p>Has visto algo en la calle. Sube la prueba. No necesitamos tu portfolio. Necesitamos la calle.</p>
-<a class="button button-dark" href="https://tally.so/r/gDoB1P" target="_blank" rel="noopener noreferrer">ENVIAR AVISTAMIENTO →</a>
-</article>
+<section class="lab-functions">
+<article class="lab-function"><b>OBSERVAR</b><p>La calle como territorio experimental.</p></article>
+<article class="lab-function"><b>DOCUMENTAR</b><p>Lo que aparece antes de que desaparezca.</p></article>
+<article class="lab-function"><b>EXPERIMENTAR</b><p>Con materia, color, adhesión, tiempo y accidente.</p></article>
+<article class="lab-function"><b>CLASIFICAR</b><p>Porque hasta el caos acaba generando categorías.</p></article>
+<article class="lab-function"><b>CONECTAR</b><p>Obras, muros, agentes, anomalías y memorias.</p></article>
+<article class="lab-function"><b>EXPANDIR</b><p>El sistema sin cerrar nunca completamente el sistema.</p></article>
 </section>
 
-<section class="lore-footer ruled">
-<p class="section-kicker">LOREVERSO PEGATINIER / ARCHIVO ABIERTO</p>
-<h2>ENTRA.<br>MIRA.<br>AVISTA.<br>PEGA.</h2>
-<p>Demasiado calle para el metacrilato.</p>
+<section class="lab-mobius lab-anchor" id="modelo">
+<p class="section-kicker">01 / MODELO CONCEPTUAL</p>
+<h2>CINTA DE MÖBIUS</h2>
+<p>El laboratorio trabaja con una hipótesis: <strong>la realidad puede entenderse como una continuidad que percibimos como capas.</strong></p>
+<div class="lab-formula">AS ABOVE, SO BELOW.<br>AS WITHIN, SO WITHOUT.</div>
+<p>El modelo conceptual del laboratorio es la Cinta de Möbius. Su emblema/topología es la Botella de Klein.</p>
+</section>
+
+<section class="lab-lines lab-anchor" id="research">
+<p class="section-kicker">02 / LÍNEAS DE INVESTIGACIÓN</p>
+<h2>EL LABORATORIO<br>ESTÁ ABIERTO</h2>
+<div class="lab-research-grid">
+<article class="lab-research"><span class="num">01</span><h3>TOPOLOGÍA PEGATINIER</h3><p>Estudio de superficies, límites, continuidad y tránsito entre capas.</p><p><strong>Pregunta:</strong> ¿Dónde termina una superficie y empieza otra?</p></article>
+<article class="lab-research"><span class="num">02</span><h3>COSMOCOLOR</h3><p>Investigación sobre color, colormancia y cartografías cromáticas del universo Pegatinier.</p><p>Terminología perteneciente al sistema ficticio del Loreverso.</p></article>
+<article class="lab-research"><span class="num">03</span><h3>ESTRATIGRAFÍA URBANA</h3><p>Estudio de las capas que acumula la ciudad: pintura, pegatina, grieta, limpieza, óxido, pegamento y tiempo.</p><div class="lab-best">Cada muro es un archivo arqueológico.</div></article>
+<article class="lab-research"><span class="num">04</span><h3>FAUNA ADHESIVA</h3><p>Catálogo y estudio de organismos, criaturas y especies vinculadas al universo adhesivo.</p><p><strong>Ejemplar documentado:</strong> <em>Adhesivora polymorpha</em></p></article>
+<article class="lab-research"><span class="num">05</span><h3>ACCIDENTE Y ERROR</h3><p>Investigación sobre aquello que ocurre cuando una intervención no produce exactamente aquello que pretendía producir.</p><p><strong>Un accidente también puede producir una obra.</strong></p></article>
+<article class="lab-research"><span class="num">06</span><h3>ARCHIVO E ISO-PEG</h3><p>Desarrollo de sistemas de clasificación, codificación y documentación.</p><p><strong>AUT_ZONA_TIPO_NUM_ID_[TITULO]_AÑO</strong></p></article>
+<article class="lab-research"><span class="num">07</span><h3>LORE Y SISTEMAS</h3><p>Uno y Trino, Pegatinismo Dialéctico, Branología, Genealogía Adhesiva, instituciones, entidades, tecnologías y cosmología.</p></article>
+<article class="lab-research"><span class="num">08</span><h3>EXPERIMENTACIÓN URBANA</h3><p>Pruebas, prototipos, dispositivos, intervenciones y ensayos adhesivos.</p><p><strong>La ciudad no es el lugar donde se aplica la investigación. La ciudad es el laboratorio.</strong></p></article>
+</div>
+</section>
+
+<section class="lab-instruments lab-anchor" id="instrumental">
+<p class="section-kicker">03 / INSTRUMENTAL</p>
+<h2>TECNOLOGÍAS<br>DEL LABORATORIO</h2>
+<div class="lab-instrument-grid">
+<article class="lab-instrument"><b>City Test Stickerummie®</b><p>Dispositivo ficticio de ensayo adhesivo urbano.</p></article>
+<article class="lab-instrument"><b>Stickeiger®</b><p>Instrumento destinado a medir la hostilidad o radiación simbólica del entorno urbano. No mide radiación física.</p></article>
+<article class="lab-instrument"><b>Methacrylate Advisory®</b><p>Sistema de advertencia sobre institucionalización, protección y domesticación.</p></article>
+<article class="lab-instrument"><b>StrataScore™</b><p>Bareback Street Art Certification. Lectura del grado de callejerismo/domesticación de una intervención.</p></article>
+<article class="lab-instrument"><b>Pegatikonur</b><p>Ciudad ficticia de las pegatinas.</p></article>
+</div>
+<div class="lab-disclaimer"><strong>NOTA DE LABORATORIO</strong><br>Los dispositivos y terminología pseudo-científica pertenecen al sistema ficticio del Loreverso. La bata es imaginaria. El archivo, no.</div>
+</section>
+
+<section class="lab-doors">
+<p class="section-kicker">04 / ACCESO AL SISTEMA</p>
+<h2>CUATRO<br>PUERTAS</h2>
+<div class="lab-door-grid">
+<article class="lab-door"><b>LOREVERSO</b><p>Personajes, cosmología, genealogía adhesiva, historia y sistemas.</p><a href="#trinity">ENTRAR →</a></article>
+<article class="lab-door"><b>BRANOLOGÍA</b><p>Pegatinas, muros, memorias y universos adyacentes.</p><a href="loreverso.html#research">ABRIR →</a></article>
+<article class="lab-door"><b>PEGATINISMO DIALÉCTICO</b><p>La teoría y praxis de la lucha de capas.</p><a href="pegatinismo-dialectico-manifiesto.pdf" target="_blank" rel="noopener">LEER MANIFIESTO →</a></article>
+<article class="lab-door"><b>ISO-PEG</b><p>El lenguaje administrativo del archivo.</p><a href="archivo.html">VER ARCHIVO →</a></article>
+</div>
+</section>
+
+<section class="lab-trinity lab-anchor" id="trinity">
+<p class="section-kicker">05 / NÚCLEO IDENTITARIO</p>
+<h2>UNO Y TRINO</h2>
+<p class="lab-lead">1973 queda fijado como el nacimiento del Uno y Trino / Hic Est Ille. No se trata de tres autores separados, sino de tres funciones de una misma realidad simbólica.</p>
+<div class="trinity-grid">
+<article class="trinity-card"><span>AUTORÍA MATERIAL</span><h3>NICOLLAGE_KG</h3><p>Origen humano/autoral; diseño, collage, producción y arquitectura del sistema.</p></article>
+<article class="trinity-card"><span>ENCARNACIÓN MÍTICA</span><h3>LE PEGATINIER</h3><p>Máscara, mito, agente dialéctico y figura pública del Pegatinismo.</p></article>
+<article class="trinity-card"><span>INSTITUCIONALIDAD</span><h3>AGENTS INCÍVICS</h3><p>Aparato burocrático ficticio; administra, normativiza y protege anomalías y memoria.</p></article>
+</div>
+<p class="lab-best">La contradicción NKG / Le Pegatinier es el motor del Uno y Trino.</p>
+</section>
+
+<section class="lab-end ruled">
+<p class="section-kicker">PGTNR_LAB / ARCHIVO ABIERTO</p>
+<h2>EL LORE ES EL MURO.<br>EL MURO ES EL LORE.</h2>
+<p class="lab-line">UNA SOLA DIMENSIÓN. EL RESTO SON CAPAS.</p>
 </section>
 </main>
 
-<footer><div>LOREVERSO PEGATINIER</div><div>5a GALERIA / BARCELONA</div><div>ARCHIVO VIVO</div></footer>
+<footer><div>PGTNR_LAB</div><div>5a GALERIA / BARCELONA</div><div>ARCHIVO VIVO</div></footer>
 </body>
 </html>
