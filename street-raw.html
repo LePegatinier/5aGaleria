@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="hero-mark ondemand-mark" style="background:#201d1d !important;color:#f2eee6 !important;">
-  <div class="ondemand-image-wrap"><img id="pegaton-notienda" alt="Pegatón, Agente Incívic Nº 5" class="ondemand-image"></div>
+  <div class="ondemand-image-wrap"><img id="pegaton-notienda" src="assets/Pegaton_notienda.png?v=20260923-PEGATON-NOTIENDA" alt="Pegatón, Agente Incívic Nº 5" class="ondemand-image"></div>
   <div class="stamp">ON DEMAND<br>5a / INCÍVIC<br><span>BENEFICIO</span></div>
   <p style="color:#f2eee6 !important;">NO ES<br>UNA TIENDA.</p>
 </div>
@@ -72,10 +72,5 @@
     </section>
   </main>
   <footer><div>5a GALERIA</div><div>La5agaleria@proton.me</div><div><a href="index.html">Archivo principal</a></div></footer>
-<script>
-(async()=>{try{
- const parts=await Promise.all(["00","01","02","03"].map(n=>fetch("assets/pegaton-data-"+n+".txt").then(r=>r.text())));
- document.getElementById("pegaton-notienda").src="data:image/jpeg;base64,"+parts.join("");
-}catch(e){console.error("Pegatón image:",e)}})();
-</script></body>
+</body>
 </html>
