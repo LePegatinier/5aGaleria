@@ -82,7 +82,7 @@ jobs:
                 validatedIndex
               };
             }
-            const c=[4-v[0],v[1],4-v[2],4-v[3],v[4]];
+            const c=[v[0],v[1],v[2],v[3],v[4]];
             return {
               index:validatedCategory?(validatedIndex!==null?validatedIndex:null):c.reduce((a,b)=>a+b,0),
               category:validatedCategory||category(c.reduce((a,b)=>a+b,0)),
@@ -95,7 +95,7 @@ jobs:
           }
           async function syncStrata(page,p){
             const s=strata(p),e=rich(prop(p,'SS — Evidencia'));
-            const userIndex=Number.isFinite(s?.values?.[0])?s.values.reduce((acc,x,i)=>acc+(i===0?4-x:(i===2||i===3?4-x:x)),0):null;
+            const userIndex=Number.isFinite(s?.values?.[0])?s.values.reduce((acc,x)=>acc+x,0):null;
             if(userIndex!==null){
               const userCategory=category(userIndex);
               const patch={'SS — Índice':{number:userIndex},'StrataScore™':{select:{name:userCategory}},'SS — Fecha revisión':{date:{start:new Date().toISOString().slice(0,10)}}};
@@ -118,7 +118,7 @@ jobs:
             records.sort((a,b)=>a.expediente.localeCompare(b.expediente,'es',{numeric:true}));
             const existingPath='data/archivo.json';
             let previous=null;try{previous=JSON.parse(fs.readFileSync(existingPath,'utf8'))}catch{}
-            const base={version:'1.2',source:'5a GALERIA / ARCHIVO MAESTRO',stratascore:{system:'StrataScore™ — Bareback Street Art Certification',scale:'A-E',index:'0-20',formula:'(4-Origen)+Mediación+(4-Soporte)+(4-Autonomía)+Artwash',direction:'0 = street raw / 20 = domesticated',not_quality:true,requires_complete_matrix:true},records};
+            const base={version:'1.2',source:'5a GALERIA / ARCHIVO MAESTRO',stratascore:{system:'StrataScore™ — Bareback Street Art Certification',scale:'A-E',index:'0-20',formula:'Origen+Mediación+Soporte+Autonomía+Artwash',direction:'0 = street raw / 20 = domesticated',not_quality:true,requires_complete_matrix:true},records};
             const sameRecords=previous&&JSON.stringify(previous.records||[])===JSON.stringify(records);
             const payload={...base,updated:sameRecords&&previous.updated?previous.updated:new Date().toISOString()};
             fs.writeFileSync(existingPath,JSON.stringify(payload,null,2)+'\n');
