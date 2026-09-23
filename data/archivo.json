@@ -241,9 +241,9 @@
       "destino_curatorial": "No clasificado",
       "methacrylate_advisory": false,
       "motivos_reclusion": [],
-      "stratascore": "A — STREET RAW CERTIFIED",
+      "stratascore": "",
       "strata_index": null,
-      "stratascore_validado": "A — STREET RAW CERTIFIED",
+      "stratascore_validado": "",
       "strata_index_validado": null,
       "strata_origen": null,
       "strata_mediacion": null,
@@ -408,5 +408,5 @@
       "imagen": "assets/archive/5a-000011.jpeg"
     }
   ],
-  "updated": "2026-09-22T17:58:33.069Z"
+  "updated": "2026-09-23T15:02:44.547Z"
 }
