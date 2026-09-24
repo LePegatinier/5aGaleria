@@ -99,7 +99,7 @@ function render(){
   }
   grid.innerHTML=rows.map(r=>{
     const href=`expediente.html?id=${encodeURIComponent(r.expediente)}`;
-    const score=r.strata_index!==undefined&&r.strata_index!==null&&r.strata_index!==''?`${escapeHtml(r.strata_index)}/20 · ${escapeHtml(r.stratascore||'SIN CLASIFICAR')}`:escapeHtml(r.stratascore||'SIN STRATASCORE');
+    const validatedIndex=r.strata_index_validado!==undefined&&r.strata_index_validado!==null&&r.strata_index_validado!==''?r.strata_index_validado:r.strata_index; const validatedScore=r.stratascore_validado||r.stratascore||'SIN CLASIFICAR'; const score=validatedIndex!==undefined&&validatedIndex!==null&&validatedIndex!==''?escapeHtml(validatedIndex)+'/20 · '+escapeHtml(validatedScore):escapeHtml(validatedScore);
     const date=r.fecha?new Date(r.fecha+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}):'FECHA NO REGISTRADA';
     return `<article class="file-card">
       <a href="${href}" aria-label="Abrir expediente ${escapeAttr(r.expediente)}"><img src="${escapeAttr(r.imagen)}" alt="${escapeAttr(r.titulo||r.expediente)}" loading="lazy"></a>
