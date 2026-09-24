@@ -528,7 +528,44 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000014",
       "imagen": "assets/archive/5a-000014.jpg"
+    },
+    {
+      "expediente": "5a-000015",
+      "titulo": "5a-000015",
+      "artista": "anonimo/ creo sale en pequeñito en la foto",
+      "avistador": "alvaro",
+      "ciudad": "barcelona",
+      "ubicacion": "calle xuclà 7",
+      "coordenadas": "41.383058, 2.170820",
+      "fecha": "2026-09-22",
+      "tecnica": "Sticker",
+      "tipo_formato": "Sticker",
+      "estado": "PÚBLICO",
+      "destino_curatorial": "Archivo público",
+      "methacrylate_advisory": false,
+      "motivos_reclusion": [],
+      "stratascore": "B — SEMI-WILD URBAN",
+      "strata_index": 14,
+      "stratascore_validado": "B — SEMI-WILD URBAN",
+      "strata_index_validado": 14,
+      "strata_origen": 1,
+      "strata_mediacion": 1,
+      "strata_soporte": 1,
+      "strata_autonomia": 1,
+      "strata_artwash": 4,
+      "strata_contribucion": [
+        1,
+        1,
+        1,
+        1,
+        4
+      ],
+      "strata_evidence": "",
+      "observaciones": "en una esquinera del bar gats",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000015",
+      "imagen": "assets/archive/5a-000015.jpeg"
     }
   ],
-  "updated": "2026-09-24T10:22:22.512Z"
+  "updated": "2026-09-24T10:29:28.605Z"
 }
