@@ -80,7 +80,7 @@ function updateActiveFilters(){
 }
 function strataGrade(r){
   const s=String(r.stratascore_validado||r.stratascore||'').trim();
-  const m=s.match(/^([A-E])(?:\\s|$)/i);
+  const m=s.match(/^([A-E])(?:\s|$)/i);
   if(m)return m[1].toUpperCase();
   const n=Number(r.strata_index_validado??r.strata_index);
   if(Number.isFinite(n)&&n>=0&&n<=20)return n<=3?'A':n<=7?'B':n<=11?'C':n<=15?'D':'E';
