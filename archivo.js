@@ -78,13 +78,18 @@ function updateActiveFilters(){
   const box=$('active-filters');
   box.innerHTML=chips.map(([k,v])=>`<span><b>${escapeHtml(k)}</b> ${escapeHtml(v)}</span>`).join('');
 }
+function strataIndex(r){
+  const vals=['strata_origen','strata_mediacion','strata_soporte','strata_autonomia','strata_artwash'].map(k=>Number(r[k]));
+  if(vals.every(Number.isFinite)) return vals.reduce((a,b)=>a+b,0);
+  const n=Number(r.strata_index_validado??r.strata_index);
+  return Number.isFinite(n)?n:null;
+}
 function strataGrade(r){
+  const n=strataIndex(r);
+  if(Number.isFinite(n)&&n>=0&&n<=20)return n<=3?'A':n<=7?'B':n<=11?'C':n<=15?'D':'E';
   const s=String(r.stratascore_validado||r.stratascore||'').trim();
   const m=s.match(/^([A-E])(?:\s|$)/i);
-  if(m)return m[1].toUpperCase();
-  const n=Number(r.strata_index_validado??r.strata_index);
-  if(Number.isFinite(n)&&n>=0&&n<=20)return n<=3?'A':n<=7?'B':n<=11?'C':n<=15?'D':'E';
-  return '';
+  return m?m[1].toUpperCase():'';
 }
 function strataImage(r){const g=strataGrade(r);if(!g)return '';if(String(r.expediente||'')==='5a-000009')return 'assets/C.png?v=20260923-EXP9C';return 'assets/'+g+'.png?v='+encodeURIComponent(g);}
 function render(){
@@ -99,7 +104,7 @@ function render(){
   }
   grid.innerHTML=rows.map(r=>{
     const href=`expediente.html?id=${encodeURIComponent(r.expediente)}`;
-    const validatedIndex=r.strata_index_validado!==undefined&&r.strata_index_validado!==null&&r.strata_index_validado!==''?r.strata_index_validado:r.strata_index; const validatedScore=r.stratascore_validado||r.stratascore||'SIN CLASIFICAR'; const score=validatedIndex!==undefined&&validatedIndex!==null&&validatedIndex!==''?escapeHtml(validatedIndex)+'/20 · '+escapeHtml(validatedScore):escapeHtml(validatedScore);
+    const effectiveIndex=strataIndex(r); const effectiveGrade=strataGrade(r); const effectiveScore=effectiveGrade?({'A':'A — STREET RAW CERTIFIED','B':'B — SEMI-WILD URBAN','C':'C — URBAN DISTRICT APPROVED','D':'D — ARTWASH READY™','E':'E — CONTENT SLURRY INDUSTRIAL'}[effectiveGrade]):(r.stratascore_validado||r.stratascore||'SIN CLASIFICAR'); const score=Number.isFinite(effectiveIndex)?escapeHtml(effectiveIndex)+'/20 · '+escapeHtml(effectiveScore):escapeHtml(effectiveScore);
     const date=r.fecha?new Date(r.fecha+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}):'FECHA NO REGISTRADA';
     return `<article class="file-card">
       <a href="${href}" aria-label="Abrir expediente ${escapeAttr(r.expediente)}"><img src="${escapeAttr(r.imagen)}" alt="${escapeAttr(r.titulo||r.expediente)}" loading="lazy"></a>
