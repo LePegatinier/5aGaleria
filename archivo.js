@@ -107,6 +107,7 @@ function render(){
         <span>5a GALERIA / ${escapeHtml(r.expediente)}</span>
         <strong><a href="${href}">${escapeHtml(r.titulo||r.expediente)}</a></strong>
         <p>${escapeHtml(r.artista||'ANÓNIMO')}</p>
+        <p class="file-card-observer">AVISTADOR: ${escapeHtml(r.avistador||'NO REGISTRADO')}</p>
         <p>${escapeHtml(r.ciudad||'SIN CIUDAD')} · ${escapeHtml(r.tecnica||'SIN CLASIFICAR')}</p>
         <div class="file-card-date">${escapeHtml(date)}</div>
         <div class="file-score-line"><b>${score}</b></div>${strataImage(r)?'<div class="file-strata-badge"><img src="'+escapeAttr(strataImage(r))+'" alt="StrataScore™ '+escapeAttr(strataGrade(r))+'" loading="lazy"></div>':''}
