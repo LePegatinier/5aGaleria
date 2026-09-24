@@ -291,15 +291,15 @@
       "strata_index_validado": null,
       "strata_origen": 0,
       "strata_mediacion": 0,
-      "strata_soporte": 4,
-      "strata_autonomia": 4,
-      "strata_artwash": 4,
+      "strata_soporte": 0,
+      "strata_autonomia": 0,
+      "strata_artwash": 0,
       "strata_contribucion": [
         0,
         0,
-        4,
-        4,
-        4
+        0,
+        0,
+        0
       ],
       "strata_evidence": "",
       "observaciones": "",
@@ -388,7 +388,7 @@
       "avistador": "Le Pegatinier ",
       "ciudad": "Barcelona ",
       "ubicacion": "Carrer marqués de barberà",
-      "coordenadas": "41.517474, 2.358985",
+      "coordenadas": "41.379340, 2.172288",
       "fecha": "2026-09-22",
       "tecnica": "Intervención",
       "tipo_formato": "Intervención",
@@ -641,5 +641,5 @@
       "imagen": "assets/archive/5a-000017.jpeg"
     }
   ],
-  "updated": "2026-09-24T11:01:52.864Z"
+  "updated": "2026-09-24T14:54:36.744Z"
 }
