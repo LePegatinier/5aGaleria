@@ -136,7 +136,7 @@ async function loadArchive(){
       .forEach(id=>$(id).addEventListener(id==='archive-search'?'input':'change',render));
     $('archive-reset').addEventListener('click',()=>{
       ['archive-search','filter-city','filter-technique','filter-artist','filter-state','filter-score','filter-destino','filter-advisory'].forEach(id=>$(id).value='');
-      $('archive-sort').value='newest';render();
+      $('archive-sort').value='id-desc';render();
     });
     render();
   }catch(e){
