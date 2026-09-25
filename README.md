@@ -79,3 +79,5 @@ El sitio se sirve gratuitamente mediante GitHub Pages:
 https://lepegatinier.github.io/5aGaleria/
 
 <!-- sync trigger 2026-09-25T15:52:00+02:00 -->
+
+<!-- 5a-sync-trigger 2026-09-25T13:51:54.875Z -->
