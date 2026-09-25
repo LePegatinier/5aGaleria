@@ -544,9 +544,9 @@
       "destino_curatorial": "Archivo público",
       "methacrylate_advisory": false,
       "motivos_reclusion": [],
-      "stratascore": "B — SEMI-WILD URBAN",
+      "stratascore": "A — STREET RAW CERTIFIED",
       "strata_index": 14,
-      "stratascore_validado": "B — SEMI-WILD URBAN",
+      "stratascore_validado": "A — STREET RAW CERTIFIED",
       "strata_index_validado": 14,
       "strata_origen": 1,
       "strata_mediacion": 1,
@@ -641,5 +641,5 @@
       "imagen": "assets/archive/5a-000017.jpeg"
     }
   ],
-  "updated": "2026-09-24T14:54:36.744Z"
+  "updated": "2026-09-25T13:44:31.175Z"
 }
