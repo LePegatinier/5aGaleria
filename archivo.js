@@ -79,17 +79,21 @@ function updateActiveFilters(){
   box.innerHTML=chips.map(([k,v])=>`<span><b>${escapeHtml(k)}</b> ${escapeHtml(v)}</span>`).join('');
 }
 function strataIndex(r){
+  const validated=Number(r.strata_index_validado);
+  if(Number.isFinite(validated)&&validated>=0&&validated<=20)return validated;
   const vals=['strata_origen','strata_mediacion','strata_soporte','strata_autonomia','strata_artwash'].map(k=>Number(r[k]));
   if(vals.every(Number.isFinite)) return vals.reduce((a,b)=>a+b,0);
-  const n=Number(r.strata_index_validado??r.strata_index);
+  const n=Number(r.strata_index);
   return Number.isFinite(n)?n:null;
 }
 function strataGrade(r){
+  const s=String(r.stratascore_validado||'').trim();
+  const m=s.match(/^([A-E])(?:\s|$)/i);
+  if(m)return m[1].toUpperCase();
   const n=strataIndex(r);
   if(Number.isFinite(n)&&n>=0&&n<=20)return n<=3?'A':n<=7?'B':n<=11?'C':n<=15?'D':'E';
-  const s=String(r.stratascore_validado||r.stratascore||'').trim();
-  const m=s.match(/^([A-E])(?:\s|$)/i);
-  return m?m[1].toUpperCase():'';
+  const fallback=String(r.stratascore||'').trim().match(/^([A-E])(?:\s|$)/i);
+  return fallback?fallback[1].toUpperCase():'';
 }
 function strataImage(r){const g=strataGrade(r);if(!g)return '';if(String(r.expediente||'')==='5a-000009')return 'assets/C.png?v=20260923-EXP9C';return 'assets/'+g+'.png?v='+encodeURIComponent(g);}
 function render(){
