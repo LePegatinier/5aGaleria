@@ -656,9 +656,9 @@
       "methacrylate_advisory": false,
       "motivos_reclusion": [],
       "stratascore": "A — STREET RAW CERTIFIED",
-      "strata_index": 12,
+      "strata_index": 0,
       "stratascore_validado": "A — STREET RAW CERTIFIED",
-      "strata_index_validado": 12,
+      "strata_index_validado": 0,
       "strata_origen": 0,
       "strata_mediacion": 0,
       "strata_soporte": 0,
@@ -678,5 +678,5 @@
       "imagen": "assets/archive/5a-000018.jpeg"
     }
   ],
-  "updated": "2026-09-25T13:49:33.535Z"
+  "updated": "2026-09-25T13:52:12.907Z"
 }
