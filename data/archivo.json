@@ -678,6 +678,43 @@
       "imagen": "assets/archive/5a-000018.jpeg"
     },
     {
+      "expediente": "5a-000019",
+      "titulo": "5a-000019",
+      "artista": "Desconocido",
+      "avistador": "Agents Incívics",
+      "ciudad": "Barcelona",
+      "ubicacion": "Carrer Llacuna",
+      "coordenadas": "41.641971, 2.194276",
+      "fecha": "2026-09-26",
+      "tecnica": "Desconocida",
+      "tipo_formato": "Desconocida",
+      "estado": "PÚBLICO",
+      "destino_curatorial": "Archivo público",
+      "methacrylate_advisory": false,
+      "motivos_reclusion": [],
+      "stratascore": "A — STREET RAW CERTIFIED",
+      "strata_index": 0,
+      "stratascore_validado": "A — STREET RAW CERTIFIED",
+      "strata_index_validado": 0,
+      "strata_origen": 0,
+      "strata_mediacion": 0,
+      "strata_soporte": 0,
+      "strata_autonomia": 0,
+      "strata_artwash": 0,
+      "strata_contribucion": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "strata_evidence": "",
+      "observaciones": "Stencil? con el retrato de Nestor Makhno (comandante del Ejército Revolucionario Insurreccional de Ucrania durante la guerra de independencia de Ucrania. Fundó la Majnóvschina, un movimiento de masas del campesinado ucraniano para instaurar el comunismo anarquista en el país entre 1918 y 1921. Autor desconocido y técnica dudosa, desde 5a galeria agradeceríamos cualquier tipo de info al respecto.",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000019",
+      "imagen": "assets/archive/5a-000019.jpeg"
+    },
+    {
       "expediente": "5a-000020",
       "titulo": "5a-000020",
       "artista": "@juandresvera",
@@ -715,5 +752,5 @@
       "imagen": "assets/archive/5a-000020.jpeg"
     }
   ],
-  "updated": "2026-09-26T14:56:02.377Z"
+  "updated": "2026-09-26T15:00:59.055Z"
 }
