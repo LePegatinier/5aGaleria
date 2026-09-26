@@ -55,7 +55,9 @@ jobs:
               const location=rich(prop(p,'Ubicación')).trim(),city=rich(prop(p,'Ciudad')).trim();
               let coords=normalizeCoords(rich(prop(p,'Coordenadas')).trim());
               if(!validCoords(coords)){try{coords=await geocode(location,city)}catch(e){console.warn(`Geocodificación fallida para ${expediente}: ${e.message}`);coords=''}}
-              const properties={'Expediente':{title:[{type:'text',text:{content:expediente}}]},'Estado del expediente':{select:{name:coords?'EN REVISIÓN':'RECIBIDO'}}};
+              const existingState=select(prop(p,'Estado del expediente')).trim();
+              const resolvedState=existingState==='PÚBLICO'?'PÚBLICO':(coords?'EN REVISIÓN':'RECIBIDO');
+              const properties={'Expediente':{title:[{type:'text',text:{content:expediente}}]},'Estado del expediente':{select:{name:resolvedState}}};
               if(coords)properties['Coordenadas']={rich_text:[{type:'text',text:{content:coords}}]};
               await patchPage(page.id,properties);
               console.log(`${expediente} asignado · ${coords?'EN REVISIÓN · '+coords:'RECIBIDO · sin coordenadas'}`);
