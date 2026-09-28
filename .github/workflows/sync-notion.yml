@@ -73,37 +73,46 @@ jobs:
             const resolvedValidatedCategory=validatedCategory||category(validatedIndex);
             const existingCategory=select(prop(p,'StrataScore™'));
             const existingIndex=number(prop(p,'SS — Índice'));
-            if(v.some(x=>x===null||x<0||x>4)){
+            const proposedComplete=v.every(x=>x!==null&&x>=0&&x<=4);
+            const proposedIndex=proposedComplete?v.reduce((a,b)=>a+b,0):null;
+            const proposedCategory=proposedComplete?category(proposedIndex):'';
+            if(!proposedComplete){
               return {
-                index:validatedCategory?(validatedIndex!==null?validatedIndex:null):existingIndex,
-                category:resolvedValidatedCategory||existingCategory,
-                values:[null,null,null,null,null],
-                contributions:[null,null,null,null,null],
+                index:validatedCategory?(validatedIndex!==null?validatedIndex:null):null,
+                category:validatedCategory||'',
+                values:v,
+                contributions:v,
                 evidence:rich(prop(p,'SS — Evidencia')),
                 validatedCategory,
-                validatedIndex
+                validatedIndex,
+                proposedIndex:null,
+                proposedCategory:''
               };
             }
-            const c=[v[0],v[1],v[2],v[3],v[4]];
             return {
-              index:validatedCategory?(validatedIndex!==null?validatedIndex:null):c.reduce((a,b)=>a+b,0),
-              category:validatedCategory||category(c.reduce((a,b)=>a+b,0)),
+              index:validatedCategory?(validatedIndex!==null?validatedIndex:null):null,
+              category:validatedCategory||'',
               values:v,
-              contributions:c,
+              contributions:v,
               evidence:rich(prop(p,'SS — Evidencia')),
               validatedCategory,
-              validatedIndex
+              validatedIndex,
+              proposedIndex,
+              proposedCategory
             };
           }
           async function syncStrata(page,p){
             const s=strata(p),e=rich(prop(p,'SS — Evidencia'));
-            const userIndex=Number.isFinite(s?.values?.[0])?s.values.reduce((acc,x)=>acc+x,0):null;
-            if(userIndex!==null){
-              const userCategory=category(userIndex);
-              const patch={'SS — Índice':{number:userIndex},'StrataScore™':{select:{name:userCategory}},'SS — Fecha revisión':{date:{start:new Date().toISOString().slice(0,10)}}};
+            if(s.validatedCategory){
+              const patch={'SS — Fecha revisión':{date:{start:new Date().toISOString().slice(0,10)}}};
+              if(s.validatedIndex!==null)patch['SS — Índice']={number:s.validatedIndex};
+              patch['StrataScore™']={select:{name:s.validatedCategory}};
+              await patchPage(page.id,patch);
+            }else{
+              const patch={'SS — Índice':{number:null},'StrataScore™':{select:null}};
               await patchPage(page.id,patch);
             }
-            return s||{index:null,category:'',values:[null,null,null,null,null],contributions:[null,null,null,null,null],evidence:e,validatedCategory:'',validatedIndex:null};
+            return s||{index:null,category:'',values:[null,null,null,null,null],contributions:[null,null,null,null,null],evidence:e,validatedCategory:'',validatedIndex:null,proposedIndex:null,proposedCategory:''};
           }
           async function image(record,img){const src=img?.type==='file'?img.file?.url:img?.external?.url;if(!src)return '';const ext=(img?.name?.match(/\.(jpe?g|png|webp|gif)$/i)?.[1]||'jpg').toLowerCase(),dir=path.join('assets','archive');fs.mkdirSync(dir,{recursive:true});const file=`${record.expediente.replace(/[^a-zA-Z0-9_-]/g,'_')}.${ext}`,target=path.join(dir,file);try{const r=await fetch(src);if(!r.ok)throw new Error(`HTTP ${r.status}`);fs.writeFileSync(target,Buffer.from(await r.arrayBuffer()));return `assets/archive/${file}`}catch(e){console.warn(`No se pudo copiar ${record.expediente}: ${e.message}`);return ''}}
           (async()=>{
@@ -114,7 +123,7 @@ jobs:
             const records=[],seen=new Set();
             for(const page of pages){const p=page.properties||{},raw=title(prop(p,'Expediente')).trim(),expediente=norm(raw);if(!expediente){console.warn(`Omitido ${page.id}: Expediente inválido.`);continue}if(seen.has(expediente)){console.warn(`Omitido duplicado: ${expediente}`);continue}
               let coords=normalizeCoords(rich(prop(p,'Coordenadas')).trim());if(!validCoords(coords)){try{coords=await geocode(rich(prop(p,'Ubicación')),rich(prop(p,'Ciudad')))}catch(e){coords=''}}if(!validCoords(coords)){console.warn(`No publicado ${expediente}: sin coordenadas válidas.`);continue}
-              const s=await syncStrata(page,p),r={expediente,titulo:raw||'INTERVENCIÓN URBANA',artista:rich(prop(p,'Artista / Alias'))||'ANÓNIMO',avistador:rich(prop(p,'Avistador'))||'NO REGISTRADO',ciudad:rich(prop(p,'Ciudad')),ubicacion:rich(prop(p,'Ubicación')),coordenadas:coords,fecha:date(prop(p,'Fecha')),tecnica:select(prop(p,'Técnica'))||'Desconocida',tipo_formato:select(prop(p,'Tipo / Formato'))||select(prop(p,'Técnica'))||'Desconocida',estado:select(prop(p,'Estado del expediente'))||'Desconocido',destino_curatorial:select(prop(p,'Destino curatorial'))||'No clasificado',methacrylate_advisory:prop(p,'METHACRYLATE ADVISORY™')?.checkbox===true,motivos_reclusion:prop(p,'Motivo de reclusión')?.multi_select?.map(x=>x.name)||[],stratascore:s.validatedCategory||s.category||'',strata_index:s.validatedCategory?(s.validatedIndex!==null?s.validatedIndex:null):s.index,stratascore_validado:s.validatedCategory||s.category||'',strata_index_validado:s.validatedIndex,strata_origen:s.values[0],strata_mediacion:s.values[1],strata_soporte:s.values[2],strata_autonomia:s.values[3],strata_artwash:s.values[4],strata_contribucion:s.contributions,strata_evidence:s.evidence,observaciones:rich(prop(p,'Observaciones')),publicado:true,url:`expediente.html?id=${encodeURIComponent(expediente)}`,imagen:''};
+              const s=await syncStrata(page,p),r={expediente,titulo:raw||'INTERVENCIÓN URBANA',artista:rich(prop(p,'Artista / Alias'))||'ANÓNIMO',avistador:rich(prop(p,'Avistador'))||'NO REGISTRADO',ciudad:rich(prop(p,'Ciudad')),ubicacion:rich(prop(p,'Ubicación')),coordenadas:coords,fecha:date(prop(p,'Fecha')),tecnica:select(prop(p,'Técnica'))||'Desconocida',tipo_formato:select(prop(p,'Tipo / Formato'))||select(prop(p,'Técnica'))||'Desconocida',estado:select(prop(p,'Estado del expediente'))||'Desconocido',destino_curatorial:select(prop(p,'Destino curatorial'))||'No clasificado',methacrylate_advisory:prop(p,'METHACRYLATE ADVISORY™')?.checkbox===true,motivos_reclusion:prop(p,'Motivo de reclusión')?.multi_select?.map(x=>x.name)||[],stratascore:s.validatedCategory||'',strata_index:s.validatedCategory?(s.validatedIndex!==null?s.validatedIndex:null):null,stratascore_validado:s.validatedCategory||'',strata_index_validado:s.validatedIndex,stratascore_propuesto:s.proposedCategory||'',strata_index_propuesto:s.proposedIndex,strata_origen:s.values[0],strata_mediacion:s.values[1],strata_soporte:s.values[2],strata_autonomia:s.values[3],strata_artwash:s.values[4],strata_contribucion:s.contributions,strata_evidence:s.evidence,observaciones:rich(prop(p,'Observaciones')),publicado:true,url:`expediente.html?id=${encodeURIComponent(expediente)}`,imagen:''};
               const files=prop(p,'Fotografía')?.files||[];if(files.length)r.imagen=await image(r,files[0]);seen.add(expediente);records.push(r)
             }
             records.sort((a,b)=>a.expediente.localeCompare(b.expediente,'es',{numeric:true}));
