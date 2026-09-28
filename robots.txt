@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lepegatinier.github.io/5aGaleria/sitemap.xml
