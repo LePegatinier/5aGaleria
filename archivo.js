@@ -108,7 +108,7 @@ function render(){
   }
   grid.innerHTML=rows.map(r=>{
     const href=`expediente.html?id=${encodeURIComponent(r.expediente)}`;
-    const effectiveIndex=strataIndex(r); const effectiveGrade=strataGrade(r); const effectiveScore=effectiveGrade?({'A':'A — STREET RAW CERTIFIED','B':'B — SEMI-WILD URBAN','C':'C — URBAN DISTRICT APPROVED','D':'D — ARTWASH READY™','E':'E — CONTENT SLURRY INDUSTRIAL'}[effectiveGrade]):(r.stratascore_validado||r.stratascore||'SIN CLASIFICAR'); const score=Number.isFinite(effectiveIndex)?escapeHtml(effectiveIndex)+'/20 · '+escapeHtml(effectiveScore):escapeHtml(effectiveScore);
+    const effectiveIndex=strataIndex(r); const effectiveGrade=strataGrade(r); const effectiveScore=effectiveGrade?({'A':'A — STREET RAW CERTIFIED','B':'B — SEMI-WILD URBAN','C':'C — URBAN DISTRICT APPROVED','D':'D — ARTWASH READY™','E':'E — METHACRYLATE™'}[effectiveGrade]):(r.stratascore_validado||r.stratascore||'SIN CLASIFICAR'); const score=Number.isFinite(effectiveIndex)?escapeHtml(effectiveIndex)+'/20 · '+escapeHtml(effectiveScore):escapeHtml(effectiveScore);
     const date=r.fecha?new Date(r.fecha+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}):'FECHA NO REGISTRADA';
     return `<article class="file-card">
       <a href="${href}" aria-label="Abrir expediente ${escapeAttr(r.expediente)}"><img src="${escapeAttr(r.imagen)}" alt="${escapeAttr(r.titulo||r.expediente)}" loading="lazy"></a>
