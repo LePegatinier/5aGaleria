@@ -120,20 +120,6 @@
 
 <script>
 (function(){
-  const demo={agent_id:"AINC-0001",alias:"Agent de prova",city:"Barcelona",status:"ACTIU",carnet:true,issued:"2026-09-23",validated_sightings:10,total_sightings:12,territory:"Barcelona / Catalunya",role:"Agent Incívic",public:true,test:true};
-  const countEl=document.getElementById("test-count");
-  const saved=Number(localStorage.getItem("5a_demo_agent_count"));
-  if(Number.isFinite(saved)) countEl.value=saved;
-  function render(count){
-    const eligible=count>=10;
-    document.getElementById("card-count").textContent=count;
-    document.getElementById("dash-count").textContent=count+" / 10";
-    document.getElementById("eligibility-title").textContent=eligible?"ELEGIBLE":"ENCARA NO";
-    document.getElementById("eligibility-text").textContent=eligible?"Aquest perfil de prova ja ha superat el llindar de 10 avistaments validats.":"Falten "+(10-count)+" avistament(s) validat(s) per poder sol·licitar el carnet.";
-    document.getElementById("card-status").textContent=eligible?"ACTIU":"CANDIDAT";
-    document.getElementById("dash-status").textContent=eligible?"ACTIU":"CANDIDAT";
-  }
-  document.getElementById("apply-test").addEventListener("click",function(){const n=Math.max(0,Number(countEl.value)||0);localStorage.setItem("5a_demo_agent_count",n);render(n);});
   fetch("data/agentes.json").then(r=>r.json()).then(data=>{
     const body=document.getElementById("agent-table-body");
     body.innerHTML="";
@@ -145,7 +131,7 @@
   }).catch(function(){
     document.getElementById("agent-table-body").innerHTML="<tr><td colspan='5'>No s'ha pogut carregar el registre.</td></tr>";
   });
-  render(Number(countEl.value)||10);
+  render(0);
 })();
 </script>
 </body>
