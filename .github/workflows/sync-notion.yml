@@ -1,5 +1,5 @@
 name: 5a Galeria · Sincronizar archivo público
-# Manual sync trigger 2026-09-21
+# Manual sync trigger 2026-09-28 · force resync of pending intake
 
 on:
   workflow_dispatch:
