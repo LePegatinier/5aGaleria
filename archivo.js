@@ -4,8 +4,7 @@ const norm=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLo
 
 function publicRecord(r){
   const id=String(r.expediente||'');
-  const coords=String(r.coordenadas||'').trim();
-  return r.publicado===true&&coords&&/^5a-\d{6}$/.test(id);
+  return r.publicado===true&&/^5a-\d{6}$/.test(id);
 }
 function unique(field){
   return [...new Set(archiveRecords.map(r=>String(r[field]||'').trim()).filter(Boolean))]
