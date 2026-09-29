@@ -33,7 +33,7 @@ El sistema asigna automáticamente un expediente canónico con formato:
 
 `5a-000001`
 
-Si existen coordenadas válidas, el registro pasa a **EN REVISIÓN**. La publicación pública requiere que el expediente esté en **PÚBLICO** y que **Publicado** esté activado.
+Si existen coordenadas válidas, el registro pasa a **EN REVISIÓN**. La publicación pública requiere que el expediente esté en **PÚBLICO** y que **Publicado** esté activado. Un expediente puede formar parte del Archivo sin coordenadas; en ese caso no aparece en el Mapa.
 
 ## Publicación automática
 
@@ -81,3 +81,11 @@ https://lepegatinier.github.io/5aGaleria/
 <!-- sync trigger 2026-09-25T15:52:00+02:00 -->
 
 <!-- 5a-sync-trigger 2026-09-25T13:51:54.875Z -->
+
+## Gobierno del Archivo Maestro · 29/09/2026
+
+- **Producción:** data source `081d103e-208a-45df-a3f7-489a2deaf3eb`.
+- **Legacy:** data source histórico `7016bada-bf2a-425a-840c-429425f42c2d` conservado como referencia y **no operativo** para publicaciones.
+- **Publicación:** `Estado del expediente = PÚBLICO` + `Publicado = YES`.
+- **Archivo ≠ Mapa:** coordenadas ausentes no bloquean el archivo; el mapa filtra únicamente registros con coordenadas válidas.
+- **StrataScore™:** una matriz incompleta no se convierte en ceros. La puntuación sólo se calcula cuando las cinco variables están realmente informadas; la certificación validada permanece separada.
