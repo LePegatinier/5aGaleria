@@ -8,7 +8,7 @@ function validateArchive(records){
   const ids=new Set();
   (records||[]).forEach((r,index)=>{
     const id=String(r.expediente||'').trim();
-    if(!/^5a-\\d{6}$/.test(id)) errors.push(`Registro ${index}: ID inválido`);
+    if(!/^5a-\d{6}$/.test(id)) errors.push(`Registro ${index}: ID inválido`);
     if(ids.has(id)) errors.push(`Duplicado: ${id}`);
     ids.add(id);
     if(r.publicado===true && !String(r.imagen||'').trim()) errors.push(`${id}: falta imagen`);
