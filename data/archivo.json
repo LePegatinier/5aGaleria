@@ -829,7 +829,46 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000021",
       "imagen": "assets/archive/5a-000021.jpg"
+    },
+    {
+      "expediente": "5a-000022",
+      "titulo": "5a-000022",
+      "artista": "Obeygiant",
+      "avistador": "Agents Incívics",
+      "ciudad": "Barcelona",
+      "ubicacion": "Avda. Vilanova",
+      "coordenadas": "41.392443, 2.181586",
+      "fecha": "2026-09-29",
+      "tecnica": "Sticker",
+      "tipo_formato": "Sticker",
+      "estado": "PÚBLICO",
+      "destino_curatorial": "Archivo público",
+      "methacrylate_advisory": false,
+      "motivos_reclusion": [],
+      "stratascore": "",
+      "strata_index": null,
+      "stratascore_validado": "",
+      "strata_index_validado": 4,
+      "stratascore_propuesto": "B — SEMI-WILD URBAN",
+      "strata_index_propuesto": 4,
+      "strata_origen": 2,
+      "strata_mediacion": 0,
+      "strata_soporte": 0,
+      "strata_autonomia": 1,
+      "strata_artwash": 1,
+      "strata_contribucion": [
+        2,
+        0,
+        0,
+        1,
+        1
+      ],
+      "strata_evidence": "",
+      "observaciones": "Andre the Giant Has a Posse es una famosa campaña de arte callejero creada en 1989 por el artista y grafitero Shepard Fairey mientras estudiaba en la Escuela de Diseño de Rhode Island.",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000022",
+      "imagen": "assets/archive/5a-000022.png"
     }
   ],
-  "updated": "2026-09-28T06:45:37.254Z"
+  "updated": "2026-09-29T09:26:02.336Z"
 }
