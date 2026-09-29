@@ -50,7 +50,7 @@ jobs:
             const pages=await queryAll();
             const used=new Set(pages.map(x=>norm(title(prop(x.properties,'Expediente')))).filter(Boolean));
             let max=0;for(const x of used){const n=Number(x.slice(3));if(n>max)max=n}
-            for(const page of pages){const p=page.properties||{};if(title(prop(p,'Expediente')).trim())continue;
+            for(const page of pages){const p=page.properties||{};const currentExpediente=title(prop(p,'Expediente')).trim();if(currentExpediente&&!/^Nueva página$/i.test(currentExpediente)&&!/^New page$/i.test(currentExpediente))continue;
               const expediente=`5a-${String(++max).padStart(6,'0')}`;
               const location=rich(prop(p,'Ubicación')).trim(),city=rich(prop(p,'Ciudad')).trim();
               let coords=normalizeCoords(rich(prop(p,'Coordenadas')).trim());
