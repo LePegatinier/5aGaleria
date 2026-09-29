@@ -728,8 +728,8 @@
       "destino_curatorial": "Archivo público",
       "methacrylate_advisory": false,
       "motivos_reclusion": [],
-      "stratascore": "",
-      "strata_index": null,
+      "stratascore": "A — STREET RAW CERTIFIED",
+      "strata_index": 0,
       "stratascore_validado": "A — STREET RAW CERTIFIED",
       "strata_index_validado": 0,
       "stratascore_propuesto": "A — STREET RAW CERTIFIED",
@@ -806,8 +806,8 @@
       "destino_curatorial": "No clasificado",
       "methacrylate_advisory": false,
       "motivos_reclusion": [],
-      "stratascore": "",
-      "strata_index": null,
+      "stratascore": "A — STREET RAW CERTIFIED",
+      "strata_index": 0,
       "stratascore_validado": "A — STREET RAW CERTIFIED",
       "strata_index_validado": 0,
       "stratascore_propuesto": "A — STREET RAW CERTIFIED",
@@ -845,8 +845,8 @@
       "destino_curatorial": "Archivo público",
       "methacrylate_advisory": false,
       "motivos_reclusion": [],
-      "stratascore": "",
-      "strata_index": null,
+      "stratascore": "B — SEMI-WILD URBAN",
+      "strata_index": 4,
       "stratascore_validado": "B — SEMI-WILD URBAN",
       "strata_index_validado": 4,
       "stratascore_propuesto": "B — SEMI-WILD URBAN",
@@ -870,5 +870,5 @@
       "imagen": "assets/archive/5a-000022.png"
     }
   ],
-  "updated": "2026-09-29T09:26:02.336Z"
+  "updated": "2026-09-29T10:04:45.424Z"
 }
