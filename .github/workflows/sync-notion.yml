@@ -65,12 +65,12 @@ jobs:
           async function publicPages(){return queryAll({and:[{property:'Estado del expediente',select:{equals:'PÚBLICO'}},{property:'Publicado',checkbox:{equals:true}}]})}
           function category(i){if(!Number.isFinite(i)||i<0||i>20)return '';if(i<=3)return 'A — STREET RAW CERTIFIED';if(i<=7)return 'B — SEMI-WILD URBAN';if(i<=11)return 'C — URBAN DISTRICT APPROVED';if(i<=15)return 'D — ARTWASH READY™';return 'E — METHACRYLATE™'}
           function strata(p){
-            const ns=['Origen','Mediación','Soporte','Autonomía','Artwash'],v=ns.map(n=>number(prop(p,`SS - ${n}`)));
+            const ns=['Origen','Mediación','Soporte','Autonomía','Artwash'],v=ns.map(n=>number(prop(p,`SS — ${n}`)));
             const validatedCategory=select(prop(p,'StrataScore™ validado'));
-            const validatedIndex=number(prop(p,'SS - Índice validado'));
+            const validatedIndex=number(prop(p,'SS — Índice validado'));
             const resolvedValidatedCategory=validatedCategory||category(validatedIndex);
             const existingCategory=select(prop(p,'StrataScore™'));
-            const existingIndex=number(prop(p,'SS - Índice'));
+            const existingIndex=number(prop(p,'SS — Índice'));
             const proposedComplete=v.every(x=>x!==null&&x>=0&&x<=4);
             const proposedIndex=proposedComplete?v.reduce((a,b)=>a+b,0):null;
             const proposedCategory=proposedComplete?category(proposedIndex):'';
@@ -80,7 +80,7 @@ jobs:
                 category:validatedCategory||'',
                 values:v,
                 contributions:v,
-                evidence:rich(prop(p,'SS - Evidencia')),
+                evidence:rich(prop(p,'SS — Evidencia')),
                 validatedCategory,
                 validatedIndex,
                 proposedIndex:null,
@@ -92,7 +92,7 @@ jobs:
               category:validatedCategory||'',
               values:v,
               contributions:v,
-              evidence:rich(prop(p,'SS - Evidencia')),
+              evidence:rich(prop(p,'SS — Evidencia')),
               validatedCategory,
               validatedIndex,
               proposedIndex,
@@ -100,14 +100,14 @@ jobs:
             };
           }
           async function syncStrata(page,p){
-            const s=strata(p),e=rich(prop(p,'SS - Evidencia'));
+            const s=strata(p),e=rich(prop(p,'SS — Evidencia'));
             if(s.validatedCategory){
               const patch={'SS — Fecha revisión':{date:{start:new Date().toISOString().slice(0,10)}}};
-              if(s.validatedIndex!==null)patch['SS - Índice']={number:s.validatedIndex};
+              if(s.validatedIndex!==null)patch['SS — Índice']={number:s.validatedIndex};
               patch['StrataScore™']={select:{name:s.validatedCategory}};
               await patchPage(page.id,patch);
             }else{
-              const patch={'SS - Índice':{number:null},'StrataScore™':{select:null}};
+              const patch={'SS — Índice':{number:null},'StrataScore™':{select:null}};
               await patchPage(page.id,patch);
             }
             return s||{index:null,category:'',values:[null,null,null,null,null],contributions:[null,null,null,null,null],evidence:e,validatedCategory:'',validatedIndex:null,proposedIndex:null,proposedCategory:''};
