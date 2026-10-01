@@ -5,8 +5,6 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [notion-publish]
-  push:
-    branches: [main]
   schedule:
     - cron: '*/5 * * * *'
 
@@ -104,7 +102,7 @@ jobs:
           async function syncStrata(page,p){
             const s=strata(p),e=rich(prop(p,'SS - Evidencia'));
             if(s.validatedCategory){
-              const patch={};
+              const patch={'SS — Fecha revisión':{date:{start:new Date().toISOString().slice(0,10)}}};
               if(s.validatedIndex!==null)patch['SS - Índice']={number:s.validatedIndex};
               patch['StrataScore™']={select:{name:s.validatedCategory}};
               await patchPage(page.id,patch);
