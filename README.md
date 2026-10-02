@@ -56,7 +56,7 @@ Para su publicación se exige:
 - estado **PÚBLICO**;
 - propiedad **Publicado = YES**;
 - coordenadas válidas;
-- fotografía disponible.
+- fotografía disponible. Las coordenadas no son obligatorias para el Archivo; sólo determinan si el expediente puede representarse en el Mapa.
 
 El sistema evita publicar registros incompletos y no inventa valores de StrataScore™.
 
