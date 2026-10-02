@@ -95,9 +95,38 @@ function strataGrade(r){
   return fallback?fallback[1].toUpperCase():'';
 }
 function strataImage(r){const g=strataGrade(r);if(!g)return '';if(String(r.expediente||'')==='5a-000009')return 'assets/C.png?v=20260923-EXP9C';return 'assets/'+g+'.png?v='+encodeURIComponent(g);}
+function renderStrataDistribution(){
+  const box=$('strata-distribution'); if(!box)return;
+  const counts={A:0,B:0,C:0,D:0,E:0};
+  archiveRecords.forEach(r=>{const g=strataGrade(r);if(counts[g]!==undefined)counts[g]++;});
+  const total=archiveRecords.length||1;
+  box.innerHTML=Object.entries(counts).map(([g,n])=>{
+    const pct=Math.round(n/total*100);
+    const label={'A':'STREET RAW CERTIFIED','B':'SEMI-WILD URBAN','C':'URBAN DISTRICT APPROVED','D':'ARTWASH READY™','E':'METHACRYLATE™'}[g];
+    return '<button type="button" class="strata-bar strata-'+g.toLowerCase()+'" data-score="'+g+'" aria-label="Filtrar por StrataScore '+g+'"><span class="strata-letter">'+g+'</span><span class="strata-bar-main"><b>'+label+'</b><i><em style="width:'+pct+'%"></em></i></span><strong>'+n+'</strong></button>';
+  }).join('');
+  box.querySelectorAll('.strata-bar').forEach(btn=>btn.addEventListener('click',()=>{
+    const g=btn.dataset.score;
+    const options=[...$('filter-score').options];
+    const match=options.find(o=>String(o.textContent||'').trim().startsWith(g+' '));
+    if(match){$('filter-score').value=match.value;render();}
+    else{
+      const rows=archiveRecords.filter(r=>strataGrade(r)===g);
+      $('archive-search').value=''; $('filter-score').value='';
+      $('archive-grid').innerHTML=rows.length?rows.map(r=>renderCard(r)).join(''):'<div class="archive-empty"><strong>NINGÚN EXPEDIENTE COINCIDE.</strong></div>';
+      $('archive-summary').textContent='MOSTRANDO '+rows.length+' DE '+archiveRecords.length;
+    }
+  }));
+}
+function renderCard(r){
+  const href='expediente.html?id='+encodeURIComponent(r.expediente);
+  const effectiveIndex=strataIndex(r); const effectiveGrade=strataGrade(r); const effectiveScore=effectiveGrade?({'A':'A — STREET RAW CERTIFIED','B':'B — SEMI-WILD URBAN','C':'C — URBAN DISTRICT APPROVED','D':'D — ARTWASH READY™','E':'E — METHACRYLATE™'}[effectiveGrade]):(r.stratascore_validado||r.stratascore||'SIN CLASIFICAR'); const score=Number.isFinite(effectiveIndex)?escapeHtml(effectiveIndex)+'/20 · '+escapeHtml(effectiveScore):escapeHtml(effectiveScore);
+  const date=r.fecha?new Date(r.fecha+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}):'FECHA NO REGISTRADA';
+  return '<article class="file-card"><a href="'+href+'" aria-label="Abrir expediente '+escapeAttr(r.expediente)+'"><img src="'+escapeAttr(r.imagen)+'" alt="'+escapeAttr(r.titulo||r.expediente)+'" loading="lazy"></a><div class="file-meta"><span>5a GALERIA / '+escapeHtml(r.expediente)+'</span><strong><a href="'+href+'">'+escapeHtml(r.titulo||r.expediente)+'</a></strong><p>'+escapeHtml(r.artista||'ANÓNIMO')+'</p><p class="file-card-observer">AVISTADOR: '+escapeHtml(r.avistador||'NO REGISTRADO')+'</p><p class="file-card-observations">OBSERVACIONES: '+escapeHtml(r.observaciones||'SIN OBSERVACIONES')+'</p><p>'+escapeHtml(r.ciudad||'SIN CIUDAD')+' · '+escapeHtml(r.tecnica||'SIN CLASIFICAR')+'</p><div class="file-card-date">'+escapeHtml(date)+'</div><div class="file-score-line"><b>'+score+'</b></div>'+(strataImage(r)?'<div class="file-strata-badge"><img src="'+escapeAttr(strataImage(r))+'" alt="StrataScore™ '+escapeAttr(strataGrade(r))+'" loading="lazy"></div>':'')+'<div class="file-tags">'+(r.estado?'<small>'+escapeHtml(r.estado)+'</small>':'')+(r.methacrylate_advisory?'<small>METHACRYLATE ADVISORY™</small>':'')+((r.destino_curatorial==='Calabozo del Metacrilato™'||r.destino_curatorial==='Ambos')?'<small>CALABOZO DEL METACRILATO™</small>':'')+((r.destino_curatorial==='Calabozo del Metacrilato™'||r.destino_curatorial==='Ambos')?'<small><a href="calabozo.html">VER EN CALABOZO →</a></small>':'')+'</div></div></article>';
+}
 function render(){
   const grid=$('archive-grid'),status=$('archive-status'),summary=$('archive-summary');
-  updateSortNote();updateActiveFilters();
+  updateSortNote();updateActiveFilters();renderStrataDistribution();
   const rows=filteredRecords();
   status.textContent=`ARCHIVO PÚBLICO / ${archiveRecords.length} EXPEDIENTE${archiveRecords.length===1?'':'S'} CATALOGADO${archiveRecords.length===1?'':'S'}`;
   summary.textContent=`MOSTRANDO ${rows.length} DE ${archiveRecords.length}`;
@@ -105,30 +134,8 @@ function render(){
     grid.innerHTML='<div class="archive-empty"><strong>NINGÚN EXPEDIENTE COINCIDE.</strong><p>La calle existe. Este filtro, de momento, no.</p></div>';
     return;
   }
-  grid.innerHTML=rows.map(r=>{
-    const href=`expediente.html?id=${encodeURIComponent(r.expediente)}`;
-    const effectiveIndex=strataIndex(r); const effectiveGrade=strataGrade(r); const effectiveScore=effectiveGrade?({'A':'A — STREET RAW CERTIFIED','B':'B — SEMI-WILD URBAN','C':'C — URBAN DISTRICT APPROVED','D':'D — ARTWASH READY™','E':'E — METHACRYLATE™'}[effectiveGrade]):(r.stratascore_validado||r.stratascore||'SIN CLASIFICAR'); const score=Number.isFinite(effectiveIndex)?escapeHtml(effectiveIndex)+'/20 · '+escapeHtml(effectiveScore):escapeHtml(effectiveScore);
-    const date=r.fecha?new Date(r.fecha+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}):'FECHA NO REGISTRADA';
-    return `<article class="file-card">
-      <a href="${href}" aria-label="Abrir expediente ${escapeAttr(r.expediente)}"><img src="${escapeAttr(r.imagen)}" alt="${escapeAttr(r.titulo||r.expediente)}" loading="lazy"></a>
-      <div class="file-meta">
-        <span>5a GALERIA / ${escapeHtml(r.expediente)}</span>
-        <strong><a href="${href}">${escapeHtml(r.titulo||r.expediente)}</a></strong>
-        <p>${escapeHtml(r.artista||'ANÓNIMO')}</p>
-        <p class="file-card-observer">AVISTADOR: ${escapeHtml(r.avistador||'NO REGISTRADO')}</p>
-        <p class="file-card-observations">OBSERVACIONES: ${escapeHtml(r.observaciones||'SIN OBSERVACIONES')}</p>
-        <p>${escapeHtml(r.ciudad||'SIN CIUDAD')} · ${escapeHtml(r.tecnica||'SIN CLASIFICAR')}</p>
-        <div class="file-card-date">${escapeHtml(date)}</div>
-        <div class="file-score-line"><b>${score}</b></div>${strataImage(r)?'<div class="file-strata-badge"><img src="'+escapeAttr(strataImage(r))+'" alt="StrataScore™ '+escapeAttr(strataGrade(r))+'" loading="lazy"></div>':''}
-        <div class="file-tags">
-          ${r.estado?`<small>${escapeHtml(r.estado)}</small>`:''}
-          ${r.methacrylate_advisory?`<small>METHACRYLATE ADVISORY™</small>`:''}
-          ${r.destino_curatorial==='Calabozo del Metacrilato™'||r.destino_curatorial==='Ambos'?'<small>CALABOZO DEL METACRILATO™</small>':''}
-          ${(r.destino_curatorial==='Calabozo del Metacrilato™'||r.destino_curatorial==='Ambos')?'<small><a href="calabozo.html">VER EN CALABOZO →</a></small>':''}
-        </div>
-      </div>
-    </article>`;
-  }).join('');
+  grid.innerHTML=rows.map(renderCard).join('');
+
 }
 async function loadArchive(){
   try{
