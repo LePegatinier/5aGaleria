@@ -720,7 +720,7 @@
       "avistador": "Agents Incívics",
       "ciudad": "Barcelona",
       "ubicacion": "Carrer Llacuna",
-      "coordenadas": "41.401971, 2.194276",
+      "coordenadas": "41.401810, 2.198125",
       "fecha": "2026-09-26",
       "tecnica": "Desconocida",
       "tipo_formato": "Desconocida",
@@ -987,5 +987,5 @@
       "imagen": "assets/archive/5a-000025.jpg"
     }
   ],
-  "updated": "2026-10-01T14:47:47.284Z"
+  "updated": "2026-10-02T08:55:00.314Z"
 }
