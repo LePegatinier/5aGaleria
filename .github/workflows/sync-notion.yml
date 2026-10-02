@@ -6,14 +6,14 @@ on:
   repository_dispatch:
     types: [notion-publish]
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '2-59/5 * * * *'
 
 permissions:
   contents: write
 
 concurrency:
   group: 5a-galeria-sync
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   sync:
