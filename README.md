@@ -25,7 +25,7 @@ La 5a Galeria es un archivo público y distribuido de avistamientos de arte call
 
 El botón **Avistar** abre el formulario Tally:
 
-https://tally.so/r/gDoB1P
+https://tally.so/r/kdqeNr
 
 Las entradas llegan al **5a GALERIA / ARCHIVO MAESTRO** de Notion.
 
