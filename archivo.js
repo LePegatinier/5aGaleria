@@ -86,12 +86,15 @@ function updateActiveFilters(){
   box.innerHTML=chips.map(([k,v])=>`<span><b>${escapeHtml(k)}</b> ${escapeHtml(v)}</span>`).join('');
 }
 function strataIndex(r){
-  const validated=Number(r.strata_index_validado);
-  if(Number.isFinite(validated)&&validated>=0&&validated<=20)return validated;
+  const hasValidated=String(r.stratascore_validado||'').trim()!=='';
+  if(hasValidated){
+    const validated=Number(r.strata_index_validado);
+    if(Number.isFinite(validated)&&validated>=0&&validated<=20)return validated;
+  }
+  const proposed=String(r.stratascore_propuesto||'').trim()!=='';
   const vals=['strata_origen','strata_mediacion','strata_soporte','strata_autonomia','strata_artwash'].map(k=>Number(r[k]));
-  if(vals.every(Number.isFinite)) return vals.reduce((a,b)=>a+b,0);
-  const n=Number(r.strata_index);
-  return Number.isFinite(n)?n:null;
+  if(proposed&&vals.every(Number.isFinite)&&vals.some(v=>v!==0)) return vals.reduce((a,b)=>a+b,0);
+  return null;
 }
 function strataGrade(r){
   const s=String(r.stratascore_validado||'').trim();
