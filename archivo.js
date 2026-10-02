@@ -53,6 +53,14 @@ function updateStats(){
   $('stat-artists').textContent=new Set(archiveRecords.map(r=>norm(r.artista)).filter(Boolean)).size;
   $('stat-calabozo').textContent=calabozo;
   $('stat-advisory').textContent=advisory;
+  const mapped=archiveRecords.filter(r=>String(r.coordenadas||'').split(',').length===2&&String(r.coordenadas||'').split(',').every(v=>Number.isFinite(Number(v.trim())))).length;
+  const dated=archiveRecords.filter(r=>/^\d{4}-\d{2}-\d{2}$/.test(String(r.fecha||''))).sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha)));
+  const latest=dated[0];
+  const oldest=dated[dated.length-1];
+  $('stat-mapped').textContent=mapped;
+  $('stat-latest').textContent=latest?.expediente||'—';
+  $('stat-latest-date').textContent=latest?.fecha?new Date(latest.fecha+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}):'—';
+  $('stat-range').textContent=oldest?.fecha&&latest?.fecha?oldest.fecha.slice(0,4)+'–'+latest.fecha.slice(0,4):'—';
 }
 function updateSortNote(){
   const notes={
