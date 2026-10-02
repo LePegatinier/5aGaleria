@@ -139,8 +139,9 @@ async function loadArchive(){
     updateStats();
     fillSelect('filter-city','ciudad');fillSelect('filter-technique','tecnica');fillSelect('filter-artist','artista');
     fillSelect('filter-state','estado');fillSelect('filter-score','stratascore');fillSelect('filter-destino','destino_curatorial');
-    const requestedDestino=new URLSearchParams(location.search).get('destino');
+    const params=new URLSearchParams(location.search);const requestedDestino=params.get('destino');const requestedCity=params.get('city');
     if(requestedDestino)$('filter-destino').value=requestedDestino;
+    if(requestedCity){const match=unique('ciudad').find(v=>norm(v)===norm(requestedCity));if(match)$('filter-city').value=match;}
     ['archive-search','filter-city','filter-technique','filter-artist','filter-state','filter-score','filter-destino','filter-advisory','archive-sort']
       .forEach(id=>$(id).addEventListener(id==='archive-search'?'input':'change',render));
     $('archive-reset').addEventListener('click',()=>{
