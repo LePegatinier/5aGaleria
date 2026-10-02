@@ -33,7 +33,7 @@ function filteredRecords(){
       &&(!f.technique||r.tecnica===f.technique)
       &&(!f.artist||r.artista===f.artist)
       &&(!f.state||r.estado===f.state)
-      &&(!f.score||r.stratascore===f.score)
+      &&(!f.score||strataGrade(r)===String(f.score).match(/^([A-E])/i)?.[1]?.toUpperCase())
       &&(!f.destino||r.destino_curatorial===f.destino)
       &&(!f.advisory||(f.advisory==='yes'?r.methacrylate_advisory===true:r.methacrylate_advisory!==true));
   });
@@ -153,7 +153,10 @@ async function loadArchive(){
     archiveRecords=(data.records||[]).filter(publicRecord);
     updateStats();
     fillSelect('filter-city','ciudad');fillSelect('filter-technique','tecnica');fillSelect('filter-artist','artista');
-    fillSelect('filter-state','estado');fillSelect('filter-score','stratascore');fillSelect('filter-destino','destino_curatorial');
+    fillSelect('filter-state','estado');
+    const scoreOptions=[['A','A — STREET RAW CERTIFIED'],['B','B — SEMI-WILD URBAN'],['C','C — URBAN DISTRICT APPROVED'],['D','D — ARTWASH READY™'],['E','E — METHACRYLATE™']];
+    scoreOptions.forEach(([value,label])=>$('filter-score').insertAdjacentHTML('beforeend',`<option value="${value}">${label}</option>`));
+    fillSelect('filter-destino','destino_curatorial');
     const params=new URLSearchParams(location.search);const requestedDestino=params.get('destino');const requestedCity=params.get('city');
     if(requestedDestino)$('filter-destino').value=requestedDestino;
     if(requestedCity){const match=unique('ciudad').find(v=>norm(v)===norm(requestedCity));if(match)$('filter-city').value=match;}
