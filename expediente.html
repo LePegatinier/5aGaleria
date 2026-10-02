@@ -37,7 +37,6 @@ async function load(){
   const d=await r.json(),x=(d.records||[]).find(v=>v.expediente===id&&v.publicado===true);
   if(!x){el.innerHTML='<div class="archive-empty"><h1>EXPEDIENTE NO DISPONIBLE.</h1><p>El registro puede estar en revisión o fuera del archivo público.</p><p><a href="archivo.html">Volver al archivo.</a></p></div>';return}
   const title=x.titulo||x.tecnica||'INTERVENCIÓN URBANA',img=x.imagen?`<img class="record-image" src="${esc(x.imagen)}" alt="${esc(title)}">`:'';
-  const maps=`https://www.openstreetmap.org/?mlat=${encodeURIComponent(String(x.coordenadas).split(',')[0].trim())}&mlon=${encodeURIComponent(String(x.coordenadas).split(',')[1].trim())}#map=18`;
   const status=esc(x.estado||'DESCONOCIDO');
   const publicRows=(d.records||[]).filter(v=>v.publicado===true&&/^5a-\d{6}$/.test(String(v.expediente||''))).sort((a,b)=>a.expediente.localeCompare(b.expediente,'es',{numeric:true}));
   const pos=publicRows.findIndex(v=>v.expediente===x.expediente), prev=pos>0?publicRows[pos-1]:null, next=pos>=0&&pos<publicRows.length-1?publicRows[pos+1]:null;
