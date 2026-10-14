@@ -1085,7 +1085,50 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000025",
       "imagen": "assets/archive/5a-000025.jpg"
+    },
+    {
+      "expediente": "5a-000026",
+      "titulo": "5a-000026",
+      "artista": "@walewilsong",
+      "avistador": "Agents Incívics",
+      "ciudad": "Barcelona",
+      "ubicacion": "ciutat de granada",
+      "coordenadas": "41.398749, 2.196889",
+      "fecha": "2026-10-14",
+      "tecnica": "Graffiti",
+      "tipo_formato": "Graffiti",
+      "soporte": "",
+      "tema": [],
+      "fuente_documental": "",
+      "certeza_autoria": "",
+      "estado": "PÚBLICO",
+      "destino_curatorial": "Archivo público",
+      "methacrylate_advisory": false,
+      "motivos_reclusion": [],
+      "stratascore": "D — ARTWASH READY™",
+      "strata_index": 19,
+      "stratascore_validado": "D — ARTWASH READY™",
+      "strata_index_validado": 19,
+      "stratascore_propuesto": "E — METHACRYLATE™",
+      "strata_index_propuesto": 19,
+      "strata_origen": 4,
+      "strata_mediacion": 4,
+      "strata_soporte": 3,
+      "strata_autonomia": 4,
+      "strata_artwash": 4,
+      "strata_contribucion": [
+        4,
+        4,
+        3,
+        4,
+        4
+      ],
+      "strata_evidence": "",
+      "observaciones": "Ilustradora y artísta visual chilena. Su objetivo es crear imagenes visualmente potentes con un toque extraño.",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000026",
+      "imagen": "assets/archive/5a-000026.jpeg"
     }
   ],
-  "updated": "2026-10-05T06:04:58.308Z"
+  "updated": "2026-10-14T20:35:05.610Z"
 }
