@@ -1320,10 +1320,10 @@
       "destino_curatorial": "Archivo público",
       "methacrylate_advisory": false,
       "motivos_reclusion": [],
-      "stratascore": "",
-      "strata_index": null,
-      "stratascore_validado": "",
-      "strata_index_validado": null,
+      "stratascore": "A — STREET RAW CERTIFIED",
+      "strata_index": 0,
+      "stratascore_validado": "A — STREET RAW CERTIFIED",
+      "strata_index_validado": 0,
       "stratascore_propuesto": "",
       "strata_index_propuesto": null,
       "strata_origen": 0,
@@ -1345,5 +1345,5 @@
       "imagen": "assets/archive/5a-000031.jpg"
     }
   ],
-  "updated": "2026-11-03T11:51:51.147Z"
+  "updated": "2026-11-04T11:05:56.722Z"
 }
