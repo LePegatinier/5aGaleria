@@ -1343,7 +1343,52 @@
       "publicado": true,
       "url": "expediente.html?id=5a-000031",
       "imagen": "assets/archive/5a-000031.jpg"
+    },
+    {
+      "expediente": "5a-000032",
+      "titulo": "5a-000032",
+      "artista": "Anónimo",
+      "avistador": "Agents Incívics",
+      "ciudad": "Barcelona",
+      "ubicacion": "Joaquim Costa",
+      "coordenadas": "41.546751, 2.096539",
+      "fecha": "2026-11-04",
+      "tecnica": "Material adherido",
+      "tipo_formato": "Material adherido",
+      "soporte": "Fachada",
+      "tema": [
+        "Cultura popular"
+      ],
+      "fuente_documental": "Avistamiento directo",
+      "certeza_autoria": "",
+      "estado": "PÚBLICO",
+      "destino_curatorial": "Archivo público",
+      "methacrylate_advisory": false,
+      "motivos_reclusion": [],
+      "stratascore": "A — STREET RAW CERTIFIED",
+      "strata_index": 0,
+      "stratascore_validado": "A — STREET RAW CERTIFIED",
+      "strata_index_validado": 0,
+      "stratascore_propuesto": "",
+      "strata_index_propuesto": null,
+      "strata_origen": null,
+      "strata_mediacion": 0,
+      "strata_soporte": 0,
+      "strata_autonomia": 0,
+      "strata_artwash": 0,
+      "strata_contribucion": [
+        null,
+        0,
+        0,
+        0,
+        0
+      ],
+      "strata_evidence": "",
+      "observaciones": "Exponente máximo del DYS y del paste up, en este caso ketch_up.\nUn envase de patatas fritas adherido con ketchup a la pared se convierte en un pasteup icónico en el raval. Desde Agents Incívics nuestros dieses para los perpetradores.\nCualquier info suplementaria será bienvenida.",
+      "publicado": true,
+      "url": "expediente.html?id=5a-000032",
+      "imagen": "assets/archive/5a-000032.jpg"
     }
   ],
-  "updated": "2026-11-04T11:05:56.722Z"
+  "updated": "2026-11-05T12:14:39.521Z"
 }
