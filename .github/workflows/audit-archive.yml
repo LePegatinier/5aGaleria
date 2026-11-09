@@ -1,0 +1,31 @@
+name: 5a Galeria · Auditoría del archivo
+
+on:
+  pull_request:
+    paths:
+      - 'data/archivo.json'
+      - 'assets/archive/**'
+      - 'scripts/audit-archive.mjs'
+      - '.github/workflows/audit-archive.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Auditar integridad del archivo
+        run: node scripts/audit-archive.mjs
+
+      - name: Guardar informe de auditoría
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: informe-auditoria-5a-galeria
+          path: reports/archive-audit.json
+          if-no-files-found: ignore
